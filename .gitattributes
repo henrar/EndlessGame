@@ -4,6 +4,7 @@
 *.tscn text eol=erlf
 *.import text eol=crlf
 *.tres text eol=crlf
+*.gd text eol=crlf
 
 *.jpg binary
 *.png binary
