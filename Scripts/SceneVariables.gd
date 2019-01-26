@@ -5,7 +5,7 @@ var initial_paint = 10
 var ball_spawn_rate = 1 #per second
 var barrier_erect_speed = 10 #per second
 var barrier_strength = 10 
-var ball_speed = 5
+var ball_speed = 200
 var ball_strength = 4
 var high_score_threshold = 100
 var points_per_ball = 10
@@ -18,8 +18,6 @@ var current_paint_level
 
 func _ready():
 	center_location = Vector2(get_viewport().size.x / 2.0, get_viewport().size.y / 2.0)
-	print(center_location)
-	
 	reinit_variables()
 	pass
 
@@ -36,7 +34,7 @@ func restart_game():
 func remove_life():
 	if lives > 0:
 		lives -= 1
-		print("lives: ", lives)
+		current_paint_level = initial_paint
 	else:
 		restart_game()
 

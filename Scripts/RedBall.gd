@@ -13,7 +13,7 @@ func _ready():
 
 func _physics_process(delta):
 	var target = get_node("/root/SceneVariables").center_location
-	var velocity = (target - position).normalized() * speed
+	var velocity = (target - position).normalized() * speed * delta
 
 	if (target - position).length() > 5:
 		var collision = move_and_collide(velocity)

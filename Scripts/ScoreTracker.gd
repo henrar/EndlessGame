@@ -46,6 +46,7 @@ func load_score():
             new_paint_amount += get_node("/root/SceneVariables").paint_score_modifier
 
         get_node("/root/SceneVariables").initial_paint = new_paint_amount
+        get_node("/root/SceneVariables").current_paint_level = new_paint_amount
 
     save_game_file.close()
 
