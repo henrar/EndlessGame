@@ -44,6 +44,9 @@ func load_score():
 
 func add_score(score):
     current_score += score
+    if current_score % get_node("/root/SceneVariables").high_score_threshold == 0:
+        get_node("/root/SceneVariables").add_paint()
+
     if current_score > high_score:
         high_score = current_score
     
