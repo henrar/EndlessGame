@@ -38,6 +38,14 @@ func load_score():
     else:
         print(current_line["high_score"])
         high_score = current_line["high_score"]
+        var new_paint_amount = get_node("/root/SceneVariables").initial_paint
+
+        var crossed_threshold = high_score / get_node("/root/SceneVariables").high_score_threshold
+
+        for i in range(crossed_threshold):
+            new_paint_amount += get_node("/root/SceneVariables").paint_score_modifier
+
+        get_node("/root/SceneVariables").initial_paint = new_paint_amount
 
     save_game_file.close()
 
