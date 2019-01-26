@@ -18,7 +18,12 @@ func _physics_process(delta):
 	if (target - position).length() > 5:
 		var collision = move_and_collide(velocity)
 	else:
-		destroy()
+		destroy(true)
 
-func destroy():
+func destroy(reached_center):
+	if not reached_center:
+		get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").points_per_ball)
+	else:
+		get_node("/root/SceneVariables").remove_life()
+
 	queue_free()
