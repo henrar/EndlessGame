@@ -29,6 +29,7 @@ func reinit_variables():
 
 func restart_game():
 	get_node("/root/ScoreTracker").save_score()
+	get_node("/root/ScoreTracker").reset_score()
 	reinit_variables()
 	get_tree().reload_current_scene()
 

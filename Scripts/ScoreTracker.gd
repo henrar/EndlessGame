@@ -49,6 +49,8 @@ func load_score():
 
     save_game_file.close()
 
+func reset_score():
+    current_score = 0
 
 func add_score(score):
     current_score += score
