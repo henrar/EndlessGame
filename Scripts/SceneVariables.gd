@@ -2,7 +2,7 @@ extends Node
 
 #configuration
 var initial_paint = 10
-var ball_spawn_rate = 10 #per second
+var ball_spawn_rate = 1 #per second
 var barrier_erect_speed = 10 #per second
 var barrier_strength = 10 
 var ball_speed = 5
