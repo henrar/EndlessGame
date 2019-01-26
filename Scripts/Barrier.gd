@@ -31,4 +31,4 @@ func draw_empty_circle(circle_center, circle_radius, color, resolution, thick):
 func _draw():
     draw_empty_circle(get_node("/root/SceneVariables").center_location, Vector2(get_viewport().size.y * 0.2, get_viewport().size.y * 0.2), Color(1.0, 0.0, 0.0, 0.2), 1, 20)
 
-    pass
+    

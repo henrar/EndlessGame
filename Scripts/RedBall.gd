@@ -10,8 +10,6 @@ func _ready():
 	add_child(sprite)
 
 	speed = get_node("/root/SceneVariables").ball_speed
-	
-	pass
 
 func _physics_process(delta):
 	var target = get_node("/root/SceneVariables").center_location
@@ -20,6 +18,7 @@ func _physics_process(delta):
 	if (target - position).length() > 5:
 		var collision = move_and_collide(velocity)
 	else:
-		queue_free()
+		destroy()
 
-	pass
+func destroy():
+	queue_free()

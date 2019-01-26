@@ -19,8 +19,6 @@ func _ready():
     
     randomize()
 
-    pass
-
 func _physics_process(delta):
 
     pass
@@ -55,6 +53,5 @@ func spawn_ball():
 	
 	    ball.position = get_random_spawn_position()
 	    scene_instance.add_child(ball)
-    
-	pass
-    
+
+

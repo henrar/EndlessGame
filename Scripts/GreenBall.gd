@@ -11,8 +11,6 @@ func _ready():
 
 	speed = get_node("/root/SceneVariables").ball_speed
 
-	pass
-
 func _physics_process(delta):
 	var target = get_node("/root/SceneVariables").center_location
 	var velocity = (target - position).normalized() * speed
@@ -20,7 +18,10 @@ func _physics_process(delta):
 	if (target - position).length() > 5:
 		var collision = move_and_collide(velocity)
 	else:
-		queue_free()	
+		destroy(false)
 
-	pass
+func destroy(reached_center):
+	if not reached_center:
+		get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").points_per_ball)
 
+	queue_free()
