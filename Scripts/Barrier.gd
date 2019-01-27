@@ -11,6 +11,8 @@ var hold_timer = 0.0
 
 var angles = {}
 var starting_angle = null
+var angle_index_left
+var angle_index_right
 
 func _ready():
     position = get_node("/root/SceneVariables").center_location
@@ -24,19 +26,37 @@ func _physics_process(delta):
         hold_timer = 0.0
         
     if hold_timer > 0.0 && fmod(hold_timer, 1.0) <= 0.01:
-        if get_node("/root/SceneVariables").current_paint_level > 0:
-            for i in range(1, get_node("/root/SceneVariables").barrier_erect_speed):
-                var negative_i = -i
+        var index = 0
+        for i in range(1, get_node("/root/SceneVariables").barrier_erect_speed):
+            if get_node("/root/SceneVariables").current_paint_level > 0:       
                 var positive_i = i
+                          
+                if angle_index_right + positive_i >= 360:
+                    angles[(angle_index_right + positive_i) - 360] = true
+                else:
+                    angles[angle_index_right + positive_i] = true
                 
-                if starting_angle + negative_i < 0:
+                index = positive_i   
+                get_node("/root/SceneVariables").substract_paint()
+
+        if angle_index_right + index >= 360:
+            print(angle_index_right + index)
+            angle_index_right = (angle_index_right + index) - 360;
+        else:
+            angle_index_right = angle_index_right + index
+
+        for i in range(1, get_node("/root/SceneVariables").barrier_erect_speed):
+            if get_node("/root/SceneVariables").current_paint_level > 0:  
+                var negative_i = -i   
+                
+                if angle_index_left + negative_i < 0:
                     negative_i = 360 + negative_i 
-                    
-                if starting_angle + positive_i > 360:
-                    positive_i = 0 + positive_i
-                              
-                angles[starting_angle + negative_i] = true    
-                angles[starting_angle + positive_i] = true         
+
+                angles[angle_index_left + negative_i] = true  
+                index = negative_i    
+                get_node("/root/SceneVariables").substract_paint()   
+
+        angle_index_left = angle_index_left + index
     
     update()
 
@@ -44,26 +64,37 @@ func _input(event):
     if OS.get_name() == "Android" || OS.get_name() == "iOS":
         if event is InputEventScreenTouch:
             if event.pressed:
-                input_pos = convert_to_ring_relative_coords(event.position)
-                clicked_within_ring = convert_to_ring_relative_coords(input_pos)
+                handle_click(event)
+            elif !event.pressed:
+                handle_release(event)
     else:
         if event is InputEventMouseButton: 
             if event.pressed && event.button_index == BUTTON_LEFT:
-                input_pos = convert_to_ring_relative_coords(event.position)
-                clicked_within_ring = convert_to_ring_relative_coords(input_pos)
-                starting_angle = int(get_angle_between_click_and_ring_origin(input_pos))
-                angles[starting_angle] = true
+                handle_click(event)
             elif !event.pressed && event.button_index == BUTTON_LEFT:
-                input_pos = null
-                clicked_within_ring = false
-                clear_angles()
+                handle_release(event)
 
         if event is InputEventMouseMotion:
             if clicked_within_ring:
                 input_pos = convert_to_ring_relative_coords(event.position)
                 if is_on_ring(input_pos):
                     pass    
-                    
+  
+func handle_click(event):
+    input_pos = convert_to_ring_relative_coords(event.position)
+    clicked_within_ring = convert_to_ring_relative_coords(input_pos)
+    starting_angle = int(floor(get_angle_between_click_and_ring_origin(input_pos)))
+    angles[starting_angle] = true
+    angle_index_left = starting_angle
+    angle_index_right = starting_angle
+    get_node("/root/SceneVariables").substract_paint()     
+    
+func handle_release(event):
+    input_pos = null
+    clicked_within_ring = false
+    get_node("/root/SceneVariables").current_paint_level = 50
+    clear_angles()
+
 func convert_to_ring_relative_coords(position):
     return Vector2(position.x - get_node("/root/SceneVariables").center_location.x, get_node("/root/SceneVariables").center_location.y - position.y)                
 
@@ -80,7 +111,7 @@ func get_angle_between_click_and_ring_origin(position):
         return angle
     else:
         return angle + 360.0
- 
+
 func clear_angles():
     starting_angle = null
     for i in range(360):
@@ -106,6 +137,11 @@ func draw_ring(circle_center, circle_radius, color, resolution, thick):
         line_origin = line_end
 
     line_end = circle_radius.rotated(deg2rad(360)) + circle_center
+    if angles[0]:
+        color = fill_barrier_color
+    else:
+        color = base_barrier_color
+
     draw_line(line_origin, line_end, color, thick)
 
 func _draw():

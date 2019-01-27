@@ -42,3 +42,7 @@ func remove_life():
 
 func add_paint():
     current_paint_level += paint_score_modifier
+
+func substract_paint():
+	current_paint_level -= 1
+	
