@@ -7,14 +7,38 @@ var clicked_within_ring = false
 var input_pos
 var base_barrier_color = Color(1.0, 0.0, 0.0, 0.2)
 var fill_barrier_color = Color(1.0, 0.0, 0.0, 1.0)
+var hold_timer = 0.0
+
+var angles = {}
+var starting_angle = null
 
 func _ready():
     position = get_node("/root/SceneVariables").center_location
     radius = Vector2(get_viewport().size.y * get_node("/root/SceneVariables").ring_radius_percentage_of_viewport / 2.0, 0.0)
+    clear_angles()
 
 func _physics_process(delta):
+    if clicked_within_ring:
+        hold_timer += delta
+    else:
+        hold_timer = 0.0
+        
+    if hold_timer > 0.0 && fmod(hold_timer, 1.0) <= 0.01:
+        if get_node("/root/SceneVariables").current_paint_level > 0:
+            for i in range(1, get_node("/root/SceneVariables").barrier_erect_speed):
+                var negative_i = -i
+                var positive_i = i
+                
+                if starting_angle + negative_i < 0:
+                    negative_i = 360 + negative_i 
+                    
+                if starting_angle + positive_i > 360:
+                    positive_i = 0 + positive_i
+                              
+                angles[starting_angle + negative_i] = true    
+                angles[starting_angle + positive_i] = true         
+    
     update()
-    pass
 
 func _input(event):
     if OS.get_name() == "Android" || OS.get_name() == "iOS":
@@ -27,9 +51,12 @@ func _input(event):
             if event.pressed && event.button_index == BUTTON_LEFT:
                 input_pos = convert_to_ring_relative_coords(event.position)
                 clicked_within_ring = convert_to_ring_relative_coords(input_pos)
+                starting_angle = int(get_angle_between_click_and_ring_origin(input_pos))
+                angles[starting_angle] = true
             elif !event.pressed && event.button_index == BUTTON_LEFT:
                 input_pos = null
                 clicked_within_ring = false
+                clear_angles()
 
         if event is InputEventMouseMotion:
             if clicked_within_ring:
@@ -54,21 +81,21 @@ func get_angle_between_click_and_ring_origin(position):
     else:
         return angle + 360.0
  
+func clear_angles():
+    starting_angle = null
+    for i in range(360):
+        angles[i] = false
+
 func draw_ring(circle_center, circle_radius, color, resolution, thick):
-    var draw_counter = 1
+    var draw_counter = 0
     var line_origin = Vector2()
     var line_end = Vector2()
     line_origin = circle_radius + circle_center
-
-    var angle = null
-
-    if input_pos && clicked_within_ring:
-        angle = get_angle_between_click_and_ring_origin(input_pos)
         
-    while draw_counter <= 360:
+    while draw_counter < 360:
         line_end = circle_radius.rotated(deg2rad(draw_counter)) + circle_center
         
-        if angle != null && draw_counter == int(angle):
+        if angles != null && angles[draw_counter]:
             color = fill_barrier_color
         else:
             color = base_barrier_color
