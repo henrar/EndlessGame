@@ -20,7 +20,6 @@ func _ready():
     randomize()
 
 func _physics_process(delta):
-
     pass
 	
 func get_random_spawn_position():
@@ -40,7 +39,6 @@ func get_random_spawn_position():
         spawn_position.x = candidate_x2
 
     return spawn_position
-
 
 func spawn_ball():
 	for i in range(get_node("/root/SceneVariables").ball_spawn_rate):
