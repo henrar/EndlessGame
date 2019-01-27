@@ -4,13 +4,14 @@ extends Node
 var initial_paint = 10
 var ball_spawn_rate = 1 #per second
 var barrier_erect_speed = 10 #per second
-var barrier_strength = 10 
+var barrier_strength = 0 
 var ball_speed = 200
-var ball_strength = 0
+var ball_strength = 1
 var high_score_threshold = 100
 var points_per_ball = 10
 var paint_score_modifier = 10 #increases initial paint when score reaches certain threshold
 
+var collision_timer = 2.0
 var ring_radius_percentage_of_viewport = 0.8
 
 #on load variables

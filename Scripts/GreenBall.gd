@@ -5,6 +5,10 @@ var texture = preload("res://Assets/green_ball.png")
 var sprite = Sprite.new()
 var toughness
 
+var collided
+var initial_pos
+var collided_timer = 0.0
+
 func _ready():
     sprite.texture = texture
     sprite.scale = Vector2(0.5, 0.5)
@@ -12,9 +16,16 @@ func _ready():
 
     speed = get_node("/root/SceneVariables").ball_speed
     toughness = get_node("/root/SceneVariables").ball_strength
+    initial_pos = position
 
 func _physics_process(delta):
-    var target = get_node("/root/SceneVariables").center_location
+    var target
+    if collided:
+        target = initial_pos
+        collided_timer += delta
+    else:
+        target = get_node("/root/SceneVariables").center_location
+
     var velocity = (target - position).normalized() * speed * delta
 
     if (target - position).length() > 5:
@@ -22,6 +33,10 @@ func _physics_process(delta):
         handle_collision_with_barrier()
     else:
         destroy(true)
+
+    if position == initial_pos || collided_timer > get_node("/root/SceneVariables").collision_timer:
+        collided = false
+        collided_timer = 0.0
 
 func collided_with_barrier():
     var barrier = get_tree().get_root().get_node("World/Barrier")
@@ -32,6 +47,7 @@ func handle_collision_with_barrier():
     if collided_with_barrier():
         if toughness > 0:
             toughness -= 1
+            collided = true
         else:
             destroy(false)
 

@@ -14,9 +14,12 @@ var starting_angle = null
 var angle_index_left
 var angle_index_right
 
+var current_barrier_strength
+
 func _ready():
     position = get_node("/root/SceneVariables").center_location
     radius = Vector2(get_viewport().size.y * get_node("/root/SceneVariables").ring_radius_percentage_of_viewport / 2.0, 0.0)
+    current_barrier_strength = get_node("/root/SceneVariables").barrier_strength
     clear_angles()
 
 func _physics_process(delta):
@@ -24,8 +27,12 @@ func _physics_process(delta):
         hold_timer += delta
     else:
         hold_timer = 0.0
+
+    if current_barrier_strength < 0 && clicked_within_ring:
+        clicked_within_ring = false
+        clear_angles()
         
-    if hold_timer > 0.0 && fmod(hold_timer, 1.0) <= 0.01:
+    if hold_timer > 0.0 && fmod(hold_timer, 1.0) <= 0.01 && clicked_within_ring:
         var index = 0
         for i in range(1, get_node("/root/SceneVariables").barrier_erect_speed):
             if get_node("/root/SceneVariables").current_paint_level > 0:       
@@ -87,6 +94,7 @@ func handle_click(event):
     angles[starting_angle] = true
     angle_index_left = starting_angle
     angle_index_right = starting_angle
+    current_barrier_strength = get_node("/root/SceneVariables").barrier_strength
     get_node("/root/SceneVariables").substract_paint()     
     
 func handle_release(event):
@@ -146,3 +154,6 @@ func draw_ring(circle_center, circle_radius, color, resolution, thick):
 func _draw():
     draw_ring(center_coords, radius, base_barrier_color, 1, thickness)
     
+func damage_barrier():
+    if current_barrier_strength >= 0:
+        current_barrier_strength -= 1
