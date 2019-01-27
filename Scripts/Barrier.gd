@@ -5,7 +5,7 @@ var thickness = 20
 var center_coords = Vector2(0.0, 0.0)
 var clicked_within_ring = false
 var input_pos
-var base_barrier_color = Color(1.0, 0.0, 0.0, 0.2)
+var base_barrier_color = Color(1.0, 0.0, 0.0, 0.1)
 var fill_barrier_color = Color(1.0, 0.0, 0.0, 1.0)
 var hold_timer = 0.0
 
