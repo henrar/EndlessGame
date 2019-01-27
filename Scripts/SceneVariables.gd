@@ -6,7 +6,7 @@ var ball_spawn_rate = 1 #per second
 var barrier_erect_speed = 10 #per second
 var barrier_strength = 10 
 var ball_speed = 200
-var ball_strength = 4
+var ball_strength = 0
 var high_score_threshold = 100
 var points_per_ball = 10
 var paint_score_modifier = 10 #increases initial paint when score reaches certain threshold
@@ -44,5 +44,5 @@ func add_paint():
     current_paint_level += paint_score_modifier
 
 func substract_paint():
-	current_paint_level -= 1
-	
+    current_paint_level -= 1
+    

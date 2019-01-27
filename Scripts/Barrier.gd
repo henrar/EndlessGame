@@ -83,7 +83,7 @@ func _input(event):
 func handle_click(event):
     input_pos = convert_to_ring_relative_coords(event.position)
     clicked_within_ring = convert_to_ring_relative_coords(input_pos)
-    starting_angle = int(floor(get_angle_between_click_and_ring_origin(input_pos)))
+    starting_angle = int(floor(get_angle_between_position_and_ring_origin(input_pos)))
     angles[starting_angle] = true
     angle_index_left = starting_angle
     angle_index_right = starting_angle
@@ -92,7 +92,6 @@ func handle_click(event):
 func handle_release(event):
     input_pos = null
     clicked_within_ring = false
-    get_node("/root/SceneVariables").current_paint_level = 50
     clear_angles()
 
 func convert_to_ring_relative_coords(position):
@@ -104,7 +103,7 @@ func is_on_ring(position):
 func is_inside_inner_circle(position):
     return position.distance_to(center_coords) < (radius.x - thickness / 2.0)
 
-func get_angle_between_click_and_ring_origin(position):
+func get_angle_between_position_and_ring_origin(position):
     var ring_origin = center_coords + radius
     var angle = rad2deg(position.angle_to(ring_origin))
     if angle <= 180.0 && angle >= 0.0:
