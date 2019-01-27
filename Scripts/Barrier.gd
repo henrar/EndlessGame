@@ -10,7 +10,6 @@ var center_coords = Vector2(0.0, 0.0)
 func _ready():
     position = get_node("/root/SceneVariables").center_location
     radius = Vector2(get_viewport().size.y * get_node("/root/SceneVariables").ring_radius_percentage_of_viewport / 2.0, 0.0)
-    print(radius)
 
 func _physics_process(delta):
     pass
@@ -24,7 +23,7 @@ func _input(event):
         if event is InputEventMouseButton: #that's mostly for debbuging
             if event.pressed:
                 var click_pos = convert_to_ring_relative_coords(event.position)
-                
+
 func convert_to_ring_relative_coords(position):
     return Vector2(position.x - get_node("/root/SceneVariables").center_location.x, get_node("/root/SceneVariables").center_location.y - position.y)                
 
