@@ -3,14 +3,34 @@ extends KinematicBody2D
 #for touch calculation
 var outer_circle
 var inner_circle
+var radius
 
 func _ready():
     position = get_node("/root/SceneVariables").center_location
-    print(position)
+    radius = Vector2(get_viewport().size.y * get_node("/root/SceneVariables").ring_radius_percentage_of_viewport / 2.0, 0)
+    print(radius)
 
 func _physics_process(delta):
-
     pass
+    
+func _input(event):
+    if OS.get_name() == "Android" || OS.get_name() == "iOS":
+        if event is InputEventScreenTouch:
+            if event.pressed:
+                var touch_pos = event.position
+    else:
+        if event is InputEventMouseButton:
+            if event.pressed:
+                var click_pos = event.position
+
+func convert_to_ring_relative_coords(position):
+    return Vector2(position.x - get_node("/root/SceneVariables").center_location.x, get_node("/root/SceneVariables").center_location.y - position.y)                
+
+func is_on_ring(position):
+    pass
+    
+func is_inside_inner_circle(position):
+    pass    
 
 func draw_empty_circle(circle_center, circle_radius, color, resolution, thick):
     var draw_counter = 1
@@ -29,6 +49,5 @@ func draw_empty_circle(circle_center, circle_radius, color, resolution, thick):
 	
 
 func _draw():
-    print(position)
-    draw_empty_circle(Vector2(0, 0), Vector2(get_viewport().size.y * 0.2, get_viewport().size.y * 0.2), Color(1.0, 0.0, 0.0, 0.2), 1, 20)
+    draw_empty_circle(Vector2(0, 0), radius, Color(1.0, 0.0, 0.0, 0.2), 1, 20)
 

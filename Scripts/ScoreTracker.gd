@@ -36,7 +36,6 @@ func load_score():
     if current_line == null:
         high_score = 0
     else:
-        print(current_line["high_score"])
         high_score = current_line["high_score"]
         var new_paint_amount = get_node("/root/SceneVariables").initial_paint
 
@@ -60,4 +59,3 @@ func add_score(score):
 
     if current_score > high_score:
         high_score = current_score
-    

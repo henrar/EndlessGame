@@ -11,6 +11,8 @@ var high_score_threshold = 100
 var points_per_ball = 10
 var paint_score_modifier = 10 #increases initial paint when score reaches certain threshold
 
+var ring_radius_percentage_of_viewport = 0.8
+
 #on load variables
 var center_location
 var lives
