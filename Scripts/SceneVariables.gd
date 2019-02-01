@@ -13,6 +13,7 @@ var green_ball_points_destroy = 10
 var green_ball_reached_center = 10
 var green_ball_hit_barrier = 10
 var green_ball_speed_modifier = 10.0
+var green_ball_collide = 10
 
 #red ball
 var red_ball_spawn_rate = 1 
@@ -22,6 +23,7 @@ var red_ball_points_destroy = 10
 var red_ball_reached_center = 10
 var red_ball_hit_barrier = 10
 var red_ball_speed_modifier = 10.0
+var red_ball_collide = 10
 
 var high_score_threshold = 100
 
