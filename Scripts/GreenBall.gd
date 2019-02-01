@@ -14,8 +14,8 @@ func _ready():
     sprite.scale = Vector2(0.5, 0.5)
     add_child(sprite)
 
-    speed = get_node("/root/SceneVariables").ball_speed
-    toughness = get_node("/root/SceneVariables").ball_strength
+    speed = get_node("/root/SceneVariables").green_ball_speed
+    toughness = get_node("/root/SceneVariables").green_ball_strength
     initial_pos = position
 
 func _physics_process(delta):
@@ -48,12 +48,15 @@ func handle_collision_with_barrier():
         if toughness > 0:
             toughness -= 1
             collided = true
+            get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").green_ball_hit_barrier)
         else:
             destroy(false)
 
 func destroy(reached_center):
     if reached_center:
-        get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").points_per_ball)
+        get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").green_ball_reached_center)
         get_node("/root/SceneVariables").add_paint()
+    else:
+        get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").green_ball_points_destroy)
 
     queue_free()

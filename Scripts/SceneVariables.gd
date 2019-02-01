@@ -5,11 +5,23 @@ var initial_paint = 10
 var barrier_erect_speed = 10 #per second
 var barrier_strength = 0 
 
-var ball_spawn_rate = 1 
-var ball_speed = 200
-var ball_strength = 1
-var points_per_ball = 10
+#green ball
+var green_ball_spawn_rate = 1 
+var green_ball_speed = 200.0
+var green_ball_strength = 1
+var green_ball_points_destroy = 10
+var green_ball_reached_center = 10
+var green_ball_hit_barrier = 10
+var green_ball_speed_modifier = 10.0
 
+#red ball
+var red_ball_spawn_rate = 1 
+var red_ball_speed = 200
+var red_ball_strength = 1
+var red_ball_points_destroy = 10
+var red_ball_reached_center = 10
+var red_ball_hit_barrier = 10
+var red_ball_speed_modifier = 10.0
 
 var high_score_threshold = 100
 

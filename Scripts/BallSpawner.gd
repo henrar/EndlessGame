@@ -41,14 +41,13 @@ func get_random_spawn_position():
     return spawn_position
 
 func spawn_ball():
-    for i in range(get_node("/root/SceneVariables").ball_spawn_rate):
-        var ball
-        var ball_type = bool(randi() % 2) #TODO: proper chances
-        if ball_type:
-            ball = GreenBall.new()
-        else:
-            ball = RedBall.new()
-    
+    for i in range(get_node("/root/SceneVariables").green_ball_spawn_rate):
+        var ball = GreenBall.new()
+        ball.position = get_random_spawn_position()
+        scene_instance.add_child(ball)
+
+    for i in range(get_node("/root/SceneVariables").red_ball_spawn_rate):
+        var ball = RedBall.new()
         ball.position = get_random_spawn_position()
         scene_instance.add_child(ball)
 
