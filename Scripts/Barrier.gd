@@ -34,8 +34,14 @@ func _physics_process(delta):
         
     if hold_timer > 0.0 && fmod(hold_timer, 1.0) <= 0.01 && clicked_within_ring:
         var index = 0
-        for i in range(1, get_node("/root/SceneVariables").barrier_erect_speed):
-            if get_node("/root/SceneVariables").current_paint_level > 0:       
+
+        var barrier_paint_per_side = get_node("/root/SceneVariables").barrier_erect_speed
+
+        if barrier_paint_per_side >= get_node("/root/SceneVariables").current_paint_level:
+            barrier_paint_per_side = barrier_paint_per_side / 2
+
+        for i in range(1, barrier_paint_per_side + 1):
+            if get_node("/root/SceneVariables").current_paint_level > 0:   
                 var positive_i = i
                           
                 if angle_index_right + positive_i >= 360:
@@ -52,7 +58,7 @@ func _physics_process(delta):
         else:
             angle_index_right = angle_index_right + index
 
-        for i in range(1, get_node("/root/SceneVariables").barrier_erect_speed):
+        for i in range(1, barrier_paint_per_side + 1):
             if get_node("/root/SceneVariables").current_paint_level > 0:  
                 var negative_i = -i   
                 
@@ -88,14 +94,15 @@ func _input(event):
                     pass    
   
 func handle_click(event):
-    input_pos = convert_to_ring_relative_coords(event.position)
-    clicked_within_ring = convert_to_ring_relative_coords(input_pos)
-    starting_angle = int(floor(get_angle_between_position_and_ring_origin(input_pos)))
-    angles[starting_angle] = true
-    angle_index_left = starting_angle
-    angle_index_right = starting_angle
-    current_barrier_strength = get_node("/root/SceneVariables").barrier_strength
-    get_node("/root/SceneVariables").substract_paint()     
+    if get_node("/root/SceneVariables").current_paint_level > 0:
+        input_pos = convert_to_ring_relative_coords(event.position)
+        clicked_within_ring = convert_to_ring_relative_coords(input_pos)
+        starting_angle = int(floor(get_angle_between_position_and_ring_origin(input_pos)))
+        angles[starting_angle] = true
+        angle_index_left = starting_angle
+        angle_index_right = starting_angle
+        current_barrier_strength = get_node("/root/SceneVariables").barrier_strength
+    #get_node("/root/SceneVariables").substract_paint()     
     
 func handle_release(event):
     input_pos = null
