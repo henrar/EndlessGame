@@ -101,8 +101,7 @@ func handle_click(event):
         angles[starting_angle] = true
         angle_index_left = starting_angle
         angle_index_right = starting_angle
-        current_barrier_strength = get_node("/root/SceneVariables").barrier_strength
-    #get_node("/root/SceneVariables").substract_paint()     
+        current_barrier_strength = get_node("/root/SceneVariables").barrier_strength   
     
 func handle_release(event):
     input_pos = null

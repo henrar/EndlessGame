@@ -64,7 +64,7 @@ func destroy(reached_center):
         get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").red_ball_points_destroy)
     else:
         get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").red_ball_reached_center)
-        #get_node("/root/SceneVariables").remove_life()
+        get_node("/root/SceneVariables").remove_life()
 
     queue_free()
 
