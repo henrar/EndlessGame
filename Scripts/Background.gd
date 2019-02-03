@@ -9,10 +9,7 @@ func _ready():
         var path = "res://Assets/Backgrounds/space_" + str(i) + ".png"
         textures.append(load(path))
     
-
-    print(textures)    
-    texture = textures[1]
-    print(texture)   
+    texture = textures[0]
 
     background_change_timer = Timer.new()
     background_change_timer.one_shot = false
@@ -23,10 +20,6 @@ func _ready():
     
 
 func replace_background():
-    if current_sprite_index < 8:
-        current_sprite_index += 1
-    else:
-        current_sprite_index = 1
-
-    texture = textures[current_sprite_index - 1]
+    current_sprite_index = int(rand_range(0, 9))      
+    texture = textures[current_sprite_index]
     
