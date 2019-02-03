@@ -5,9 +5,13 @@ var session_timer = 0.0 #global session timer, do not touch this
 #configuration
 var initial_paint = 10 #how much paint we have at the beginning
 var paint_score_modifier = 10 #increases initial paint when score reaches certain threshold
-var high_score_threshold = 100 #we get initial_paint + modifier * (previous_session_score % threshold)
 const ring_radius_percentage_of_viewport = 0.8 #size of the ring-barrier
 const initial_lives = 2
+
+#score configuration
+const high_score_threshold = 100 #we get initial_paint + modifier * (previous_session_score % threshold)
+const score_time_addition = 10
+const score_time_addition_interval = 10.0
 
 #barrier
 var barrier_erect_speed = 10 #per second
@@ -62,6 +66,9 @@ func _physics_process(delta):
 
     if fmod(session_timer, red_ball_speed_modifier_interval) <= 0.01:
         red_ball_speed += red_ball_speed_modifier    
+
+    if fmod(session_timer, score_time_addition_interval) <= 0.01:
+        get_node("/root/ScoreTracker").add_score(score_time_addition)
 
 func reinit_variables():
     current_lives = initial_lives
