@@ -58,5 +58,6 @@ func spawn_red_ball():
     for i in range(get_node("/root/SceneVariables").red_ball_spawn_rate):
         var ball = RedBall.new()
         ball.position = get_random_spawn_position()
+        ball.ship_type = int(rand_range(0, 3))
         scene_instance.add_child(ball)
 

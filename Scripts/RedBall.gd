@@ -9,7 +9,7 @@ var toughness
 var collided_with_barrier
 var initial_pos
 var collided_timer = 0.0
-var ship_type = 0
+var ship_type
 
 func _ready():
     prepare_textures()
