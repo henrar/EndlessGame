@@ -9,15 +9,17 @@ var toughness
 var collided_with_barrier
 var initial_pos
 var collided_timer = 0.0
+var ship_type = 0
 
 func _ready():
     prepare_textures()
 
-    set_ship_sprite(0, 0)
-    add_child(sprite)
-
     speed = get_node("/root/SceneVariables").red_ball_speed
     toughness = get_node("/root/SceneVariables").red_ball_strength
+
+    set_ship_sprite(ship_type, toughness)
+    add_child(sprite)
+
     initial_pos = position
 
     add_collision_shape()
@@ -54,8 +56,9 @@ func did_collide_with_barrier():
 func handle_collision_with_barrier():
     if did_collide_with_barrier():
         if toughness > 0:
-            toughness -= 1
+            toughness -= 1 
             collided_with_barrier = true
+            set_ship_sprite(ship_type, toughness)
             var barrier = get_tree().get_root().get_node("World/Barrier")
             barrier.damage_barrier()
             get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").red_ball_hit_barrier)
@@ -82,10 +85,13 @@ func add_collision_shape():
     collision_shape.shape = circle_shape
     add_child(collision_shape)
 
-func set_ship_sprite(index, type):
+func set_ship_sprite(type, life):
+    var index = 2 - life
+    if index < 0:
+        index = 0
     sprite.texture = textures[type][index]
     sprite.scale = Vector2(0.1, 0.1)
-    
+
 func prepare_textures():
     textures.resize(3)
     for i in range (0, 3):

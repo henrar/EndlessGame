@@ -16,12 +16,12 @@ func _ready():
     textures.append(preload("res://Assets/ships/friend/friend-2.png"))
     textures.append(preload("res://Assets/ships/friend/friend-3.png"))
 
-    set_ship_sprite(0)
-    add_child(sprite)
-
     speed = get_node("/root/SceneVariables").green_ball_speed
     toughness = get_node("/root/SceneVariables").green_ball_strength
     initial_pos = position
+
+    set_ship_sprite(toughness)
+    add_child(sprite)
 
     add_collision_shape()
 
@@ -59,6 +59,7 @@ func handle_collision_with_barrier():
         if toughness > 0:
             toughness -= 1
             collided_with_barrier = true
+            set_ship_sprite(toughness)
             get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").green_ball_hit_barrier)
         else:
             destroy(false)
@@ -83,7 +84,10 @@ func add_collision_shape():
     collision_shape.shape = circle_shape
     add_child(collision_shape)
 
-func set_ship_sprite(index):
+func set_ship_sprite(life):
+    var index = 2 - life
+    if index < 0:
+        index = 0
     sprite.texture = textures[index]
     sprite.scale = Vector2(0.1, 0.1)
 

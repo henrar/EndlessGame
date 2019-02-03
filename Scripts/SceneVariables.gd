@@ -6,7 +6,8 @@ var barrier_erect_speed = 10 #per second
 var barrier_strength = 0 
 
 #green ball
-var green_ball_spawn_rate = 1 
+var green_ball_spawn_rate = 1 #per interval
+var green_ball_spawn_interval = 1.0
 var green_ball_speed = 200.0
 var green_ball_strength = 1
 var green_ball_points_destroy = 10
@@ -17,8 +18,9 @@ var green_ball_collide = 10
 
 #red ball
 var red_ball_spawn_rate = 1 
+var red_ball_spawn_interval = 1.0
 var red_ball_speed = 200
-var red_ball_strength = 1
+var red_ball_strength = 3
 var red_ball_points_destroy = 10
 var red_ball_reached_center = 10
 var red_ball_hit_barrier = 10

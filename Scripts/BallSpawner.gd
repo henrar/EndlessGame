@@ -1,17 +1,25 @@
 extends Node
 
-var timer
+var green_ball_spawn_timer
+var red_ball_spawn_timer
 var scene_instance
 var GreenBall
 var RedBall
 
 func _ready():
-    timer = Timer.new()
-    timer.one_shot = false
-    timer.wait_time = 1.0
-    timer.connect("timeout",self,"spawn_ball") 
-    timer.start()
-    add_child(timer)
+    green_ball_spawn_timer = Timer.new()
+    green_ball_spawn_timer.one_shot = false
+    green_ball_spawn_timer.wait_time = get_node("/root/SceneVariables").green_ball_spawn_interval
+    green_ball_spawn_timer.connect("timeout",self,"spawn_green_ball") 
+    green_ball_spawn_timer.start()
+    add_child(green_ball_spawn_timer)
+
+    red_ball_spawn_timer = Timer.new()
+    red_ball_spawn_timer.one_shot = false
+    red_ball_spawn_timer.wait_time = get_node("/root/SceneVariables").red_ball_spawn_interval
+    red_ball_spawn_timer.connect("timeout",self,"spawn_red_ball") 
+    red_ball_spawn_timer.start()
+    add_child(red_ball_spawn_timer)
 
     scene_instance = get_tree().get_root().get_node("World")
     GreenBall = load("res://Scripts/GreenBall.gd")
@@ -40,15 +48,15 @@ func get_random_spawn_position():
 
     return spawn_position
 
-func spawn_ball():
+func spawn_green_ball():
     for i in range(get_node("/root/SceneVariables").green_ball_spawn_rate):
         var ball = GreenBall.new()
         ball.position = get_random_spawn_position()
         scene_instance.add_child(ball)
 
+func spawn_red_ball():
     for i in range(get_node("/root/SceneVariables").red_ball_spawn_rate):
         var ball = RedBall.new()
         ball.position = get_random_spawn_position()
         scene_instance.add_child(ball)
-
 
