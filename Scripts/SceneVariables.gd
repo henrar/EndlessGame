@@ -6,25 +6,31 @@ var barrier_erect_speed = 10 #per second
 var barrier_strength = 0 
 
 #green ball
+const green_ball_base_speed = 200.0 #base speed, green_ball_speed is the current one
+var green_ball_speed_modifier = 10.0
+var green_ball_speed = green_ball_base_speed
+var green_ball_speed_modifier_interval = 60.0
+
 var green_ball_spawn_rate = 1 #per interval
 var green_ball_spawn_interval = 1.0
-var green_ball_speed = 200.0
 var green_ball_strength = 1
 var green_ball_points_destroy = 10
 var green_ball_reached_center = 10
 var green_ball_hit_barrier = 10
-var green_ball_speed_modifier = 10.0
 var green_ball_collide = 10
 
 #red ball
+const red_ball_base_speed = 200.0
+var red_ball_speed = red_ball_base_speed
+var red_ball_speed_modifier = 10.0
+var red_ball_speed_modifier_interval = 60.0
+
 var red_ball_spawn_rate = 1 
 var red_ball_spawn_interval = 1.0
-var red_ball_speed = 200
 var red_ball_strength = 3
 var red_ball_points_destroy = 10
 var red_ball_reached_center = 10
 var red_ball_hit_barrier = 10
-var red_ball_speed_modifier = 10.0
 var red_ball_collide = 10
 
 var high_score_threshold = 100
@@ -48,9 +54,17 @@ func _ready():
 func _physics_process(delta):
     session_timer += delta
 
+    if fmod(session_timer, green_ball_speed_modifier_interval) <= 0.01:
+        green_ball_speed += green_ball_speed_modifier
+
+    if fmod(session_timer, red_ball_speed_modifier_interval) <= 0.01:
+        red_ball_speed += red_ball_speed_modifier    
+
 func reinit_variables():
     lives = 3
     current_paint_level = initial_paint
+    green_ball_speed = green_ball_base_speed
+    red_ball_speed = red_ball_base_speed
 
 func restart_game():
     get_node("/root/ScoreTracker").save_score()
