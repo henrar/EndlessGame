@@ -14,5 +14,5 @@ func _ready():
 func _physics_process(delta):
     score_text.text = str(get_node("/root/ScoreTracker").current_score)
     high_score_text.text = str(get_node("/root/ScoreTracker").high_score)
-    lives_text.text = str(get_node("/root/SceneVariables").lives)
+    lives_text.text = str(get_node("/root/SceneVariables").current_lives)
     paint_text.text = str(get_node("/root/SceneVariables").current_paint_level)

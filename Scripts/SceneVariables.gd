@@ -1,25 +1,36 @@
 extends Node
 
-#configuration
-var initial_paint = 10
-var barrier_erect_speed = 10 #per second
-var barrier_strength = 0 
+var session_timer = 0.0 #global session timer, do not touch this
 
-#green ball
+#configuration
+var initial_paint = 10 #how much paint we have at the beginning
+var paint_score_modifier = 10 #increases initial paint when score reaches certain threshold
+var high_score_threshold = 100 #we get initial_paint + modifier * (previous_session_score % threshold)
+const ring_radius_percentage_of_viewport = 0.8 #size of the ring-barrier
+const initial_lives = 2
+
+#barrier
+var barrier_erect_speed = 10 #per second
+var barrier_strength = 1 
+
+#ball behavior
+var collision_timer = 2.0 #how long will it take for a ship to return from a barrier bounce to normal state
+
+#green ball configuration
 const green_ball_base_speed = 200.0 #base speed, green_ball_speed is the current one
-var green_ball_speed_modifier = 10.0
 var green_ball_speed = green_ball_base_speed
+var green_ball_speed_modifier = 10.0
 var green_ball_speed_modifier_interval = 60.0
 
 var green_ball_spawn_rate = 1 #per interval
-var green_ball_spawn_interval = 1.0
+var green_ball_spawn_interval = 1.0 #interval (seconds)
 var green_ball_strength = 1
-var green_ball_points_destroy = 10
+var green_ball_points_destroy = 10 #destroyed by barrier
 var green_ball_reached_center = 10
 var green_ball_hit_barrier = 10
 var green_ball_collide = 10
 
-#red ball
+#red ball configuration
 const red_ball_base_speed = 200.0
 var red_ball_speed = red_ball_base_speed
 var red_ball_speed_modifier = 10.0
@@ -27,24 +38,16 @@ var red_ball_speed_modifier_interval = 60.0
 
 var red_ball_spawn_rate = 1 
 var red_ball_spawn_interval = 1.0
-var red_ball_strength = 3
+var red_ball_strength = 2
 var red_ball_points_destroy = 10
 var red_ball_reached_center = 10
 var red_ball_hit_barrier = 10
 var red_ball_collide = 10
 
-var high_score_threshold = 100
-
-var paint_score_modifier = 10 #increases initial paint when score reaches certain threshold
-
-var collision_timer = 2.0
-var ring_radius_percentage_of_viewport = 0.8
-
 #on load variables
 var center_location
-var lives
+var current_lives
 var current_paint_level
-var session_timer = 0.0
 
 func _ready():
     center_location = Vector2(get_viewport().size.x / 2.0, get_viewport().size.y / 2.0)
@@ -61,7 +64,7 @@ func _physics_process(delta):
         red_ball_speed += red_ball_speed_modifier    
 
 func reinit_variables():
-    lives = 3
+    current_lives = initial_lives
     current_paint_level = initial_paint
     green_ball_speed = green_ball_base_speed
     red_ball_speed = red_ball_base_speed
@@ -74,8 +77,8 @@ func restart_game():
     get_tree().reload_current_scene()
 
 func remove_life():
-    if lives > 0:
-        lives -= 1
+    if current_lives > 0:
+        current_lives -= 1
         current_paint_level = initial_paint
     else:
         restart_game()
