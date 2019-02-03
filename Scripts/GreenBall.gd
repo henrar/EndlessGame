@@ -1,7 +1,8 @@
 extends KinematicBody2D
 
 var speed
-var texture = preload("res://Assets/green_ball.png")
+
+var textures = []
 var collision_shape
 var sprite = Sprite.new()
 var toughness
@@ -11,8 +12,11 @@ var initial_pos
 var collided_timer = 0.0
 
 func _ready():
-    sprite.texture = texture
-    sprite.scale = Vector2(0.5, 0.5)
+    textures.append(preload("res://Assets/ships/friend/friend-full.png"))
+    textures.append(preload("res://Assets/ships/friend/friend-2.png"))
+    textures.append(preload("res://Assets/ships/friend/friend-3.png"))
+
+    set_ship_sprite(0)
     add_child(sprite)
 
     speed = get_node("/root/SceneVariables").green_ball_speed
@@ -30,6 +34,8 @@ func _physics_process(delta):
         target = get_node("/root/SceneVariables").center_location
 
     var velocity = (target - position).normalized() * speed * delta
+
+    sprite.look_at(target)
 
     if (target - position).length() > 5:
         var collision = move_and_collide(velocity)
@@ -76,3 +82,8 @@ func add_collision_shape():
     circle_shape.radius = 20.0
     collision_shape.shape = circle_shape
     add_child(collision_shape)
+
+func set_ship_sprite(index):
+    sprite.texture = textures[index]
+    sprite.scale = Vector2(0.1, 0.1)
+

@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 var speed
-var texture = preload("res://Assets/red_ball.png")
+var textures = []
 var collision_shape
 var sprite = Sprite.new()
 var toughness
@@ -11,8 +11,9 @@ var initial_pos
 var collided_timer = 0.0
 
 func _ready():
-    sprite.texture = texture
-    sprite.scale = Vector2(0.5, 0.5)
+    prepare_textures()
+
+    set_ship_sprite(0, 0)
     add_child(sprite)
 
     speed = get_node("/root/SceneVariables").red_ball_speed
@@ -30,6 +31,8 @@ func _physics_process(delta):
         target = get_node("/root/SceneVariables").center_location
 
     var velocity = (target - position).normalized() * speed * delta
+
+    sprite.look_at(target)
 
     if (target - position).length() > 5:
         var collision = move_and_collide(velocity)
@@ -78,3 +81,24 @@ func add_collision_shape():
     circle_shape.radius = 20.0
     collision_shape.shape = circle_shape
     add_child(collision_shape)
+
+func set_ship_sprite(index, type):
+    sprite.texture = textures[type][index]
+    sprite.scale = Vector2(0.1, 0.1)
+    
+func prepare_textures():
+    textures.resize(3)
+    for i in range (0, 3):
+        textures[i] = []
+
+    textures[0].append(preload("res://Assets/ships/enemy1/enemy-full.png"))
+    textures[0].append(preload("res://Assets/ships/enemy1/enemy-2.png"))
+    textures[0].append(preload("res://Assets/ships/enemy1/enemy-3.png"))    
+
+    textures[1].append(preload("res://Assets/ships/enemy2/enemy-2.png"))
+    textures[1].append(preload("res://Assets/ships/enemy2/enemy-2-1.png"))
+    textures[1].append(preload("res://Assets/ships/enemy2/enemy-2-2.png"))    
+
+    textures[2].append(preload("res://Assets/ships/enemy3/enemy-3-1.png"))
+    textures[2].append(preload("res://Assets/ships/enemy3/enemy-3-2.png"))
+    textures[2].append(preload("res://Assets/ships/enemy3/enemy-3-3.png"))    

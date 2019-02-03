@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/enemy-3.png-418235501f8345a5be18bf83a8219859.stex"
+path="res://.import/enemy-2-1.png-666f7e8ec3d00708430d5213771ab714.stex"
 
 [deps]
 
-source_file="res://Assets/ships/enemy1/enemy-3.png"
-dest_files=[ "res://.import/enemy-3.png-418235501f8345a5be18bf83a8219859.stex" ]
+source_file="res://Assets/ships/enemy2/enemy-2-1.png"
+dest_files=[ "res://.import/enemy-2-1.png-666f7e8ec3d00708430d5213771ab714.stex" ]
 
 [params]
 
