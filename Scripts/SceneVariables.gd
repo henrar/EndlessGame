@@ -48,19 +48,20 @@ var green_ball_reached_center = 10
 var green_ball_hit_barrier = 10
 var green_ball_collide = 10
 
-#red ball configuration
-const red_ball_base_speed = 200.0
-var red_ball_speed = red_ball_base_speed
-var red_ball_speed_modifier = 10.0
-var red_ball_speed_modifier_interval = 60.0
+#red ball configuration - arrays for values
+enum RedBallTypes { SHIP_1 = 0, SHIP_2 = 1, SHIP_3 = 2, SHIP_TYPE_COUNT = 3 }
 
-var red_ball_spawn_rate = 1 
-var red_ball_spawn_interval = 1.0
-var red_ball_strength = 2
-var red_ball_points_destroy = 10
-var red_ball_reached_center = 10
-var red_ball_hit_barrier = 10
-var red_ball_collide = 10
+const red_ball_base_speed = [200.0, 200.0, 200.0]
+var red_ball_speed = [red_ball_base_speed[RedBallTypes.SHIP_1], red_ball_base_speed[RedBallTypes.SHIP_2], red_ball_base_speed[RedBallTypes.SHIP_3]]
+var red_ball_speed_modifier = [10.0, 10.0, 10.0]
+var red_ball_speed_modifier_interval = [60.0, 60.0, 60.0]
+var red_ball_spawn_rate = [1, 1, 1]
+var red_ball_spawn_interval = [1.0, 1.0, 1.0]
+var red_ball_strength = [2, 2, 2]
+var red_ball_points_destroy = [10, 10, 10]
+var red_ball_reached_center = [10, 10, 10]
+var red_ball_hit_barrier = [10, 10, 10]
+var red_ball_collide = [10, 10, 10]
 
 #on load variables
 var center_location
@@ -78,8 +79,9 @@ func _physics_process(delta):
     if fmod(session_timer, green_ball_speed_modifier_interval) <= 0.01:
         green_ball_speed += green_ball_speed_modifier
 
-    if fmod(session_timer, red_ball_speed_modifier_interval) <= 0.01:
-        red_ball_speed += red_ball_speed_modifier   
+    for i in range(0, 3):
+        if fmod(session_timer, red_ball_speed_modifier_interval[i]) <= 0.01:
+            red_ball_speed[i] += red_ball_speed_modifier[i]   
         
     if fmod(session_timer, gold_ball_speed_modifier_interval) <= 0.01:
         gold_ball_speed += gold_ball_speed_modifier    

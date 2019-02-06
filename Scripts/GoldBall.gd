@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+var speed
+
 var textures = []
 var collision_shape
 var sprite = Sprite.new()

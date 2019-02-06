@@ -14,8 +14,8 @@ var ship_type
 func _ready():
     prepare_textures()
 
-    speed = get_node("/root/SceneVariables").red_ball_speed
-    toughness = get_node("/root/SceneVariables").red_ball_strength
+    speed = get_node("/root/SceneVariables").red_ball_speed[ship_type]
+    toughness = get_node("/root/SceneVariables").red_ball_strength[ship_type]
 
     set_ship_sprite(ship_type, toughness)
     add_child(sprite)
@@ -61,21 +61,21 @@ func handle_collision_with_barrier():
             set_ship_sprite(ship_type, toughness)
             var barrier = get_tree().get_root().get_node("World/Barrier")
             barrier.damage_barrier()
-            get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").red_ball_hit_barrier)
+            get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").red_ball_hit_barrier[ship_type])
         else:
             destroy(false)
 
 func destroy(reached_center):
     if not reached_center:
-        get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").red_ball_points_destroy)
+        get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").red_ball_points_destroy[ship_type])
     else:
-        get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").red_ball_reached_center)
+        get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").red_ball_reached_center[ship_type])
         get_node("/root/SceneVariables").remove_life()
 
     queue_free()
 
 func collide_with_ball():
-    get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").red_ball_collide)
+    get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").red_ball_collide[ship_type])
     queue_free()
 
 func add_collision_shape():
