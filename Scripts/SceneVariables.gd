@@ -20,6 +20,20 @@ var barrier_strength = 1
 #ball behavior
 var collision_timer = 2.0 #how long will it take for a ship to return from a barrier bounce to normal state
 
+#gold ball configuration
+const gold_ball_base_speed = 200.0 #base speed, gold_ball_speed is the current one
+var gold_ball_speed = green_ball_base_speed
+var gold_ball_speed_modifier = 10.0
+var gold_ball_speed_modifier_interval = 60.0
+
+var gold_ball_spawn_rate = 1 #per interval
+var gold_ball_spawn_interval = 1.0 #interval (seconds)
+var gold_ball_strength = 1
+var gold_ball_points_destroy = 10 #destroyed by barrier
+var gold_ball_reached_center = 10
+var gold_ball_hit_barrier = 10
+var gold_ball_collide = 10
+
 #green ball configuration
 const green_ball_base_speed = 200.0 #base speed, green_ball_speed is the current one
 var green_ball_speed = green_ball_base_speed
@@ -65,7 +79,10 @@ func _physics_process(delta):
         green_ball_speed += green_ball_speed_modifier
 
     if fmod(session_timer, red_ball_speed_modifier_interval) <= 0.01:
-        red_ball_speed += red_ball_speed_modifier    
+        red_ball_speed += red_ball_speed_modifier   
+        
+    if fmod(session_timer, gold_ball_speed_modifier_interval) <= 0.01:
+        gold_ball_speed += gold_ball_speed_modifier    
 
     if fmod(session_timer, score_time_addition_interval) <= 0.01:
         get_node("/root/ScoreTracker").add_score(score_time_addition)
@@ -75,6 +92,7 @@ func reinit_variables():
     current_paint_level = initial_paint
     green_ball_speed = green_ball_base_speed
     red_ball_speed = red_ball_base_speed
+    gold_ball_speed = gold_ball_base_speed
 
 func restart_game():
     get_node("/root/ScoreTracker").save_score()
