@@ -26,8 +26,15 @@ var gold_ball_speed = green_ball_base_speed
 var gold_ball_speed_modifier = 10.0
 var gold_ball_speed_modifier_interval = 60.0
 
-var gold_ball_spawn_rate = 1 #per interval
-var gold_ball_spawn_interval = 1.0 #interval (seconds)
+const gold_ball_base_spawn_rate = 1 #per interval
+var gold_ball_spawn_rate = gold_ball_base_spawn_rate 
+
+const gold_ball_base_spawn_interval = 1.0 #interval (seconds)
+var gold_ball_spawn_interval = gold_ball_base_spawn_interval 
+var gold_ball_spawn_rate_modifier = 1
+var gold_ball_spawn_rate_interval_modifier = 0.0
+var gold_ball_spawn_rate_timer = 60.0
+
 var gold_ball_strength = 1
 var gold_ball_points_destroy = 10 #destroyed by barrier
 var gold_ball_reached_center = 10
@@ -40,8 +47,15 @@ var green_ball_speed = green_ball_base_speed
 var green_ball_speed_modifier = 10.0
 var green_ball_speed_modifier_interval = 60.0
 
-var green_ball_spawn_rate = 1 #per interval
-var green_ball_spawn_interval = 1.0 #interval (seconds)
+const green_ball_base_spawn_rate = 1 #per interval
+var green_ball_spawn_rate = green_ball_base_spawn_rate 
+
+const green_ball_base_spawn_interval = 1.0 #interval (seconds)
+var green_ball_spawn_interval = green_ball_base_spawn_interval 
+var green_ball_spawn_rate_modifier = 1
+var green_ball_spawn_rate_interval_modifier = 0.0
+var green_ball_spawn_rate_timer = 60.0
+
 var green_ball_strength = 1
 var green_ball_points_destroy = 10 #destroyed by barrier
 var green_ball_reached_center = 10
@@ -53,10 +67,19 @@ enum RedBallTypes { SHIP_1 = 0, SHIP_2 = 1, SHIP_3 = 2, SHIP_TYPE_COUNT = 3 }
 
 const red_ball_base_speed = [200.0, 200.0, 200.0]
 var red_ball_speed = [red_ball_base_speed[RedBallTypes.SHIP_1], red_ball_base_speed[RedBallTypes.SHIP_2], red_ball_base_speed[RedBallTypes.SHIP_3]]
+
 var red_ball_speed_modifier = [10.0, 10.0, 10.0]
 var red_ball_speed_modifier_interval = [60.0, 60.0, 60.0]
-var red_ball_spawn_rate = [1, 1, 1]
-var red_ball_spawn_interval = [1.0, 1.0, 1.0]
+
+const red_ball_base_spawn_rate = [1, 1, 1] #per interval
+var red_ball_spawn_rate = red_ball_base_spawn_rate 
+
+const red_ball_base_spawn_interval = [1.0, 1.0, 1.0] #interval (seconds)
+var red_ball_spawn_interval = red_ball_base_spawn_interval 
+var red_ball_spawn_rate_modifier = [1, 1, 1]
+var red_ball_spawn_rate_interval_modifier = [0.0, 0.0, 0.0]
+var red_ball_spawn_rate_timer = [60.0, 60.0, 60.0]
+
 var red_ball_strength = [2, 2, 2]
 var red_ball_points_destroy = [10, 10, 10]
 var red_ball_reached_center = [10, 10, 10]
@@ -76,6 +99,30 @@ func _ready():
 func _physics_process(delta):
     session_timer += delta
 
+    update_ball_speed()
+    update_ball_spawn_rate()
+    update_score()
+
+func update_ball_spawn_rate():
+    if fmod(session_timer, green_ball_spawn_rate_timer) <= 0.01:
+        green_ball_spawn_rate += green_ball_spawn_rate_modifier
+        if green_ball_spawn_interval - green_ball_spawn_rate_interval_modifier > 1.0:
+            green_ball_spawn_interval -= green_ball_spawn_rate_interval_modifier
+
+    for i in range(0, 3):   
+        if fmod(session_timer, red_ball_spawn_rate_timer[i]) <= 0.01:
+            red_ball_spawn_rate[i] += red_ball_spawn_rate_modifier[i]
+            if red_ball_spawn_interval[i] - red_ball_spawn_rate_interval_modifier[i] > 1.0:
+                red_ball_spawn_interval[i] -= red_ball_spawn_rate_interval_modifier[i]     
+
+    if fmod(session_timer, gold_ball_spawn_rate_timer) <= 0.01:
+        gold_ball_spawn_rate += gold_ball_spawn_rate_modifier
+        if gold_ball_spawn_interval - gold_ball_spawn_rate_interval_modifier > 1.0:
+            gold_ball_spawn_interval -= gold_ball_spawn_rate_interval_modifier        
+
+    pass
+
+func update_ball_speed():
     if fmod(session_timer, green_ball_speed_modifier_interval) <= 0.01:
         green_ball_speed += green_ball_speed_modifier
 
@@ -86,15 +133,27 @@ func _physics_process(delta):
     if fmod(session_timer, gold_ball_speed_modifier_interval) <= 0.01:
         gold_ball_speed += gold_ball_speed_modifier    
 
+func update_score():
     if fmod(session_timer, score_time_addition_interval) <= 0.01:
         get_node("/root/ScoreTracker").add_score(score_time_addition)
 
 func reinit_variables():
     current_lives = initial_lives
     current_paint_level = initial_paint
+
     green_ball_speed = green_ball_base_speed
-    red_ball_speed = red_ball_base_speed
+    green_ball_spawn_rate = green_ball_base_spawn_rate
+    green_ball_spawn_interval = green_ball_base_spawn_interval
+
+    for i in range(0, RedBallTypes.SHIP_TYPE_COUNT):
+        red_ball_speed[i] = red_ball_base_speed[i]
+        red_ball_spawn_rate[i] = red_ball_base_spawn_rate[i]
+        red_ball_spawn_interval[i] = red_ball_base_spawn_interval[i]
+
     gold_ball_speed = gold_ball_base_speed
+    gold_ball_spawn_rate = gold_ball_base_spawn_rate
+    gold_ball_spawn_interval = gold_ball_base_spawn_interval
+
 
 func restart_game():
     get_node("/root/ScoreTracker").save_score()
