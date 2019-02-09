@@ -12,10 +12,7 @@ var initial_pos
 var collided_timer = 0.0
 
 func _ready():
-    #TODO: replace gold ball textures
-    textures.append(preload("res://Assets/ships/gold/green_ball-full.png"))
-    textures.append(preload("res://Assets/ships/gold/green_ball-2.png"))
-    textures.append(preload("res://Assets/ships/gold/green_ball-3.png"))
+    textures.append(preload("res://Assets/ships/gold/GoldenShip.png"))
 
     speed = get_node("/root/SceneVariables").gold_ball_speed
     toughness = get_node("/root/SceneVariables").gold_ball_strength
@@ -86,9 +83,6 @@ func add_collision_shape():
     add_child(collision_shape)
 
 func set_ship_sprite(life):
-    var index = 2 - life
-    if index < 0:
-        index = 0
-    sprite.texture = textures[index]
+    sprite.texture = textures[0]
     sprite.scale = Vector2(0.1, 0.1)
 
