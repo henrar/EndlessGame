@@ -1,4 +1,4 @@
-extends Sprite
+extends KinematicBody2D
 
 func _ready():
     position = get_node("/root/SceneVariables").center_location
