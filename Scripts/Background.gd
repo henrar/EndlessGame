@@ -9,7 +9,8 @@ func _ready():
         var path = "res://Assets/Backgrounds/space_" + str(i) + ".png"
         textures.append(load(path))
 
-    #texture = textures[0]
+    randomize()
+
     replace_background()
 
     background_change_timer = Timer.new()
