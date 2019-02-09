@@ -3,19 +3,19 @@ extends Node
 var session_timer = 0.0 #global session timer, do not touch this
 
 #configuration
-var initial_paint = 10 #how much paint we have at the beginning
-var paint_score_modifier = 10 #increases initial paint when score reaches certain threshold
+var initial_paint = 45 #how much paint we have at the beginning
+var paint_score_modifier = 15 #increases initial paint when score reaches certain threshold
 const ring_radius_percentage_of_viewport = 0.8 #size of the ring-barrier
 const initial_lives = 2
 
 #score configuration
-const high_score_threshold = 100 #we get initial_paint + modifier * (previous_session_score % threshold)
+const high_score_threshold = 500 #we get initial_paint + modifier * (previous_session_score % threshold)
 const score_time_addition = 10
-const score_time_addition_interval = 10.0
+const score_time_addition_interval = 1.0
 
 #barrier
-var barrier_erect_speed = 10 #per second
-var barrier_strength = 1 
+var barrier_erect_speed = 5 #per second
+var barrier_strength = 0 
 
 #ball behavior
 var collision_timer = 2.0 #how long will it take for a ship to return from a barrier bounce to normal state
@@ -29,7 +29,7 @@ var gold_ball_speed_modifier_interval = 60.0
 const gold_ball_base_spawn_rate = 1 #per interval
 var gold_ball_spawn_rate = gold_ball_base_spawn_rate 
 
-const gold_ball_base_spawn_interval = 1.0 #interval (seconds)
+const gold_ball_base_spawn_interval = 60.0 #interval (seconds)
 var gold_ball_spawn_interval = gold_ball_base_spawn_interval 
 var gold_ball_spawn_rate_modifier = 1
 var gold_ball_spawn_rate_interval_modifier = 0.0
@@ -50,22 +50,22 @@ var green_ball_speed_modifier_interval = 60.0
 const green_ball_base_spawn_rate = 1 #per interval
 var green_ball_spawn_rate = green_ball_base_spawn_rate 
 
-const green_ball_base_spawn_interval = 1.0 #interval (seconds)
+const green_ball_base_spawn_interval = 3.0 #interval (seconds)
 var green_ball_spawn_interval = green_ball_base_spawn_interval 
-var green_ball_spawn_rate_modifier = 1
+var green_ball_spawn_rate_modifier = 0
 var green_ball_spawn_rate_interval_modifier = 0.0
 var green_ball_spawn_rate_timer = 60.0
 
-var green_ball_strength = 1
-var green_ball_points_destroy = 10 #destroyed by barrier
+var green_ball_strength = 0
+var green_ball_points_destroy = 0 #destroyed by barrier
 var green_ball_reached_center = 10
-var green_ball_hit_barrier = 10
-var green_ball_collide = 10
+var green_ball_hit_barrier = 0
+var green_ball_collide = 0
 
 #red ball configuration - arrays for values
 enum RedBallTypes { SHIP_1 = 0, SHIP_2 = 1, SHIP_3 = 2, SHIP_TYPE_COUNT = 3 }
 
-const red_ball_base_speed = [200.0, 200.0, 200.0]
+const red_ball_base_speed = [199.0, 151.0, 97.0]
 var red_ball_speed = [red_ball_base_speed[RedBallTypes.SHIP_1], red_ball_base_speed[RedBallTypes.SHIP_2], red_ball_base_speed[RedBallTypes.SHIP_3]]
 
 var red_ball_speed_modifier = [10.0, 10.0, 10.0]
@@ -74,17 +74,17 @@ var red_ball_speed_modifier_interval = [60.0, 60.0, 60.0]
 const red_ball_base_spawn_rate = [1, 1, 1] #per interval
 var red_ball_spawn_rate = red_ball_base_spawn_rate 
 
-const red_ball_base_spawn_interval = [1.0, 1.0, 1.0] #interval (seconds)
+const red_ball_base_spawn_interval = [5.0, 19.0, 31.0] #interval (seconds)
 var red_ball_spawn_interval = red_ball_base_spawn_interval 
 var red_ball_spawn_rate_modifier = [1, 1, 1]
 var red_ball_spawn_rate_interval_modifier = [0.0, 0.0, 0.0]
 var red_ball_spawn_rate_timer = [60.0, 60.0, 60.0]
 
-var red_ball_strength = [2, 2, 2]
-var red_ball_points_destroy = [10, 10, 10]
-var red_ball_reached_center = [10, 10, 10]
-var red_ball_hit_barrier = [10, 10, 10]
-var red_ball_collide = [10, 10, 10]
+var red_ball_strength = [0, 1, 2]
+var red_ball_points_destroy = [10, 15, 20]
+var red_ball_reached_center = [0, 0, 0]
+var red_ball_hit_barrier = [10, 15, 20]
+var red_ball_collide = [10, 15, 20]
 
 #on load variables
 var center_location
