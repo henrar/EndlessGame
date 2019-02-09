@@ -38,7 +38,7 @@ func _ready():
     
     randomize()
 
-func _physics_process(delta):
+func _process(delta):
     pass
     
 func get_random_spawn_position():

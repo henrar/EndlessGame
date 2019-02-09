@@ -96,7 +96,7 @@ func _ready():
     reinit_variables()
     pass
 
-func _physics_process(delta):
+func _process(delta):
     session_timer += delta
 
     update_ball_speed()

@@ -11,7 +11,7 @@ func _ready():
     lives_text = get_tree().get_root().get_node("World/HUD/Control/LivesCounter")
     paint_text = get_tree().get_root().get_node("World/HUD/Control/PaintCounter")
 
-func _physics_process(delta):
+func _process(delta):
     score_text.text = str(get_node("/root/ScoreTracker").current_score)
     high_score_text.text = str(get_node("/root/ScoreTracker").high_score)
     lives_text.text = str(get_node("/root/SceneVariables").current_lives)

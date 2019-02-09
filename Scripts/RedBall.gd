@@ -6,7 +6,8 @@ var collision_shape
 var sprite = Sprite.new()
 var toughness
 
-var collided_with_barrier
+var collided_with_barrier = false
+var collided_with_ball = false
 var initial_pos
 var collided_timer = 0.0
 var ship_type
@@ -24,7 +25,7 @@ func _ready():
 
     add_collision_shape()
 
-func _physics_process(delta):
+func _process(delta):
     var target
     if collided_with_barrier:
         target = initial_pos
@@ -40,6 +41,7 @@ func _physics_process(delta):
         var collision = move_and_collide(velocity)
         if collision:
             collision.collider.collide_with_ball()
+            collide_with_ball()
         handle_collision_with_barrier()
     else:
         destroy(true)

@@ -22,7 +22,7 @@ func _ready():
     current_barrier_strength = get_node("/root/SceneVariables").barrier_strength
     clear_angles()
 
-func _physics_process(delta):
+func _process(delta):
     if clicked_within_ring:
         hold_timer += delta
     else:

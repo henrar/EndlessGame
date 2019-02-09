@@ -27,5 +27,12 @@ window/size/height=1080
 [rendering]
 
 quality/intended_usage/framebuffer_allocation=0
+threads/thread_model=2
+quality/shadows/filter_mode=0
+quality/reflections/texture_array_reflections=false
+quality/reflections/high_quality_ggx=false
+quality/subsurface_scattering/quality=0
+quality/voxel_cone_tracing/high_quality=false
 environment/default_clear_color=Color( 0, 0, 0, 1 )
+quality/depth/hdr=false
 environment/default_environment="res://default_env.tres"
