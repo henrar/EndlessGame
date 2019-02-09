@@ -58,8 +58,12 @@ func handle_collision_with_barrier():
             toughness -= 1
             collided_with_barrier = true
             set_ship_sprite(toughness)
+            var barrier = get_tree().get_root().get_node("World/Barrier")
+            barrier.damage_barrier()
             get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").gold_ball_hit_barrier)
         else:
+            var barrier = get_tree().get_root().get_node("World/Barrier")
+            barrier.damage_barrier()
             destroy(false)
 
 func destroy(reached_center):

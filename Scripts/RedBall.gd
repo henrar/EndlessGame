@@ -63,6 +63,8 @@ func handle_collision_with_barrier():
             barrier.damage_barrier()
             get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").red_ball_hit_barrier[ship_type])
         else:
+            var barrier = get_tree().get_root().get_node("World/Barrier")
+            barrier.damage_barrier()
             destroy(false)
 
 func destroy(reached_center):
