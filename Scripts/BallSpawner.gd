@@ -14,9 +14,6 @@ var GoldBall
 var good_powerup_probability_sum = 0.0
 var bad_powerup_probability_sum = 0.0
 
-var good_powerup_probability_table = []
-var bad_powerup_probability_table = []
-
 func _ready():
     green_ball_spawn_timer = Timer.new()
     green_ball_spawn_timer.one_shot = false
@@ -49,13 +46,7 @@ func _ready():
         good_powerup_probability_sum += get_node("/root/SceneVariables").good_powerup_drop_probability[i]
 
     for i in range(BadPowerupTypes.SLOW_DOWN_BARRIER, BadPowerupTypes.BAD_POWERUP_COUNT):
-        bad_powerup_probability_sum += get_node("/root/SceneVariables").bad_powerup_drop_probability[i]    
-    
-    for i in range(GoodPowerupTypes.SPEED_UP_BARRIER, GoodPowerupTypes.GOOD_POWERUP_COUNT):
-        good_powerup_probability_table.append(get_node("/root/SceneVariables").good_powerup_drop_probability[i] / good_powerup_probability_sum)
-
-    for i in range(BadPowerupTypes.SLOW_DOWN_BARRIER, BadPowerupTypes.BAD_POWERUP_COUNT):
-        bad_powerup_probability_table.append(get_node("/root/SceneVariables").bad_powerup_drop_probability[i] / bad_powerup_probability_sum)    
+        bad_powerup_probability_sum += get_node("/root/SceneVariables").bad_powerup_drop_probability[i]       
 
     randomize()
 
