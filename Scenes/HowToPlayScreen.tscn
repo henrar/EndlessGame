@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Assets/menu/Title-Background.png" type="Texture" id=1]
 
-[node name="HowToPlayScreen" type="Node2D" index="0"]
+[node name="HowToPlayScreen" type="Node2D"]
 
 [node name="Background" type="Sprite" parent="." index="0"]
 

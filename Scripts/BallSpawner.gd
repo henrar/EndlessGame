@@ -32,9 +32,9 @@ func _ready():
     add_child(gold_ball_spawn_timer)    
 
     scene_instance = get_tree().get_root().get_node("World")
-    GreenBall = load("res://Scripts/GreenBall.gd")
-    RedBall = load("res://Scripts/RedBall.gd")
-    GoldBall = load("res://Scripts/GoldBall.gd")
+    GreenBall = preload("res://Scripts/GreenBall.gd")
+    RedBall = preload("res://Scripts/RedBall.gd")
+    GoldBall = preload("res://Scripts/GoldBall.gd")
     
     randomize()
 
