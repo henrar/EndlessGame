@@ -86,6 +86,32 @@ var red_ball_reached_center = [0, 0, 0]
 var red_ball_hit_barrier = [10, 15, 20]
 var red_ball_collide = [10, 15, 20]
 
+#powerups variables
+#types
+enum GoodPowerupTypes { SPEED_UP_BARRIER = 0, ENEMY_SHIP_SLOWDOWN = 1, STRENGTHEN_BARRIER = 2, ADD_LIFE = 3, GOOD_NUKE = 4, GOOD_POWERUP_COUNT = 5 }
+enum BadPowerupTypes { SLOW_DOWN_BARRIER = 0 , ENEMY_SHIP_SPEEDUP = 1, WEAKEN_BARRIER = 2, BAD_NUKE = 3, BAD_POWERUP_COUNT = 4}
+#good ones
+const speed_up_barrier_modifier = 1
+const speed_up_barrier_time = 20.0
+
+const enemy_ship_slowdown_modifier = 10.0
+const enemy_ship_slowdown_time = 20.0
+
+const strengthen_barrier_modifier = 10
+const strengthen_barrier_time = 20.0
+
+const add_life_time = 20.0
+
+#bad ones
+const slow_down_barrier_modifier = 1
+const slow_down_barrier_time = 20.0
+
+const enemy_ship_speedup_modifier = 20.0
+const enemy_ship_speedup_time = 20.0
+
+const weaken_barrier_modifier = 20.0
+const weaken_barrier_time = 20.0
+
 #on load variables
 var center_location
 var current_lives
