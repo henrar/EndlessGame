@@ -13,6 +13,8 @@ var initial_pos
 var collided_timer = 0.0
 
 func _ready():
+    set_name("GoldBall")
+
     textures.append(preload("res://Assets/ships/gold/GoldenShip.png"))
 
     speed = get_node("/root/SceneVariables").gold_ball_speed

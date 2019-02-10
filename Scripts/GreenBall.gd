@@ -13,12 +13,12 @@ var initial_pos
 var collided_timer = 0.0
 
 var carried_powerup
-var GoodPowerup
+var GoodPowerup = preload("res://Scripts/GoodPowerup.gd")
 
 func _ready():
-    textures.append(preload("res://Assets/ships/friend/Friend.png"))
+    set_name("GreenBall")
 
-    GoodPowerup = preload("res://Scripts/GoodPowerup.gd")
+    textures.append(preload("res://Assets/ships/friend/Friend.png"))
 
     speed = get_node("/root/SceneVariables").green_ball_speed
     toughness = get_node("/root/SceneVariables").green_ball_strength
@@ -81,7 +81,7 @@ func destroy(reached_center):
         get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").green_ball_points_destroy)
 
     queue_free()
-
+    
 func collide_with_ball():
     if not collided_with_ball:
         collided_with_ball = true

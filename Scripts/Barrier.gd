@@ -15,14 +15,18 @@ var angle_index_left
 var angle_index_right
 
 var current_barrier_strength
+var current_barrier_speed
 
 func _ready():
     position = get_node("/root/SceneVariables").center_location
     radius = Vector2(get_viewport().size.y * get_node("/root/SceneVariables").ring_radius_percentage_of_viewport / 2.0, 0.0)
     current_barrier_strength = get_node("/root/SceneVariables").barrier_strength
+    current_barrier_speed = get_node("/root/SceneVariables").barrier_erect_speed
     clear_angles()
 
 func _process(delta):
+    current_barrier_speed = get_node("/root/SceneVariables").barrier_erect_speed
+
     if clicked_within_ring:
         hold_timer += delta
     else:
@@ -35,7 +39,7 @@ func _process(delta):
     if hold_timer > 0.0 && fmod(hold_timer, 1.0) <= 0.01 && clicked_within_ring:
         var index = 0
 
-        var barrier_paint_per_side = get_node("/root/SceneVariables").barrier_erect_speed
+        var barrier_paint_per_side = current_barrier_speed
 
         if barrier_paint_per_side >= get_node("/root/SceneVariables").current_paint_level:
             barrier_paint_per_side = barrier_paint_per_side / 2

@@ -101,7 +101,7 @@ const speed_up_barrier_time = 20.0
 const enemy_ship_slowdown_modifier = 10.0
 const enemy_ship_slowdown_time = 20.0
 
-const strengthen_barrier_modifier = 10
+const strengthen_barrier_modifier = 1
 const strengthen_barrier_time = 20.0
 
 const add_life_time = 20.0
@@ -110,10 +110,10 @@ const add_life_time = 20.0
 const slow_down_barrier_modifier = 1
 const slow_down_barrier_time = 20.0
 
-const enemy_ship_speedup_modifier = 20.0
+const enemy_ship_speedup_modifier = 20.0 #must be positive, we substract the value in RedBall.gd
 const enemy_ship_speedup_time = 20.0
 
-const weaken_barrier_modifier = 20.0
+const weaken_barrier_modifier = 1.0
 const weaken_barrier_time = 20.0
 
 #powerup logic variables, DO NOT TOUCH
@@ -121,10 +121,35 @@ var add_life_time_start
 var add_life_powerup_drop_triggered_timer = false
 var add_life_powerup_drop = false
 
+var speed_up_barrier_start_time
+var speed_up_barrier_triggered = false
+
+var enemy_ship_slowdown_start_time
+var enemy_ship_slowdown_triggered = false
+
+var strengthen_barrier_start_time
+var strengthen_barrier_triggered = false
+
+var slow_down_barrier_start_time
+var slow_down_barrier_triggered = false
+
+var enemy_ship_speedup_start_time
+var enemy_ship_speedup_triggered = false
+
+var weaken_barrier_start_time
+var weaken_barrier_triggered = false
+var old_barrier_speed
+var old_barrier_strength
+
 #on load variables
 var center_location
 var current_lives
 var current_paint_level
+
+#Types
+var GreenBall = preload("res://Scripts/GreenBall.gd")
+var RedBall = preload("res://Scripts/RedBall.gd")
+var GoldBall = preload("res://Scripts/GoldBall.gd")
 
 func _ready():
     center_location = Vector2(get_viewport().size.x / 2.0, get_viewport().size.y / 2.0)
@@ -171,9 +196,37 @@ func update_score():
         get_node("/root/ScoreTracker").add_score(score_time_addition)
 
 func update_powerups():
+    if speed_up_barrier_triggered && session_timer - speed_up_barrier_start_time >= speed_up_barrier_time:
+        speed_up_barrier_triggered = false
+        barrier_erect_speed = old_barrier_speed
+
+    if enemy_ship_slowdown_triggered && session_timer - enemy_ship_slowdown_start_time >= enemy_ship_slowdown_time:
+        enemy_ship_slowdown_triggered = false
+        for node in get_tree().get_root().get_node("World").get_children():
+            if node is RedBall:
+                node.restore_speed()
+    
+    if strengthen_barrier_triggered && session_timer - strengthen_barrier_start_time >= strengthen_barrier_time:
+        strengthen_barrier_triggered = false
+        barrier_strength = old_barrier_strength
+
     if add_life_powerup_drop_triggered_timer && session_timer - add_life_time_start >= add_life_time:
         add_life_powerup_drop = true
         add_life_powerup_drop_triggered_timer = false
+
+    if slow_down_barrier_triggered && session_timer - slow_down_barrier_start_time >= slow_down_barrier_time:
+        slow_down_barrier_triggered = false
+        barrier_erect_speed = old_barrier_speed
+
+    if enemy_ship_speedup_triggered && session_timer - enemy_ship_speedup_start_time >= enemy_ship_speedup_time:
+        enemy_ship_speedup_triggered = false
+        for node in get_tree().get_root().get_node("World").get_children():
+            if node is RedBall:
+                node.restore_speed()
+
+    if weaken_barrier_triggered && session_timer - weaken_barrier_start_time >= weaken_barrier_time:
+        weaken_barrier_triggered = false
+        barrier_strength = old_barrier_strength
 
 func reinit_variables():
     current_lives = initial_lives
@@ -218,25 +271,53 @@ func substract_paint():
 
 func execute_good_powerup(type):
     if type == GoodPowerupTypes.SPEED_UP_BARRIER:
-        pass
+        if not speed_up_barrier_triggered && not slow_down_barrier_modifier:
+            speed_up_barrier_triggered = true
+            speed_up_barrier_start_time = session_timer
+            old_barrier_speed = barrier_erect_speed
+            barrier_erect_speed += speed_up_barrier_modifier
     elif type == GoodPowerupTypes.ENEMY_SHIP_SLOWDOWN:
-        pass
+        if not enemy_ship_slowdown_triggered && not enemy_ship_speedup_triggered:
+            enemy_ship_slowdown_triggered = true
+            enemy_ship_speedup_start_time = session_timer
+            for node in get_tree().get_root().get_node("World").get_children():
+                if node is RedBall:
+                    node.slowdown()
     elif type == GoodPowerupTypes.STRENGTHEN_BARRIER:
-        pass
+        if not strengthen_barrier_triggered && barrier_strength < 3 && not weaken_barrier_triggered:
+            strengthen_barrier_triggered = true
+            strengthen_barrier_start_time = session_timer
+            old_barrier_strength = barrier_strength
+            barrier_strength += strengthen_barrier_modifier
     elif type == GoodPowerupTypes.ADD_LIFE:
-        pass
+        current_lives += 1
     elif type == GoodPowerupTypes.GOOD_NUKE:
-        pass
+        for node in get_tree().get_root().get_node("World").get_children():
+            if node is RedBall:
+                node.destroy(false)
 
 func execute_bad_powerup(type):
-    if type == BadPowerupTypes.SPEED_UP_BARRIER:
-        pass
-    elif type == BadPowerupTypes.ENEMY_SHIP_SLOWDOWN:
-        pass
-    elif type == BadPowerupTypes.STRENGTHEN_BARRIER:
-        pass
-    elif type == BadPowerupTypes.ADD_LIFE:
-        pass
-    elif type == BadPowerupTypes.GOOD_NUKE:
-        pass
+    if type == BadPowerupTypes.SLOW_DOWN_BARRIER:
+        if not slow_down_barrier_triggered && not speed_up_barrier_triggered:
+            slow_down_barrier_triggered = true
+            slow_down_barrier_start_time = session_timer
+            old_barrier_speed = barrier_erect_speed
+            barrier_erect_speed -= weaken_barrier_modifier
+    elif type == BadPowerupTypes.ENEMY_SHIP_SPEEDUP:
+        if not enemy_ship_speedup_triggered && not enemy_ship_slowdown_triggered:
+            enemy_ship_speedup_triggered = true
+            enemy_ship_speedup_start_time = session_timer
+            for node in get_tree().get_root().get_node("World").get_children():
+                if node is RedBall:
+                    node.speedup()
+    elif type == BadPowerupTypes.WEAKEN_BARRIER:
+        if not weaken_barrier_modifier && barrier_strength > 0 && not strengthen_barrier_triggered:
+            weaken_barrier_modifier = true
+            weaken_barrier_start_time = session_timer
+            old_barrier_strength = barrier_strength
+            barrier_strength -= weaken_barrier_modifier
+    elif type == BadPowerupTypes.BAD_NUKE:
+        for node in get_tree().get_root().get_node("World").get_children():
+            if node is GreenBall || node is GoldBall:
+                node.destroy(false)
         

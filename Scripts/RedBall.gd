@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 var speed
+var old_speed
 var textures = []
 var collision_shape
 var sprite = Sprite.new()
@@ -13,12 +14,12 @@ var collided_timer = 0.0
 var ship_type
 
 var carried_powerup
-var BadPowerup
+var BadPowerup = preload("res://Scripts/BadPowerup.gd")
 
 func _ready():
-    prepare_textures()
+    set_name("RedBall")
 
-    BadPowerup = preload("res://Scripts/BadPowerup.gd")
+    prepare_textures()
 
     speed = get_node("/root/SceneVariables").red_ball_speed[ship_type]
     toughness = get_node("/root/SceneVariables").red_ball_strength[ship_type]
@@ -80,6 +81,8 @@ func destroy(reached_center):
     else:
         get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").red_ball_reached_center[ship_type])
         get_node("/root/SceneVariables").remove_life()
+        if carried_powerup:
+            carried_powerup.execute_effect()
 
     queue_free()
 
@@ -129,3 +132,14 @@ func set_powerup(type):
     carried_powerup.set_type(type)
     carried_powerup.set_position(Vector2(20.0, 20.0))
     add_child(carried_powerup)   
+
+func restore_speed():
+    speed = old_speed
+
+func slowdown():
+    old_speed = speed
+    old_speed -= get_node("/root/SceneVariables").enemy_ship_slowdown_modifier
+
+func speedup():
+    old_speed = speed
+    old_speed += get_node("/root/SceneVariables").enemy_ship_speedup_modifier
