@@ -127,9 +127,9 @@ func spawn_green_ball():
     for i in range(get_node("/root/SceneVariables").green_ball_spawn_rate):
         var ball = GreenBall.new()
         ball.position = get_random_spawn_position()
-        var type = select_good_powerup()
-        if type:
-            ball.set_powerup(type)
+        var powerup_type = select_good_powerup()
+        if powerup_type:
+            ball.set_powerup(powerup_type)
         scene_instance.add_child(ball)
 
 func spawn_red_ball(type):
@@ -137,9 +137,9 @@ func spawn_red_ball(type):
         var ball = RedBall.new()
         ball.position = get_random_spawn_position()
         ball.ship_type = type
-        var type = select_good_powerup()
-        if type:
-            ball.set_powerup(type)
+        var powerup_type = select_good_powerup()
+        if powerup_type:
+            ball.set_powerup(powerup_type)
         scene_instance.add_child(ball)
 
 func spawn_gold_ball():

@@ -10,7 +10,7 @@ config_version=3
 
 [application]
 
-config/name="EndlessGame"
+config/name="Star Shield"
 run/main_scene="res://Scenes/MainMenu.tscn"
 config/icon="res://icon.png"
 
@@ -23,6 +23,12 @@ ScoreTracker="*res://Scripts/ScoreTracker.gd"
 
 window/size/width=1920
 window/size/height=1080
+window/size/resizable=false
+
+[physics]
+
+2d/thread_model=2
+common/enable_object_picking=false
 
 [rendering]
 

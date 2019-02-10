@@ -4,7 +4,7 @@
 [ext_resource path="res://Assets/menu/Title-Background.png" type="Texture" id=2]
 [ext_resource path="res://Assets/menu/Button-main-menu.png" type="Texture" id=3]
 
-[node name="HowToPlayScreen" type="Node2D" index="0"]
+[node name="HowToPlayScreen" type="Node2D"]
 
 script = ExtResource( 1 )
 
