@@ -91,6 +91,9 @@ var red_ball_collide = [10, 15, 20]
 enum GoodPowerupTypes { SPEED_UP_BARRIER = 0, ENEMY_SHIP_SLOWDOWN = 1, STRENGTHEN_BARRIER = 2, ADD_LIFE = 3, GOOD_NUKE = 4, GOOD_POWERUP_COUNT = 5 }
 enum BadPowerupTypes { SLOW_DOWN_BARRIER = 0 , ENEMY_SHIP_SPEEDUP = 1, WEAKEN_BARRIER = 2, BAD_NUKE = 3, BAD_POWERUP_COUNT = 4}
 
+const good_powerup_drop_probability = [ 0.1, 0.1, 0.1, 0.1, 0.1 ]
+const bad_powerup_drop_probability = [ 0.1, 0.1, 0.1, 0.1 ]
+
 #good ones
 const speed_up_barrier_modifier = 1
 const speed_up_barrier_time = 20.0
@@ -113,6 +116,11 @@ const enemy_ship_speedup_time = 20.0
 const weaken_barrier_modifier = 20.0
 const weaken_barrier_time = 20.0
 
+#powerup logic variables, DO NOT TOUCH
+var add_life_time_start
+var add_life_powerup_drop_triggered_timer = false
+var add_life_powerup_drop = false
+
 #on load variables
 var center_location
 var current_lives
@@ -128,6 +136,7 @@ func _process(delta):
     update_ball_speed()
     update_ball_spawn_rate()
     update_score()
+    update_powerups()
 
 func update_ball_spawn_rate():
     if fmod(session_timer, green_ball_spawn_rate_timer) <= 0.01:
@@ -161,6 +170,11 @@ func update_score():
     if fmod(session_timer, score_time_addition_interval) <= 0.01:
         get_node("/root/ScoreTracker").add_score(score_time_addition)
 
+func update_powerups():
+    if add_life_powerup_drop_triggered_timer && session_timer - add_life_time_start >= add_life_time:
+        add_life_powerup_drop = true
+        add_life_powerup_drop_triggered_timer = false
+
 func reinit_variables():
     current_lives = initial_lives
     current_paint_level = initial_paint
@@ -189,6 +203,9 @@ func remove_life():
     if current_lives > 0:
         current_lives -= 1
         current_paint_level = initial_paint
+        if current_lives == 0 && !add_life_powerup_drop_triggered_timer:
+            add_life_time_start = session_timer
+            add_life_powerup_drop_triggered_timer = true
     else:
         restart_game()
 
@@ -198,4 +215,28 @@ func add_paint():
 func substract_paint():
     if current_paint_level > 0:
         current_paint_level -= 1
-    
+
+func execute_good_powerup(type):
+    if type == GoodPowerupTypes.SPEED_UP_BARRIER:
+        pass
+    elif type == GoodPowerupTypes.ENEMY_SHIP_SLOWDOWN:
+        pass
+    elif type == GoodPowerupTypes.STRENGTHEN_BARRIER:
+        pass
+    elif type == GoodPowerupTypes.ADD_LIFE:
+        pass
+    elif type == GoodPowerupTypes.GOOD_NUKE:
+        pass
+
+func execute_bad_powerup(type):
+    if type == BadPowerupTypes.SPEED_UP_BARRIER:
+        pass
+    elif type == BadPowerupTypes.ENEMY_SHIP_SLOWDOWN:
+        pass
+    elif type == BadPowerupTypes.STRENGTHEN_BARRIER:
+        pass
+    elif type == BadPowerupTypes.ADD_LIFE:
+        pass
+    elif type == BadPowerupTypes.GOOD_NUKE:
+        pass
+        

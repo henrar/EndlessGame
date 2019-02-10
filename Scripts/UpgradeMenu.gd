@@ -8,3 +8,4 @@ func _ready():
 func _process(delta):
     if main_menu_button.pressed:
         get_tree().change_scene("res://Scenes/MainMenu.tscn")
+        

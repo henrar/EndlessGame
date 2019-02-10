@@ -11,7 +11,7 @@ func _ready():
 func _process(delta):
     loading_timer += delta
 
-    if fmod(loading_timer, 0.5) <= 0.02 && loading_bar.scale.x < 1.0:
+    if fmod(loading_timer, 0.4) <= 0.02 && loading_bar.scale.x < 1.0:
         loading_bar.scale.x += 0.1
     
     if loading_bar.scale.x >= 1.0:

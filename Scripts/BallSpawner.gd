@@ -1,5 +1,8 @@
 extends Node
 
+enum GoodPowerupTypes { SPEED_UP_BARRIER = 0, ENEMY_SHIP_SLOWDOWN = 1, STRENGTHEN_BARRIER = 2, ADD_LIFE = 3, GOOD_NUKE = 4, GOOD_POWERUP_COUNT = 5 }
+enum BadPowerupTypes { SLOW_DOWN_BARRIER = 0 , ENEMY_SHIP_SPEEDUP = 1, WEAKEN_BARRIER = 2, BAD_NUKE = 3, BAD_POWERUP_COUNT = 4}
+
 var green_ball_spawn_timer
 var red_ball_spawn_timer = []
 var gold_ball_spawn_timer
@@ -62,6 +65,11 @@ func get_random_spawn_position():
 func spawn_green_ball():
     for i in range(get_node("/root/SceneVariables").green_ball_spawn_rate):
         var ball = GreenBall.new()
+
+        if get_node("/root/SceneVariables").add_life_powerup_drop:
+            add_life_powerup_drop = false
+            ball.set_powerup(GoodPowerupTypes.ADD_LIFE)
+
         ball.position = get_random_spawn_position()
         scene_instance.add_child(ball)
 

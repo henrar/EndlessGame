@@ -93,4 +93,3 @@ func add_collision_shape():
 func set_ship_sprite(life):
     sprite.texture = textures[0]
     sprite.scale = Vector2(0.05, 0.05)
-

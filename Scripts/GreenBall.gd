@@ -75,6 +75,8 @@ func destroy(reached_center):
     if reached_center:
         get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").green_ball_reached_center)
         get_node("/root/SceneVariables").add_paint()
+        if carried_powerup:
+            carried_powerup.execute_effect()
     else:
         get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").green_ball_points_destroy)
 

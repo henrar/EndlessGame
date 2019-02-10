@@ -32,13 +32,4 @@ func set_type(type):
     add_child(current_texture)
 
 func execute_effect():
-    if current_type == BadPowerupTypes.SPEED_UP_BARRIER:
-        pass
-    elif current_type == BadPowerupTypes.ENEMY_SHIP_SLOWDOWN:
-        pass
-    elif current_type == BadPowerupTypes.STRENGTHEN_BARRIER:
-        pass
-    elif current_type == BadPowerupTypes.ADD_LIFE:
-        pass
-    elif current_type == BadPowerupTypes.GOOD_NUKE:
-        pass
+    get_node("/root/SceneVariables").execute_bad_powerup(current_type)
