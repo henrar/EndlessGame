@@ -42,15 +42,14 @@ func _process(delta):
 
     sprite.look_at(target)
 
-    if (target - position).length() > 5:
-        var collision = move_and_collide(velocity)
-        if collision:
-            if collision.collider.get_name() == "Mothership":
-                destroy(true)
-            else:
-                collision.collider.collide_with_ball()
-                collide_with_ball()
-        handle_collision_with_barrier()
+    var collision = move_and_collide(velocity)
+    if collision:
+        if collision.collider.get_name() == "Mothership":
+            destroy(true)
+        else:
+            collision.collider.collide_with_ball()
+            collide_with_ball()
+    handle_collision_with_barrier()
 
     if position == initial_pos || collided_timer > get_node("/root/SceneVariables").collision_timer:
         collided_with_barrier = false
