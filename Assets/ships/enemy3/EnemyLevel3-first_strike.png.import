@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/friend-full.png-78a0a1a92b7f57a6aaf641dc26bf852c.stex"
+path="res://.import/EnemyLevel3-first_strike.png-af000b7f208ad5a43d6ae8ec1c8ce2f1.stex"
 
 [deps]
 
-source_file="res://Assets/ships/friend/friend-full.png"
-dest_files=[ "res://.import/friend-full.png-78a0a1a92b7f57a6aaf641dc26bf852c.stex" ]
+source_file="res://Assets/ships/enemy3/EnemyLevel3-first_strike.png"
+dest_files=[ "res://.import/EnemyLevel3-first_strike.png-af000b7f208ad5a43d6ae8ec1c8ce2f1.stex" ]
 
 [params]
 

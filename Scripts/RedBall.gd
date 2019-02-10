@@ -93,25 +93,29 @@ func add_collision_shape():
     add_child(collision_shape)
 
 func set_ship_sprite(type, life):
-    var index = 2 - life
+    var index = 0 
+    if type == get_node("/root/SceneVariables").RedBallTypes.SHIP_3:
+        index = 2 - life
+    elif type == get_node("/root/SceneVariables").RedBallTypes.SHIP_2:
+        index = 1 - life
+    elif type == get_node("/root/SceneVariables").RedBallTypes.SHIP_1:
+        index = 0
+        
     if index < 0:
         index = 0
     sprite.texture = textures[type][index]
-    sprite.scale = Vector2(0.1, 0.1)
+    sprite.scale = Vector2(0.05, 0.05)
 
 func prepare_textures():
     textures.resize(3)
     for i in range (0, 3):
         textures[i] = []
 
-    textures[0].append(preload("res://Assets/ships/enemy1/enemy-full.png"))
-    textures[0].append(preload("res://Assets/ships/enemy1/enemy-2.png"))
-    textures[0].append(preload("res://Assets/ships/enemy1/enemy-3.png"))    
+    textures[0].append(preload("res://Assets/ships/enemy1/EnemyLevel1.png"))
 
-    textures[1].append(preload("res://Assets/ships/enemy2/enemy-2.png"))
-    textures[1].append(preload("res://Assets/ships/enemy2/enemy-2-1.png"))
-    textures[1].append(preload("res://Assets/ships/enemy2/enemy-2-2.png"))    
+    textures[1].append(preload("res://Assets/ships/enemy2/EnemyLevel2.png"))
+    textures[1].append(preload("res://Assets/ships/enemy2/EnemyLevel2-first_strike.png")) 
 
-    textures[2].append(preload("res://Assets/ships/enemy3/enemy-3-1.png"))
-    textures[2].append(preload("res://Assets/ships/enemy3/enemy-3-2.png"))
-    textures[2].append(preload("res://Assets/ships/enemy3/enemy-3-3.png"))    
+    textures[2].append(preload("res://Assets/ships/enemy3/EnemyLevel3.png"))
+    textures[2].append(preload("res://Assets/ships/enemy3/EnemyLevel3-first_strike.png"))
+    textures[2].append(preload("res://Assets/ships/enemy3/EnemyLevel3-second_strike.png"))    
