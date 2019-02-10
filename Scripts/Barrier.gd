@@ -53,7 +53,6 @@ func _process(delta):
                 get_node("/root/SceneVariables").substract_paint()
 
         if angle_index_right + index >= 360:
-            print(angle_index_right + index)
             angle_index_right = (angle_index_right + index) - 360;
         else:
             angle_index_right = angle_index_right + index
