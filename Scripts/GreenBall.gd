@@ -13,9 +13,10 @@ var initial_pos
 var collided_timer = 0.0
 
 func _ready():
-    textures.append(preload("res://Assets/ships/friend/friend-full.png"))
-    textures.append(preload("res://Assets/ships/friend/friend-2.png"))
-    textures.append(preload("res://Assets/ships/friend/friend-3.png"))
+ #   textures.append(preload("res://Assets/ships/friend/friend-full.png"))
+ #   textures.append(preload("res://Assets/ships/friend/friend-2.png"))
+ #   textures.append(preload("res://Assets/ships/friend/friend-3.png"))
+    textures.append(preload("res://Assets/ships/friend/Friend.png"))
 
     speed = get_node("/root/SceneVariables").green_ball_speed
     toughness = get_node("/root/SceneVariables").green_ball_strength
@@ -92,9 +93,6 @@ func add_collision_shape():
     add_child(collision_shape)
 
 func set_ship_sprite(life):
-    var index = 2 - life
-    if index < 0:
-        index = 0
-    sprite.texture = textures[index]
-    sprite.scale = Vector2(0.1, 0.1)
+    sprite.texture = textures[0]
+    sprite.scale = Vector2(0.05, 0.05)
 
