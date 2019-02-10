@@ -12,13 +12,15 @@ var collided_with_ball = false
 var initial_pos
 var collided_timer = 0.0
 
+onready var scene_variables = get_node("/root/SceneVariables")
+
 func _ready():
     set_name("GoldBall")
 
     textures.append(preload("res://Assets/ships/gold/GoldenShip.png"))
 
-    speed = get_node("/root/SceneVariables").gold_ball_speed
-    toughness = get_node("/root/SceneVariables").gold_ball_strength
+    speed = scene_variables.gold_ball_speed
+    toughness = scene_variables.gold_ball_strength
     initial_pos = position
 
     set_ship_sprite(toughness)
@@ -32,7 +34,7 @@ func _process(delta):
         target = initial_pos
         collided_timer += delta
     else:
-        target = get_node("/root/SceneVariables").center_location
+        target = scene_variables.center_location
 
     var velocity = (target - position).normalized() * speed * delta
 
@@ -47,7 +49,7 @@ func _process(delta):
             collide_with_ball()
     handle_collision_with_barrier()
 
-    if position == initial_pos || collided_timer > get_node("/root/SceneVariables").collision_timer:
+    if position == initial_pos || collided_timer > scene_variables.collision_timer:
         collided_with_barrier = false
         collided_timer = 0.0
 
@@ -64,7 +66,7 @@ func handle_collision_with_barrier():
             set_ship_sprite(toughness)
             var barrier = get_tree().get_root().get_node("World/Barrier")
             barrier.damage_barrier()
-            get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").gold_ball_hit_barrier)
+            get_node("/root/ScoreTracker").add_score(scene_variables.gold_ball_hit_barrier)
         else:
             var barrier = get_tree().get_root().get_node("World/Barrier")
             barrier.damage_barrier()
@@ -72,17 +74,17 @@ func handle_collision_with_barrier():
 
 func destroy(reached_center):
     if reached_center:
-        get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").gold_ball_reached_center)
-        get_node("/root/SceneVariables").add_paint()
+        get_node("/root/ScoreTracker").add_score(scene_variables.gold_ball_reached_center)
+        scene_variables.add_paint()
     else:
-        get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").gold_ball_points_destroy)
+        get_node("/root/ScoreTracker").add_score(scene_variables.gold_ball_points_destroy)
 
     queue_free()
 
 func collide_with_ball():
     if not collided_with_ball:
         collided_with_ball = true
-        get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").gold_ball_collide)
+        get_node("/root/ScoreTracker").add_score(scene_variables.gold_ball_collide)
         queue_free()
 
 func add_collision_shape():

@@ -10,6 +10,8 @@ var bad_nuke_texture = preload("res://Assets/powerups/Bad-Nuke.png")
 var current_texture = Sprite.new()
 var current_type
 
+onready var scene_variables = get_node("/root/SceneVariables")
+
 func _ready():
     pass
 
@@ -32,4 +34,4 @@ func set_type(type):
     add_child(current_texture)
 
 func execute_effect():
-    get_node("/root/SceneVariables").execute_bad_powerup(current_type)
+    scene_variables.execute_bad_powerup(current_type)

@@ -17,15 +17,17 @@ var angle_index_right
 var current_barrier_strength
 var current_barrier_speed
 
+onready var scene_variables = get_node("/root/SceneVariables")
+
 func _ready():
-    position = get_node("/root/SceneVariables").center_location
-    radius = Vector2(get_viewport().size.y * get_node("/root/SceneVariables").ring_radius_percentage_of_viewport / 2.0, 0.0)
-    current_barrier_strength = get_node("/root/SceneVariables").barrier_strength
-    current_barrier_speed = get_node("/root/SceneVariables").barrier_erect_speed
+    position = scene_variables.center_location
+    radius = Vector2(get_viewport().size.y * scene_variables.ring_radius_percentage_of_viewport / 2.0, 0.0)
+    current_barrier_strength = scene_variables.barrier_strength
+    current_barrier_speed = scene_variables.barrier_erect_speed
     clear_angles()
 
 func _process(delta):
-    current_barrier_speed = get_node("/root/SceneVariables").barrier_erect_speed
+    current_barrier_speed = scene_variables.barrier_erect_speed
 
     if clicked_within_ring:
         hold_timer += delta
@@ -41,11 +43,11 @@ func _process(delta):
 
         var barrier_paint_per_side = current_barrier_speed
 
-        if barrier_paint_per_side >= get_node("/root/SceneVariables").current_paint_level:
+        if barrier_paint_per_side >= scene_variables.current_paint_level:
             barrier_paint_per_side = barrier_paint_per_side / 2
 
         for i in range(1, barrier_paint_per_side + 1):
-            if get_node("/root/SceneVariables").current_paint_level > 0:   
+            if scene_variables.current_paint_level > 0:   
                 var positive_i = i
                           
                 if angle_index_right + positive_i >= 360:
@@ -54,7 +56,7 @@ func _process(delta):
                     angles[angle_index_right + positive_i] = true
                 
                 index = positive_i   
-                get_node("/root/SceneVariables").substract_paint()
+                scene_variables.substract_paint()
 
         if angle_index_right + index >= 360:
             angle_index_right = (angle_index_right + index) - 360;
@@ -62,7 +64,7 @@ func _process(delta):
             angle_index_right = angle_index_right + index
 
         for i in range(1, barrier_paint_per_side + 1):
-            if get_node("/root/SceneVariables").current_paint_level > 0:  
+            if scene_variables.current_paint_level > 0:  
                 var negative_i = -i   
                 
                 if angle_index_left + negative_i < 0:
@@ -70,7 +72,7 @@ func _process(delta):
 
                 angles[angle_index_left + negative_i] = true  
                 index = negative_i    
-                get_node("/root/SceneVariables").substract_paint()   
+                scene_variables.substract_paint()   
 
         angle_index_left = angle_index_left + index
     
@@ -97,14 +99,14 @@ func _input(event):
                     pass    
   
 func handle_click(event):
-    if get_node("/root/SceneVariables").current_paint_level > 0:
+    if scene_variables.current_paint_level > 0:
         input_pos = convert_to_ring_relative_coords(event.position)
         clicked_within_ring = convert_to_ring_relative_coords(input_pos)
         starting_angle = int(floor(get_angle_between_position_and_ring_origin(input_pos)))
         angles[starting_angle] = true
         angle_index_left = starting_angle
         angle_index_right = starting_angle
-        current_barrier_strength = get_node("/root/SceneVariables").barrier_strength   
+        current_barrier_strength = scene_variables.barrier_strength   
     
 func handle_release(event):
     input_pos = null
@@ -112,7 +114,7 @@ func handle_release(event):
     clear_angles()
 
 func convert_to_ring_relative_coords(position):
-    return Vector2(position.x - get_node("/root/SceneVariables").center_location.x, get_node("/root/SceneVariables").center_location.y - position.y)                
+    return Vector2(position.x - scene_variables.center_location.x, scene_variables.center_location.y - position.y)                
 
 func is_on_ring(position):
     return position.distance_to(center_coords) > (radius.x - thickness / 2.0) && position.distance_to(center_coords) < (radius.x + thickness / 2.0)

@@ -3,6 +3,8 @@ extends Node
 var current_score
 var high_score
 
+onready var scene_variables = get_node("/root/SceneVariables")
+
 func _ready(): 
     current_score = 0
     load_score()
@@ -37,15 +39,15 @@ func load_score():
         high_score = 0
     else:
         high_score = current_line["high_score"]
-        var new_paint_amount = get_node("/root/SceneVariables").initial_paint
+        var new_paint_amount = scene_variables.initial_paint
 
-        var crossed_threshold = high_score / get_node("/root/SceneVariables").high_score_threshold
+        var crossed_threshold = high_score / scene_variables.high_score_threshold
 
         for i in range(crossed_threshold):
-            new_paint_amount += get_node("/root/SceneVariables").paint_score_modifier
+            new_paint_amount += scene_variables.paint_score_modifier
 
-        get_node("/root/SceneVariables").initial_paint = new_paint_amount
-        get_node("/root/SceneVariables").current_paint_level = new_paint_amount
+        scene_variables.initial_paint = new_paint_amount
+        scene_variables.current_paint_level = new_paint_amount
 
     save_game_file.close()
 
@@ -54,8 +56,8 @@ func reset_score():
 
 func add_score(score):
     current_score += score
-    if current_score % get_node("/root/SceneVariables").high_score_threshold == 0:
-        get_node("/root/SceneVariables").add_paint()
+    if current_score % scene_variables.high_score_threshold == 0:
+        scene_variables.add_paint()
 
     if current_score > high_score:
         high_score = current_score
