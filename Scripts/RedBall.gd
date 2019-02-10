@@ -40,11 +40,12 @@ func _process(delta):
     if (target - position).length() > 5:
         var collision = move_and_collide(velocity)
         if collision:
-            collision.collider.collide_with_ball()
-            collide_with_ball()
+            if collision.collider.get_name() == "Mothership":
+                destroy(true)
+            else:
+                collision.collider.collide_with_ball()
+                collide_with_ball()
         handle_collision_with_barrier()
-    else:
-        destroy(true)
 
     if position == initial_pos || collided_timer > get_node("/root/SceneVariables").collision_timer:
         collided_with_barrier = false
@@ -79,8 +80,10 @@ func destroy(reached_center):
     queue_free()
 
 func collide_with_ball():
-    get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").red_ball_collide[ship_type])
-    queue_free()
+    if not collided_with_ball:
+        collided_with_ball = true
+        get_node("/root/ScoreTracker").add_score(get_node("/root/SceneVariables").red_ball_collide[ship_type])
+        queue_free()
 
 func add_collision_shape():
     collision_shape = CollisionShape2D.new()

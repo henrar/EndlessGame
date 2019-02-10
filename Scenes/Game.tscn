@@ -7,7 +7,7 @@
 [ext_resource path="res://Assets/mothership_001.png" type="Texture" id=5]
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=6]
 
-[node name="World" type="Node"]
+[node name="World" type="Node" index="0"]
 
 _sections_unfolded = [ "Pause" ]
 
@@ -71,6 +71,12 @@ _sections_unfolded = [ "Collision", "Pause", "Pickable", "Transform", "Z Index",
 scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 5 )
 _sections_unfolded = [ "Offset", "Pause", "Transform" ]
+
+[node name="MothershipCollision" type="CollisionPolygon2D" parent="Mothership" index="1"]
+
+build_mode = 0
+polygon = PoolVector2Array( -177.865, -0.800507, -138.723, -59.1815, -196.441, -61.1718, -195.114, -89.0354, -115.504, -89.0354, -137.396, -170.636, -118.157, -230.344, -83.6595, -229.017, -125.455, -395.536, 63.6199, -221.056, 169.104, -267.495, 116.03, -168.646, 135.933, -102.304, 194.314, -103.631, 177.065, -8.76157, 192.987, 112.644, 133.279, 102.03, 120.674, 173.679, 175.074, 267.221, 64.9467, 215.475, -118.157, 395.261, -86.3131, 231.397, -121.474, 227.416, -131.426, 169.035, -116.831, 96.0588, -197.104, 92.0784, -197.104, 59.5707, -129.435, 61.561 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="HUD" type="CanvasLayer" parent="." index="5"]
 

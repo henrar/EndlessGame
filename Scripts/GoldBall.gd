@@ -39,8 +39,11 @@ func _process(delta):
     if (target - position).length() > 5:
         var collision = move_and_collide(velocity)
         if collision:
-            collision.collider.collide_with_ball()
-            collide_with_ball()
+            if collision.collider.get_name() == "Mothership":
+                destroy(true)
+            else:
+                collision.collider.collide_with_ball()
+                collide_with_ball()
         handle_collision_with_barrier()
     else:
         destroy(true)
