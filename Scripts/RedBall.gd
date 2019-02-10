@@ -12,8 +12,13 @@ var initial_pos
 var collided_timer = 0.0
 var ship_type
 
+var carried_powerup
+var BadPowerup
+
 func _ready():
     prepare_textures()
+
+    BadPowerup = preload("res://Scripts/BadPowerup.gd")
 
     speed = get_node("/root/SceneVariables").red_ball_speed[ship_type]
     toughness = get_node("/root/SceneVariables").red_ball_strength[ship_type]
@@ -119,3 +124,9 @@ func prepare_textures():
     textures[2].append(preload("res://Assets/ships/enemy3/EnemyLevel3.png"))
     textures[2].append(preload("res://Assets/ships/enemy3/EnemyLevel3-first_strike.png"))
     textures[2].append(preload("res://Assets/ships/enemy3/EnemyLevel3-second_strike.png"))    
+
+func set_powerup(type):
+    carried_powerup = BadPowerup.new()
+    carried_powerup.set_type(type)
+    carried_powerup.set_position(Vector2(20.0, 20.0))
+    add_child(carried_powerup)   

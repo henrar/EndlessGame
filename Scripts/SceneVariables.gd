@@ -90,6 +90,7 @@ var red_ball_collide = [10, 15, 20]
 #types
 enum GoodPowerupTypes { SPEED_UP_BARRIER = 0, ENEMY_SHIP_SLOWDOWN = 1, STRENGTHEN_BARRIER = 2, ADD_LIFE = 3, GOOD_NUKE = 4, GOOD_POWERUP_COUNT = 5 }
 enum BadPowerupTypes { SLOW_DOWN_BARRIER = 0 , ENEMY_SHIP_SPEEDUP = 1, WEAKEN_BARRIER = 2, BAD_NUKE = 3, BAD_POWERUP_COUNT = 4}
+
 #good ones
 const speed_up_barrier_modifier = 1
 const speed_up_barrier_time = 20.0
@@ -120,7 +121,6 @@ var current_paint_level
 func _ready():
     center_location = Vector2(get_viewport().size.x / 2.0, get_viewport().size.y / 2.0)
     reinit_variables()
-    pass
 
 func _process(delta):
     session_timer += delta
@@ -145,8 +145,6 @@ func update_ball_spawn_rate():
         gold_ball_spawn_rate += gold_ball_spawn_rate_modifier
         if gold_ball_spawn_interval - gold_ball_spawn_rate_interval_modifier > 1.0:
             gold_ball_spawn_interval -= gold_ball_spawn_rate_interval_modifier        
-
-    pass
 
 func update_ball_speed():
     if fmod(session_timer, green_ball_speed_modifier_interval) <= 0.01:
@@ -179,7 +177,6 @@ func reinit_variables():
     gold_ball_speed = gold_ball_base_speed
     gold_ball_spawn_rate = gold_ball_base_spawn_rate
     gold_ball_spawn_interval = gold_ball_base_spawn_interval
-
 
 func restart_game():
     get_node("/root/ScoreTracker").save_score()
