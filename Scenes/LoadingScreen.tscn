@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/LoadingScreen.gd" type="Script" id=1]
+[ext_resource path="res://Assets/menu/Title-Background.png" type="Texture" id=2]
+[ext_resource path="res://Assets/menu/Title.png" type="Texture" id=3]
+[ext_resource path="res://Assets/menu/Loading-box.png" type="Texture" id=4]
+[ext_resource path="res://Assets/menu/Loading-bar.png" type="Texture" id=5]
+
+[node name="LoadingScreen" type="Node" index="0"]
+
+script = ExtResource( 1 )
+_sections_unfolded = [ "Pause" ]
+
+[node name="Background" type="Sprite" parent="." index="0"]
+
+position = Vector2( 960, 540 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Title" type="Sprite" parent="." index="1"]
+
+position = Vector2( 960, 460 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="LoadingBox" type="Sprite" parent="." index="2"]
+
+position = Vector2( 955.18, 972.368 )
+texture = ExtResource( 4 )
+
+[node name="LoadingBar" type="Sprite" parent="LoadingBox" index="0"]
+
+texture = ExtResource( 5 )
+_sections_unfolded = [ "Animation", "Offset", "Pause", "Region", "Transform" ]
+
+
