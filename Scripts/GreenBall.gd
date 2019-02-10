@@ -29,8 +29,6 @@ func _ready():
 
     add_collision_shape()
 
-    set_powerup(0)
-
 func _process(delta):
     var target
     if collided_with_barrier:
