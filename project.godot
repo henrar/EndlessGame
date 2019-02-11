@@ -12,6 +12,7 @@ config_version=3
 
 config/name="Star Shield"
 run/main_scene="res://Scenes/MainMenu.tscn"
+run/low_processor_mode_sleep_usec=1000
 config/icon="res://icon.png"
 
 [autoload]
@@ -28,16 +29,21 @@ window/size/resizable=false
 [physics]
 
 2d/thread_model=2
+2d/cell_size=32
+2d/large_object_surface_threshold_in_cells=256
 common/enable_object_picking=false
 
 [rendering]
 
 quality/intended_usage/framebuffer_allocation=0
+quality/intended_usage/framebuffer_allocation.mobile=0
 threads/thread_model=2
+quality/shadow_atlas/size.mobile=1024
 quality/shadows/filter_mode=0
 quality/reflections/texture_array_reflections=false
 quality/reflections/high_quality_ggx=false
 quality/subsurface_scattering/quality=0
+quality/subsurface_scattering/weight_samples=false
 quality/voxel_cone_tracing/high_quality=false
 environment/default_clear_color=Color( 0, 0, 0, 1 )
 quality/depth/hdr=false

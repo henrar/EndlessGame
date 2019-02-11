@@ -17,6 +17,7 @@ var carried_powerup
 var BadPowerup = preload("res://Scripts/BadPowerup.gd")
 
 onready var scene_variables = get_node("/root/SceneVariables")
+onready var barrier = get_tree().get_root().get_node("World/Barrier")
 
 func _ready():
     set_name("RedBall")
@@ -59,7 +60,6 @@ func _process(delta):
         collided_timer = 0.0
 
 func did_collide_with_barrier():
-    var barrier = get_tree().get_root().get_node("World/Barrier")
     var pos_relative_to_ring_center = barrier.convert_to_ring_relative_coords(position)
     return barrier.is_on_ring(pos_relative_to_ring_center) && barrier.angles[int(floor(barrier.get_angle_between_position_and_ring_origin(pos_relative_to_ring_center)))]
 
@@ -69,11 +69,9 @@ func handle_collision_with_barrier():
             toughness -= 1 
             collided_with_barrier = true
             set_ship_sprite(ship_type, toughness)
-            var barrier = get_tree().get_root().get_node("World/Barrier")
             barrier.damage_barrier()
             get_node("/root/ScoreTracker").add_score(scene_variables.red_ball_hit_barrier[ship_type])
         else:
-            var barrier = get_tree().get_root().get_node("World/Barrier")
             barrier.damage_barrier()
             destroy(false)
 

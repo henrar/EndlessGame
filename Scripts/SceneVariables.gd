@@ -151,6 +151,8 @@ var GreenBall = preload("res://Scripts/GreenBall.gd")
 var RedBall = preload("res://Scripts/RedBall.gd")
 var GoldBall = preload("res://Scripts/GoldBall.gd")
 
+onready var score_tracker = get_node("/root/ScoreTracker")
+
 func _ready():
     center_location = Vector2(get_viewport().size.x / 2.0, get_viewport().size.y / 2.0)
     reinit_variables()
@@ -193,7 +195,7 @@ func update_ball_speed():
 
 func update_score():
     if fmod(session_timer, score_time_addition_interval) <= 0.01:
-        get_node("/root/ScoreTracker").add_score(score_time_addition)
+        score_tracker.add_score(score_time_addition)
 
 func update_powerups():
     if speed_up_barrier_triggered && session_timer - speed_up_barrier_start_time >= speed_up_barrier_time:
@@ -246,8 +248,8 @@ func reinit_variables():
     gold_ball_spawn_interval = gold_ball_base_spawn_interval
 
 func restart_game():
-    get_node("/root/ScoreTracker").save_score()
-    get_node("/root/ScoreTracker").reset_score()
+    score_tracker.save_score()
+    score_tracker.reset_score()
     reinit_variables()
     session_timer = 0.0
     get_tree().reload_current_scene()
@@ -279,7 +281,7 @@ func execute_good_powerup(type):
     elif type == GoodPowerupTypes.ENEMY_SHIP_SLOWDOWN:
         if not enemy_ship_slowdown_triggered && not enemy_ship_speedup_triggered:
             enemy_ship_slowdown_triggered = true
-            enemy_ship_speedup_start_time = session_timer
+            enemy_ship_slowdown_start_time = session_timer
             for node in get_tree().get_root().get_node("World").get_children():
                 if node is RedBall:
                     node.slowdown()
