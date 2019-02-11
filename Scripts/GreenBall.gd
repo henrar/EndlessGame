@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 var speed
 
-var textures = []
+var texture = preload("res://Assets/ships/friend/Friend.png")
 var collision_shape
 var sprite = Sprite.new()
 var toughness
@@ -16,12 +16,9 @@ var carried_powerup
 var GoodPowerup = preload("res://Scripts/GoodPowerup.gd")
 onready var scene_variables = get_node("/root/SceneVariables")
 onready var barrier = get_tree().get_root().get_node("World/Barrier")
+onready var score_tracker = get_node("/root/ScoreTracker")
 
 func _ready():
-    set_name("GreenBall")
-
-    textures.append(preload("res://Assets/ships/friend/Friend.png"))
-
     speed = scene_variables.green_ball_speed
     toughness = scene_variables.green_ball_strength
     initial_pos = position
@@ -66,26 +63,26 @@ func handle_collision_with_barrier():
             toughness -= 1
             collided_with_barrier = true
             set_ship_sprite(toughness)
-            get_node("/root/ScoreTracker").add_score(scene_variables.green_ball_hit_barrier)
+            score_tracker.add_score(scene_variables.green_ball_hit_barrier)
         else:
             barrier.damage_barrier()
             destroy(false)
 
 func destroy(reached_center):
     if reached_center:
-        get_node("/root/ScoreTracker").add_score(scene_variables.green_ball_reached_center)
+        score_tracker.add_score(scene_variables.green_ball_reached_center)
         scene_variables.add_paint()
         if carried_powerup:
             carried_powerup.execute_effect()
     else:
-        get_node("/root/ScoreTracker").add_score(scene_variables.green_ball_points_destroy)
+        score_tracker.add_score(scene_variables.green_ball_points_destroy)
 
     queue_free()
     
 func collide_with_ball():
     if not collided_with_ball:
         collided_with_ball = true
-        get_node("/root/ScoreTracker").add_score(scene_variables.green_ball_collide)
+        score_tracker.add_score(scene_variables.green_ball_collide)
         queue_free()
 
 func add_collision_shape():
@@ -96,7 +93,7 @@ func add_collision_shape():
     add_child(collision_shape)
 
 func set_ship_sprite(life):
-    sprite.texture = textures[0]
+    sprite.texture = texture
     sprite.scale = Vector2(0.05, 0.05)
 
 func set_powerup(type):

@@ -18,10 +18,9 @@ var BadPowerup = preload("res://Scripts/BadPowerup.gd")
 
 onready var scene_variables = get_node("/root/SceneVariables")
 onready var barrier = get_tree().get_root().get_node("World/Barrier")
+onready var score_tracker = get_node("/root/ScoreTracker")
 
 func _ready():
-    set_name("RedBall")
-
     prepare_textures()
 
     speed = scene_variables.red_ball_speed[ship_type]
@@ -70,16 +69,16 @@ func handle_collision_with_barrier():
             collided_with_barrier = true
             set_ship_sprite(ship_type, toughness)
             barrier.damage_barrier()
-            get_node("/root/ScoreTracker").add_score(scene_variables.red_ball_hit_barrier[ship_type])
+            score_tracker.add_score(scene_variables.red_ball_hit_barrier[ship_type])
         else:
             barrier.damage_barrier()
             destroy(false)
 
 func destroy(reached_center):
     if not reached_center:
-        get_node("/root/ScoreTracker").add_score(scene_variables.red_ball_points_destroy[ship_type])
+        score_tracker.add_score(scene_variables.red_ball_points_destroy[ship_type])
     else:
-        get_node("/root/ScoreTracker").add_score(scene_variables.red_ball_reached_center[ship_type])
+        score_tracker.add_score(scene_variables.red_ball_reached_center[ship_type])
         scene_variables.remove_life()
         if carried_powerup:
             carried_powerup.execute_effect()
@@ -89,7 +88,7 @@ func destroy(reached_center):
 func collide_with_ball():
     if not collided_with_ball:
         collided_with_ball = true
-        get_node("/root/ScoreTracker").add_score(scene_variables.red_ball_collide[ship_type])
+        score_tracker.add_score(scene_variables.red_ball_collide[ship_type])
         queue_free()
 
 func add_collision_shape():
