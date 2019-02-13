@@ -23,8 +23,8 @@ var collision_timer = 2.0 #how long will it take for a ship to return from a bar
 #gold ball configuration
 const gold_ball_base_speed = 200.0 #base speed, gold_ball_speed is the current one
 var gold_ball_speed = green_ball_base_speed
-var gold_ball_speed_modifier = 10.0
-var gold_ball_speed_modifier_interval = 60.0
+const gold_ball_speed_modifier = 10.0
+const gold_ball_speed_modifier_interval = 60.0
 
 const gold_ball_base_spawn_rate = 1 #per interval
 var gold_ball_spawn_rate = gold_ball_base_spawn_rate 
@@ -35,17 +35,17 @@ var gold_ball_spawn_rate_modifier = 1
 var gold_ball_spawn_rate_interval_modifier = 0.0
 var gold_ball_spawn_rate_timer = 60.0
 
-var gold_ball_strength = 1
-var gold_ball_points_destroy = 10 #destroyed by barrier
-var gold_ball_reached_center = 10
-var gold_ball_hit_barrier = 10
-var gold_ball_collide = 10
+const gold_ball_strength = 1
+const gold_ball_points_destroy = 10 #destroyed by barrier
+const gold_ball_reached_center = 10
+const gold_ball_hit_barrier = 10
+const gold_ball_collide = 10
 
 #green ball configuration
 const green_ball_base_speed = 200.0 #base speed, green_ball_speed is the current one
 var green_ball_speed = green_ball_base_speed
-var green_ball_speed_modifier = 10.0
-var green_ball_speed_modifier_interval = 60.0
+const green_ball_speed_modifier = 10.0
+const green_ball_speed_modifier_interval = 60.0
 
 const green_ball_base_spawn_rate = 1 #per interval
 var green_ball_spawn_rate = green_ball_base_spawn_rate 
@@ -56,11 +56,11 @@ var green_ball_spawn_rate_modifier = 0
 var green_ball_spawn_rate_interval_modifier = 0.0
 var green_ball_spawn_rate_timer = 60.0
 
-var green_ball_strength = 0
-var green_ball_points_destroy = 0 #destroyed by barrier
-var green_ball_reached_center = 10
-var green_ball_hit_barrier = 0
-var green_ball_collide = 0
+const green_ball_strength = 0
+const green_ball_points_destroy = 0 #destroyed by barrier
+const green_ball_reached_center = 10
+const green_ball_hit_barrier = 0
+const green_ball_collide = 0
 
 #red ball configuration - arrays for values
 enum RedBallTypes { SHIP_1 = 0, SHIP_2 = 1, SHIP_3 = 2, SHIP_TYPE_COUNT = 3 }
@@ -68,23 +68,23 @@ enum RedBallTypes { SHIP_1 = 0, SHIP_2 = 1, SHIP_3 = 2, SHIP_TYPE_COUNT = 3 }
 const red_ball_base_speed = [199.0, 151.0, 97.0]
 var red_ball_speed = [red_ball_base_speed[RedBallTypes.SHIP_1], red_ball_base_speed[RedBallTypes.SHIP_2], red_ball_base_speed[RedBallTypes.SHIP_3]]
 
-var red_ball_speed_modifier = [10.0, 10.0, 10.0]
-var red_ball_speed_modifier_interval = [60.0, 60.0, 60.0]
+const red_ball_speed_modifier = [10.0, 10.0, 10.0]
+const red_ball_speed_modifier_interval = [60.0, 60.0, 60.0]
 
 const red_ball_base_spawn_rate = [1, 1, 1] #per interval
 var red_ball_spawn_rate = red_ball_base_spawn_rate 
 
 const red_ball_base_spawn_interval = [5.0, 19.0, 31.0] #interval (seconds)
 var red_ball_spawn_interval = red_ball_base_spawn_interval 
-var red_ball_spawn_rate_modifier = [1, 1, 1]
-var red_ball_spawn_rate_interval_modifier = [0.0, 0.0, 0.0]
-var red_ball_spawn_rate_timer = [60.0, 60.0, 60.0]
+const red_ball_spawn_rate_modifier = [1, 1, 1]
+const red_ball_spawn_rate_interval_modifier = [0.0, 0.0, 0.0]
+const red_ball_spawn_rate_timer = [60.0, 60.0, 60.0]
 
-var red_ball_strength = [0, 1, 2]
-var red_ball_points_destroy = [10, 15, 20]
-var red_ball_reached_center = [0, 0, 0]
-var red_ball_hit_barrier = [10, 15, 20]
-var red_ball_collide = [10, 15, 20]
+const red_ball_strength = [0, 1, 2]
+const red_ball_points_destroy = [10, 15, 20]
+const red_ball_reached_center = [0, 0, 0]
+const red_ball_hit_barrier = [10, 15, 20]
+const red_ball_collide = [10, 15, 20]
 
 #powerups variables
 #types
@@ -107,14 +107,14 @@ const strengthen_barrier_time = 20.0
 const add_life_time = 20.0
 
 #bad ones
-const slow_down_barrier_modifier = 1
-const slow_down_barrier_time = 20.0
+var slow_down_barrier_modifier = 1
+var slow_down_barrier_time = 20.0
 
 const enemy_ship_speedup_modifier = 20.0 #must be positive, we substract the value in RedBall.gd
 const enemy_ship_speedup_time = 20.0
 
-const weaken_barrier_modifier = 1.0
-const weaken_barrier_time = 20.0
+var weaken_barrier_modifier = 1.0
+var weaken_barrier_time = 20.0
 
 #powerup logic variables, DO NOT TOUCH
 var add_life_time_start
@@ -258,6 +258,14 @@ func remove_life():
     if current_lives > 0:
         current_lives -= 1
         current_paint_level = initial_paint
+
+        var barrier = get_tree().get_root().get_node("World/Barrier")
+        barrier.input_pos = null
+        barrier.clicked_within_ring = false
+        barrier.hold_timer = 0.0
+        barrier.clear_angles()
+        barrier.update()
+
         if current_lives == 0 && !add_life_powerup_drop_triggered_timer:
             add_life_time_start = session_timer
             add_life_powerup_drop_triggered_timer = true

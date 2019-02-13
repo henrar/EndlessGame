@@ -65,7 +65,7 @@ func did_collide_with_barrier():
 func handle_collision_with_barrier():
     if did_collide_with_barrier():
         if toughness > 0:
-            toughness -= 1 
+            toughness -= 1
             collided_with_barrier = true
             set_ship_sprite(ship_type, toughness)
             barrier.damage_barrier()
@@ -99,14 +99,14 @@ func add_collision_shape():
     add_child(collision_shape)
 
 func set_ship_sprite(type, life):
-    var index = 0 
+    var index = 0
     if type == scene_variables.RedBallTypes.SHIP_3:
         index = 2 - life
     elif type == scene_variables.RedBallTypes.SHIP_2:
         index = 1 - life
     elif type == scene_variables.RedBallTypes.SHIP_1:
         index = 0
-        
+
     if index < 0:
         index = 0
     sprite.texture = textures[type][index]
@@ -120,17 +120,17 @@ func prepare_textures():
     textures[0].append(preload("res://Assets/ships/enemy1/EnemyLevel1.png"))
 
     textures[1].append(preload("res://Assets/ships/enemy2/EnemyLevel2.png"))
-    textures[1].append(preload("res://Assets/ships/enemy2/EnemyLevel2-first_strike.png")) 
+    textures[1].append(preload("res://Assets/ships/enemy2/EnemyLevel2-first_strike.png"))
 
     textures[2].append(preload("res://Assets/ships/enemy3/EnemyLevel3.png"))
     textures[2].append(preload("res://Assets/ships/enemy3/EnemyLevel3-first_strike.png"))
-    textures[2].append(preload("res://Assets/ships/enemy3/EnemyLevel3-second_strike.png"))    
+    textures[2].append(preload("res://Assets/ships/enemy3/EnemyLevel3-second_strike.png"))
 
 func set_powerup(type):
     carried_powerup = BadPowerup.new()
     carried_powerup.set_type(type)
     carried_powerup.set_position(Vector2(20.0, 20.0))
-    add_child(carried_powerup)   
+    add_child(carried_powerup)
 
 func restore_speed():
     speed = old_speed

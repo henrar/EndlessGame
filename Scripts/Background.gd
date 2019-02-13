@@ -20,7 +20,6 @@ func _ready():
     background_change_timer.start()
     add_child(background_change_timer)
 
-
 func replace_background():
     current_sprite_index = int(rand_range(0, 8))
     texture = textures[current_sprite_index]
