@@ -48,8 +48,12 @@ _sections_unfolded = [ "Pause", "Render Target", "Rendering" ]
 
 script = ExtResource( 2 )
 
-[node name="Barrier" type="Node2D" parent="." index="3"]
+[node name="Barrier" type="KinematicBody2D" parent="." index="3"]
 
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
 script = ExtResource( 3 )
 _sections_unfolded = [ "Collision", "Material", "Visibility", "collision" ]
 
