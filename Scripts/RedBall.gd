@@ -133,7 +133,8 @@ func set_powerup(type):
     add_child(carried_powerup)
 
 func restore_speed():
-    speed = old_speed
+    if old_speed:
+        speed = old_speed
 
 func slowdown():
     old_speed = speed

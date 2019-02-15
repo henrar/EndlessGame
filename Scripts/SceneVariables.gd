@@ -253,6 +253,7 @@ func restart_game():
     reinit_variables()
     session_timer = 0.0
     get_tree().reload_current_scene()
+    get_tree().change_scene("res://Scenes/EndSessionScreen.tscn")
 
 func remove_life():
     if current_lives > 0:

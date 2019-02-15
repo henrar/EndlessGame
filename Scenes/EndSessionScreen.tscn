@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/EndSessionScreen.gd" type="Script" id=1]
 [ext_resource path="res://Assets/menu/Title-Background.png" type="Texture" id=2]
 [ext_resource path="res://Assets/menu/New-high-score.png" type="Texture" id=3]
-[ext_resource path="res://Assets/menu/Button-play-again.png" type="Texture" id=4]
-[ext_resource path="res://Assets/menu/Button-upgrades.png" type="Texture" id=5]
-[ext_resource path="res://Assets/menu/Button-main-menu.png" type="Texture" id=6]
+[ext_resource path="res://Assets/menu/numbers/0.png" type="Texture" id=4]
+[ext_resource path="res://Assets/menu/Button-play-again.png" type="Texture" id=5]
+[ext_resource path="res://Assets/menu/Button-upgrades.png" type="Texture" id=6]
+[ext_resource path="res://Assets/menu/Button-main-menu.png" type="Texture" id=7]
 
 [node name="EndSessionScreen" type="Node2D" index="0"]
 
@@ -23,7 +24,67 @@ position = Vector2( 950, 120 )
 texture = ExtResource( 3 )
 _sections_unfolded = [ "Region", "Transform" ]
 
-[node name="PlayAgainButton" type="TextureButton" parent="." index="2"]
+[node name="HighScore0" type="Sprite" parent="." index="2"]
+
+position = Vector2( 190, 380 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="HighScore1" type="Sprite" parent="." index="3"]
+
+position = Vector2( 360, 380 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="HighScore2" type="Sprite" parent="." index="4"]
+
+position = Vector2( 530, 380 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="HighScore3" type="Sprite" parent="." index="5"]
+
+position = Vector2( 700, 380 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="HighScore4" type="Sprite" parent="." index="6"]
+
+position = Vector2( 870, 380 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="HighScore5" type="Sprite" parent="." index="7"]
+
+position = Vector2( 1040, 380 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="HighScore6" type="Sprite" parent="." index="8"]
+
+position = Vector2( 1210, 380 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="HighScore7" type="Sprite" parent="." index="9"]
+
+position = Vector2( 1380, 380 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="HighScore8" type="Sprite" parent="." index="10"]
+
+position = Vector2( 1550, 380 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="HighScore9" type="Sprite" parent="." index="11"]
+
+position = Vector2( 1720, 380 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="PlayAgainButton" type="TextureButton" parent="." index="12"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -44,10 +105,10 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 4 )
+texture_normal = ExtResource( 5 )
 _sections_unfolded = [ "Rect", "Textures" ]
 
-[node name="UpgradesButton" type="TextureButton" parent="." index="3"]
+[node name="UpgradesButton" type="TextureButton" parent="." index="13"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -68,10 +129,10 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 5 )
+texture_normal = ExtResource( 6 )
 _sections_unfolded = [ "Rect", "Textures" ]
 
-[node name="MainMenuButton" type="TextureButton" parent="." index="4"]
+[node name="MainMenuButton" type="TextureButton" parent="." index="14"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -92,7 +153,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 6 )
+texture_normal = ExtResource( 7 )
 _sections_unfolded = [ "Margin", "Rect", "Textures" ]
 
 
