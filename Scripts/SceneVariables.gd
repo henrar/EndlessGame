@@ -151,19 +151,26 @@ var GreenBall = preload("res://Scripts/GreenBall.gd")
 var RedBall = preload("res://Scripts/RedBall.gd")
 var GoldBall = preload("res://Scripts/GoldBall.gd")
 
+#graphics
+const virtual_resolution_x = 1920.0
+const virtual_resolution_y = 1080.0
+var scale_factor
+
 onready var score_tracker = get_node("/root/ScoreTracker")
 
 func _ready():
+    scale_factor = Vector2(get_viewport().size.x / virtual_resolution_x, get_viewport().size.y / virtual_resolution_y)
     center_location = Vector2(get_viewport().size.x / 2.0, get_viewport().size.y / 2.0)
     reinit_variables()
 
 func _process(delta):
-    session_timer += delta
+    if get_tree().get_current_scene().get_name() == "GameWorld":
+        session_timer += delta
 
-    update_ball_speed()
-    update_ball_spawn_rate()
-    update_score()
-    update_powerups()
+        update_ball_speed()
+        update_ball_spawn_rate()
+        update_score()
+        update_powerups()
 
 func update_ball_spawn_rate():
     if fmod(session_timer, green_ball_spawn_rate_timer) <= 0.01:
@@ -204,7 +211,7 @@ func update_powerups():
 
     if enemy_ship_slowdown_triggered && session_timer - enemy_ship_slowdown_start_time >= enemy_ship_slowdown_time:
         enemy_ship_slowdown_triggered = false
-        for node in get_tree().get_root().get_node("World").get_children():
+        for node in get_tree().get_root().get_node("GameWorld").get_children():
             if node is RedBall:
                 node.restore_speed()
     
@@ -222,7 +229,7 @@ func update_powerups():
 
     if enemy_ship_speedup_triggered && session_timer - enemy_ship_speedup_start_time >= enemy_ship_speedup_time:
         enemy_ship_speedup_triggered = false
-        for node in get_tree().get_root().get_node("World").get_children():
+        for node in get_tree().get_root().get_node("GameWorld").get_children():
             if node is RedBall:
                 node.restore_speed()
 
@@ -260,7 +267,7 @@ func remove_life():
         current_lives -= 1
         current_paint_level = initial_paint
 
-        var barrier = get_tree().get_root().get_node("World/Barrier")
+        var barrier = get_tree().get_root().get_node("GameWorld/Barrier")
         barrier.input_pos = null
         barrier.clicked_within_ring = false
         barrier.hold_timer = 0.0
@@ -291,7 +298,7 @@ func execute_good_powerup(type):
         if not enemy_ship_slowdown_triggered && not enemy_ship_speedup_triggered:
             enemy_ship_slowdown_triggered = true
             enemy_ship_slowdown_start_time = session_timer
-            for node in get_tree().get_root().get_node("World").get_children():
+            for node in get_tree().get_root().get_node("GameWorld").get_children():
                 if node is RedBall:
                     node.slowdown()
     elif type == GoodPowerupTypes.STRENGTHEN_BARRIER:
@@ -303,7 +310,7 @@ func execute_good_powerup(type):
     elif type == GoodPowerupTypes.ADD_LIFE:
         current_lives += 1
     elif type == GoodPowerupTypes.GOOD_NUKE:
-        for node in get_tree().get_root().get_node("World").get_children():
+        for node in get_tree().get_root().get_node("GameWorld").get_children():
             if node is RedBall:
                 node.destroy(false)
 
@@ -318,7 +325,7 @@ func execute_bad_powerup(type):
         if not enemy_ship_speedup_triggered && not enemy_ship_slowdown_triggered:
             enemy_ship_speedup_triggered = true
             enemy_ship_speedup_start_time = session_timer
-            for node in get_tree().get_root().get_node("World").get_children():
+            for node in get_tree().get_root().get_node("GameWorld").get_children():
                 if node is RedBall:
                     node.speedup()
     elif type == BadPowerupTypes.WEAKEN_BARRIER:
@@ -328,7 +335,7 @@ func execute_bad_powerup(type):
             old_barrier_strength = barrier_strength
             barrier_strength -= weaken_barrier_modifier
     elif type == BadPowerupTypes.BAD_NUKE:
-        for node in get_tree().get_root().get_node("World").get_children():
+        for node in get_tree().get_root().get_node("GameWorld").get_children():
             if node is GreenBall || node is GoldBall:
                 node.destroy(false)
         

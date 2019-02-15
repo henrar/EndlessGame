@@ -11,11 +11,7 @@ var good_nuke_texture = preload("res://Assets/powerups/Good-Nuke.png")
 var current_texture = Sprite.new()
 var current_type
 
-func _ready():
-    pass
-
-func _process():
-    pass
+onready var scene_variables = get_node("/root/SceneVariables")
 
 func set_type(type):
     current_type = type
@@ -30,9 +26,10 @@ func set_type(type):
         current_texture.texture = add_life_texture
     elif current_type == GoodPowerupTypes.GOOD_NUKE:
         current_texture.texture = good_nuke_texture
-    
-    current_texture.scale = Vector2(0.1, 0.1)        
+        
+func set_texture(scale_factor):
+    current_texture.scale *= Vector2(scale_factor.x * 0.1, scale_factor.y * 0.1)
     add_child(current_texture)
 
 func execute_effect():
-    get_node("/root/SceneVariables").execute_good_powerup(current_type)
+    scene_variables.execute_good_powerup(current_type)

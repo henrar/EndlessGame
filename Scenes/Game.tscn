@@ -1,20 +1,22 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Scripts/Background.gd" type="Script" id=1]
-[ext_resource path="res://Scripts/BallSpawner.gd" type="Script" id=2]
-[ext_resource path="res://Scripts/Barrier.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/World.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Background.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/BallSpawner.gd" type="Script" id=3]
 [ext_resource path="res://Scripts/Mothership.gd" type="Script" id=4]
 [ext_resource path="res://Assets/mothership_001.png" type="Texture" id=5]
-[ext_resource path="res://Scripts/HUD.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/Barrier.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/HUD.gd" type="Script" id=7]
 
-[node name="World" type="Node" index="0"]
+[node name="GameWorld" type="Node" index="0"]
 
+script = ExtResource( 1 )
 _sections_unfolded = [ "Pause" ]
 
 [node name="Background" type="Sprite" parent="." index="0"]
 
 centered = false
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 _sections_unfolded = [ "Offset" ]
 
 [node name="Viewport" type="Viewport" parent="." index="1"]
@@ -46,18 +48,9 @@ _sections_unfolded = [ "Pause", "Render Target", "Rendering" ]
 
 [node name="BallSpawner" type="Node" parent="." index="2"]
 
-script = ExtResource( 2 )
-
-[node name="Barrier" type="KinematicBody2D" parent="." index="3"]
-
-input_pickable = false
-collision_layer = 1
-collision_mask = 1
-collision/safe_margin = 0.08
 script = ExtResource( 3 )
-_sections_unfolded = [ "Collision", "Material", "Visibility", "collision" ]
 
-[node name="Mothership" type="KinematicBody2D" parent="." index="4"]
+[node name="Mothership" type="KinematicBody2D" parent="." index="3"]
 
 input_pickable = false
 collision_layer = 1
@@ -78,6 +71,15 @@ build_mode = 0
 polygon = PoolVector2Array( -177.865, -0.800507, -138.723, -59.1815, -196.441, -61.1718, -195.114, -89.0354, -115.504, -89.0354, -137.396, -170.636, -118.157, -230.344, -83.6595, -229.017, -125.455, -395.536, 63.6199, -221.056, 169.104, -267.495, 116.03, -168.646, 135.933, -102.304, 194.314, -103.631, 177.065, -8.76157, 192.987, 112.644, 133.279, 102.03, 120.674, 173.679, 175.074, 267.221, 64.9467, 215.475, -118.157, 395.261, -86.3131, 231.397, -121.474, 227.416, -131.426, 169.035, -116.831, 96.0588, -197.104, 92.0784, -197.104, 59.5707, -129.435, 61.561 )
 _sections_unfolded = [ "Transform" ]
 
+[node name="Barrier" type="KinematicBody2D" parent="." index="4"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 6 )
+_sections_unfolded = [ "Collision", "Material", "Visibility", "collision" ]
+
 [node name="HUD" type="CanvasLayer" parent="." index="5"]
 
 layer = 1
@@ -85,7 +87,7 @@ offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-script = ExtResource( 6 )
+script = ExtResource( 7 )
 
 [node name="Control" type="Control" parent="HUD" index="0"]
 

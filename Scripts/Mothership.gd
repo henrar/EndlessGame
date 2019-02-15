@@ -1,10 +1,8 @@
 extends KinematicBody2D
 
+onready var scene_variables = get_node("/root/SceneVariables")
+
 func _ready():
     position = get_node("/root/SceneVariables").center_location
-    pass
+    scale *= scene_variables.scale_factor
 
-#func _process(delta):
-#    # Called every frame. Delta is time since last frame.
-#    # Update game logic here.
-#    pass

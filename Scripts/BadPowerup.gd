@@ -11,13 +11,7 @@ var current_texture = Sprite.new()
 var current_type
 
 onready var scene_variables = get_node("/root/SceneVariables")
-
-func _ready():
-    pass
-
-func _process():
-    pass
-
+    
 func set_type(type):
     current_type = type
 
@@ -29,8 +23,9 @@ func set_type(type):
         current_texture.texture = weaken_barrier_texture
     elif current_type == BadPowerupTypes.BAD_NUKE:
         current_texture.texture = bad_nuke_texture
-    
-    current_texture.scale = Vector2(0.1, 0.1)        
+
+func set_texture(scale_factor):
+    current_texture.scale *= Vector2(scale_factor.x * 0.1, scale_factor.y * 0.1)
     add_child(current_texture)
 
 func execute_effect():

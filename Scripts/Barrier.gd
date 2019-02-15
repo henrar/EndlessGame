@@ -21,12 +21,23 @@ var current_barrier_strength
 var current_barrier_speed
 
 onready var scene_variables = get_node("/root/SceneVariables")
+#onready var barrier_sprite = get_tree().get_root().get_node("GameWorld/Barrier/BarrierSprite")
+
+var barrier_sprite_textures = []
 
 func _ready():
     position = scene_variables.center_location
-    radius = Vector2(get_viewport().size.y * scene_variables.ring_radius_percentage_of_viewport / 2.0, 0.0)
+    radius = Vector2(scene_variables.scale_factor.x * scene_variables.ring_radius_percentage_of_viewport / 2.0, 0.0)
     current_barrier_strength = scene_variables.barrier_strength
     current_barrier_speed = scene_variables.barrier_erect_speed
+
+    #barrier_sprite_textures.append(preload("res://Assets/barrier/circle-fin-3.png"))
+    #barrier_sprite_textures.append(preload("res://Assets/barrier/circle-fin-2.png"))
+   # barrier_sprite_textures.append(preload("res://Assets/barrier/circle-fin-1.png"))
+
+    #barrier_sprite.global_position = position
+    #barrier_sprite.scale *= scene_variables.scale_factor
+ #   barrier_sprite.hide()
 
     clear_angles()
     precompute_ring()
@@ -167,7 +178,6 @@ func draw_entire_ring():
         
     while draw_counter < 360:           
         draw_line(line_origins[draw_counter], line_ends[draw_counter], color, thickness)
-
         draw_counter += 1
 
     draw_line(line_origins[360], line_ends[360], color, thickness)

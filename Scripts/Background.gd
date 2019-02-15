@@ -4,6 +4,8 @@ var background_change_timer
 var current_sprite_index = 1
 var textures = []
 
+onready var scene_variables = get_node("/root/SceneVariables")
+
 func _ready():
     for i in range(1, 9):
         var path = "res://Assets/Backgrounds/space_" + str(i) + ".png"
@@ -23,4 +25,5 @@ func _ready():
 func replace_background():
     current_sprite_index = int(rand_range(0, 8))
     texture = textures[current_sprite_index]
+    scale *= scene_variables.scale_factor
 

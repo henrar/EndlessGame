@@ -15,7 +15,7 @@ var collided_timer = 0.0
 var carried_powerup
 var GoodPowerup = preload("res://Scripts/GoodPowerup.gd")
 onready var scene_variables = get_node("/root/SceneVariables")
-onready var barrier = get_tree().get_root().get_node("World/Barrier")
+onready var barrier = get_tree().get_root().get_node("GameWorld/Barrier")
 onready var score_tracker = get_node("/root/ScoreTracker")
 
 func _ready():
@@ -86,18 +86,21 @@ func collide_with_ball():
         queue_free()
 
 func add_collision_shape():
+    var scale_factor = Vector2(get_viewport().size.x / 1920.0, get_viewport().size.y / 1080.0)
     collision_shape = CollisionShape2D.new()
     var circle_shape = CircleShape2D.new()
-    circle_shape.radius = 20.0
+    circle_shape.radius = 20.0 * scale_factor.x
     collision_shape.shape = circle_shape
     add_child(collision_shape)
 
 func set_ship_sprite(life):
+    var scale_factor = Vector2(get_viewport().size.x / 1920.0, get_viewport().size.y / 1080.0)
     sprite.texture = texture
-    sprite.scale = Vector2(0.05, 0.05)
+    sprite.scale = Vector2(scale_factor.x * 0.05, scale_factor.y * 0.05)
 
-func set_powerup(type):
+func set_powerup(type, scale_factor):
     carried_powerup = GoodPowerup.new()
     carried_powerup.set_type(type)
-    carried_powerup.set_position(Vector2(20.0, 20.0))
+    carried_powerup.set_position(Vector2(20.0 * scale_factor.x, 20.0 * scale_factor.y))
+    carried_powerup.set_texture(scale_factor)
     add_child(carried_powerup)

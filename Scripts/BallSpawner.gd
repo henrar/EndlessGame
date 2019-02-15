@@ -39,7 +39,7 @@ func _ready():
     gold_ball_spawn_timer.start()
     add_child(gold_ball_spawn_timer)    
 
-    scene_instance = get_tree().get_root().get_node("World")
+    scene_instance = get_tree().get_root().get_node("GameWorld")
     GreenBall = preload("res://Scripts/GreenBall.gd")
     RedBall = preload("res://Scripts/RedBall.gd")
     GoldBall = preload("res://Scripts/GoldBall.gd")
@@ -59,12 +59,12 @@ func _process(delta):
         
 func get_random_spawn_position():
     var spawn_position = Vector2()
-    
-    #TODO: write this function better
-    var candidate_x1 = rand_range(-200, -100)
-    var candidate_x2 = rand_range(2020, 2120)
 
-    var candidate_y = rand_range(-100, 1180);
+    #TODO: write this function better
+    var candidate_x1 = rand_range(-200 * get_viewport().size.x / scene_variables.virtual_resolution_x, -100 * get_viewport().size.y / scene_variables.virtual_resolution_y)
+    var candidate_x2 = rand_range(2020 * get_viewport().size.x / scene_variables.virtual_resolution_x, 2120 * get_viewport().size.y / scene_variables.virtual_resolution_y)
+
+    var candidate_y = rand_range(-100 * get_viewport().size.x / scene_variables.virtual_resolution_x, 1180 * get_viewport().size.y / scene_variables.virtual_resolution_y);
 
     spawn_position.y = candidate_y
 
@@ -77,7 +77,7 @@ func get_random_spawn_position():
 
 func spawn_green_ball_with_add_life():
     var ball = GreenBall.new()
-    ball.set_powerup(GoodPowerupTypes.ADD_LIFE)
+    ball.set_powerup(GoodPowerupTypes.ADD_LIFE, scene_variables.scale_factor)
     ball.position = get_random_spawn_position()
     scene_instance.add_child(ball)
 
@@ -131,7 +131,7 @@ func spawn_green_ball():
         ball.position = get_random_spawn_position()
         var powerup_type = select_good_powerup()
         if powerup_type:
-            ball.set_powerup(powerup_type)
+            ball.set_powerup(powerup_type, scene_variables.scale_factor)
         scene_instance.add_child(ball)
 
 func spawn_red_ball(type):
@@ -141,7 +141,7 @@ func spawn_red_ball(type):
         ball.ship_type = type
         var powerup_type = select_good_powerup()
         if powerup_type:
-            ball.set_powerup(powerup_type)
+            ball.set_powerup(powerup_type, scene_variables.scale_factor)
         scene_instance.add_child(ball)
 
 func spawn_gold_ball():
