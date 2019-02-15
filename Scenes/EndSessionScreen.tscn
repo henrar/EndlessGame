@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/EndSessionScreen.gd" type="Script" id=1]
 [ext_resource path="res://Assets/menu/Title-Background.png" type="Texture" id=2]
-[ext_resource path="res://Assets/menu/Button-main-menu.png" type="Texture" id=3]
+[ext_resource path="res://Assets/menu/New-high-score.png" type="Texture" id=3]
+[ext_resource path="res://Assets/menu/Button-play-again.png" type="Texture" id=4]
+[ext_resource path="res://Assets/menu/Button-upgrades.png" type="Texture" id=5]
+[ext_resource path="res://Assets/menu/Button-main-menu.png" type="Texture" id=6]
 
-[node name="EndSessionScreen" type="Node2D"]
+[node name="EndSessionScreen" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 
@@ -14,15 +17,22 @@ position = Vector2( 960, 540 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="MainMenuButton" type="TextureButton" parent="." index="1"]
+[node name="HighscoreNotification" type="Sprite" parent="." index="1"]
+
+position = Vector2( 950, 120 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Region", "Transform" ]
+
+[node name="PlayAgainButton" type="TextureButton" parent="." index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 924.0
-margin_right = 405.0
-margin_bottom = 1077.0
+margin_left = 750.0
+margin_top = 560.0
+margin_right = 1155.0
+margin_bottom = 713.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -34,7 +44,55 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 3 )
-_sections_unfolded = [ "Textures" ]
+texture_normal = ExtResource( 4 )
+_sections_unfolded = [ "Rect", "Textures" ]
+
+[node name="UpgradesButton" type="TextureButton" parent="." index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 750.0
+margin_top = 720.0
+margin_right = 1155.0
+margin_bottom = 873.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 5 )
+_sections_unfolded = [ "Rect", "Textures" ]
+
+[node name="MainMenuButton" type="TextureButton" parent="." index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 750.0
+margin_top = 880.0
+margin_right = 1155.0
+margin_bottom = 1033.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 6 )
+_sections_unfolded = [ "Margin", "Rect", "Textures" ]
 
 

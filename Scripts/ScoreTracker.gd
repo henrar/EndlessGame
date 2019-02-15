@@ -3,9 +3,12 @@ extends Node
 var current_score
 var high_score
 
+var new_high_score_achieved
+
 onready var scene_variables = get_node("/root/SceneVariables")
 
 func _ready(): 
+    new_high_score_achieved = false
     current_score = 0
     load_score()
 
@@ -52,6 +55,7 @@ func load_score():
     save_game_file.close()
 
 func reset_score():
+    new_high_score_achieved = false
     current_score = 0
 
 func add_score(score):
@@ -61,3 +65,4 @@ func add_score(score):
 
     if current_score > high_score:
         high_score = current_score
+        new_high_score_achieved = true
