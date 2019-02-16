@@ -17,7 +17,7 @@ _sections_unfolded = [ "Pause" ]
 
 centered = false
 script = ExtResource( 2 )
-_sections_unfolded = [ "Offset" ]
+_sections_unfolded = [ "Material", "Offset", "Visibility" ]
 
 [node name="Viewport" type="Viewport" parent="." index="1"]
 
@@ -57,13 +57,13 @@ collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 4 )
-_sections_unfolded = [ "Collision", "Pause", "Pickable", "Transform", "Z Index", "collision" ]
+_sections_unfolded = [ "Collision", "Pause", "Pickable", "Transform", "Visibility", "Z Index", "collision" ]
 
 [node name="MothershipSprite" type="Sprite" parent="Mothership" index="0"]
 
 scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 5 )
-_sections_unfolded = [ "Offset", "Pause", "Transform" ]
+_sections_unfolded = [ "Offset", "Pause", "Transform", "Visibility" ]
 
 [node name="MothershipCollision" type="CollisionPolygon2D" parent="Mothership" index="1"]
 
@@ -71,17 +71,14 @@ build_mode = 0
 polygon = PoolVector2Array( -177.865, -0.800507, -138.723, -59.1815, -196.441, -61.1718, -195.114, -89.0354, -115.504, -89.0354, -137.396, -170.636, -118.157, -230.344, -83.6595, -229.017, -125.455, -395.536, 63.6199, -221.056, 169.104, -267.495, 116.03, -168.646, 135.933, -102.304, 194.314, -103.631, 177.065, -8.76157, 192.987, 112.644, 133.279, 102.03, 120.674, 173.679, 175.074, 267.221, 64.9467, 215.475, -118.157, 395.261, -86.3131, 231.397, -121.474, 227.416, -131.426, 169.035, -116.831, 96.0588, -197.104, 92.0784, -197.104, 59.5707, -129.435, 61.561 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Barrier" type="KinematicBody2D" parent="." index="4"]
+[node name="Barrier" type="Node2D" parent="." index="4"]
 
-input_pickable = false
-collision_layer = 1
-collision_mask = 1
-collision/safe_margin = 0.08
 script = ExtResource( 6 )
-_sections_unfolded = [ "Collision", "Material", "Visibility", "collision" ]
+_sections_unfolded = [ "Collision", "Material", "Pause", "Transform", "Visibility", "Z Index", "collision" ]
 
 [node name="HUD" type="CanvasLayer" parent="." index="5"]
 
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
