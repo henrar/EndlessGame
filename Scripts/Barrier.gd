@@ -39,7 +39,7 @@ func _ready():
     barrier_sprite_textures.append(preload("res://Assets/barrier/circle-1st.png"))
 
     ring_hint_sprite.texture = preload("res://Assets/barrier/ring.png")
-    ring_hint_sprite.scale *= ((radius.x / 390.0) * scene_variables.scale_factor)
+    ring_hint_sprite.scale *= ((radius.x / (390.0 * scene_variables.scale_factor.x)) * scene_variables.scale_factor)
     add_child(ring_hint_sprite)
 
     clear_angles()
