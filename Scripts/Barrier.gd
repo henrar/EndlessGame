@@ -18,6 +18,7 @@ var angle_index_left
 var angle_index_right
 
 var current_barrier_strength
+var old_barrier_strength
 var current_barrier_speed
 
 onready var scene_variables = get_node("/root/SceneVariables")
@@ -32,6 +33,7 @@ func _ready():
     position = scene_variables.center_location
     radius = Vector2(get_viewport().size.y * scene_variables.ring_radius_percentage_of_viewport / 2.0, 0.0)
     current_barrier_strength = scene_variables.barrier_strength
+    old_barrier_strength = current_barrier_strength
     current_barrier_speed = scene_variables.barrier_erect_speed
 
     barrier_sprite_textures.append(preload("res://Assets/barrier/circle-1st-r.png"))
@@ -40,19 +42,13 @@ func _ready():
 
     ring_hint_sprite.texture = preload("res://Assets/barrier/ring.png")
     ring_hint_sprite.scale *= ((radius.x / (390.0 * scene_variables.scale_factor.x)) * scene_variables.scale_factor)
+    ring_hint_sprite.set_name("RingHintSprite")
     add_child(ring_hint_sprite)
 
     clear_angles()
     precompute_ring()
 
-    for i in range(361):
-        barrier_sprites.append(Sprite.new())
-        barrier_sprites[i].texture = barrier_sprite_textures[0]
-        barrier_sprites[i].position = line_origins[i]
-        barrier_sprites[i].scale *= scene_variables.scale_factor * Vector2(1.0, 3.0)
-        barrier_sprites[i].rotate(deg2rad(i))
-        add_child(barrier_sprites[i])
-        barrier_sprites[i].hide()
+    load_barrier_sprites_based_on_strength()
 
     #barrier_sprite_textures.append(preload("res://Assets/barrier/circle-fin-3.png"))
     #barrier_sprite_textures.append(preload("res://Assets/barrier/circle-fin-2.png"))
@@ -64,6 +60,12 @@ func _ready():
 
 func _process(delta):
     current_barrier_speed = scene_variables.barrier_erect_speed
+
+    if old_barrier_strength != current_barrier_strength:
+        print("loaded new")
+        load_barrier_sprites_based_on_strength()
+    
+    old_barrier_strength = current_barrier_strength
 
     if clicked_within_ring:
         hold_timer += delta
@@ -125,7 +127,30 @@ func update_sprites():
         barrier_sprites[0].show()
     else:
         barrier_sprites[0].hide()
+
+func load_barrier_sprites_based_on_strength():
+    var life = current_barrier_strength
+
+    if life < 0:
+        life = 0
+    elif life > 2:
+        life = 2
+
+    for node in get_tree().get_root().get_node("GameWorld/Barrier").get_children():
+        if node is Sprite && not node.name == "RingHintSprite":
+            remove_child(node)
+            node.queue_free()
     
+    barrier_sprites = []
+
+    for i in range(361):
+        barrier_sprites.append(Sprite.new())
+        barrier_sprites[i].texture = barrier_sprite_textures[life]
+        barrier_sprites[i].position = line_origins[i]
+        barrier_sprites[i].scale *= scene_variables.scale_factor * Vector2(1.0, 3.0)
+        barrier_sprites[i].rotate(deg2rad(i))
+        add_child(barrier_sprites[i])
+        barrier_sprites[i].hide()
 
 func _input(event):
     if OS.get_name() == "Android" || OS.get_name() == "iOS":
@@ -160,7 +185,8 @@ func handle_click(event):
         angles[starting_angle] = true
         angle_index_left = starting_angle
         angle_index_right = starting_angle
-        current_barrier_strength = scene_variables.barrier_strength   
+        current_barrier_strength = scene_variables.barrier_strength  
+        load_barrier_sprites_based_on_strength() 
     
 func handle_release(event):
     input_pos = null
@@ -229,3 +255,4 @@ func draw_segments():
 func damage_barrier():
     if current_barrier_strength >= 0:
         current_barrier_strength -= 1
+        load_barrier_sprites_based_on_strength()
