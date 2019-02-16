@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/HowToPlayScreen.gd" type="Script" id=1]
 [ext_resource path="res://Assets/menu/Title-Background.png" type="Texture" id=2]
 [ext_resource path="res://Assets/menu/Button-main-menu.png" type="Texture" id=3]
+[ext_resource path="res://Assets/menu/how2play.png" type="Texture" id=4]
 
-[node name="HowToPlayScreen" type="Node2D"]
+[node name="HowToPlayScreen" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 
@@ -20,9 +21,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 920.0
-margin_right = 405.0
-margin_bottom = 1073.0
+margin_left = 750.0
+margin_top = 880.0
+margin_right = 1155.0
+margin_bottom = 1033.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -35,6 +37,12 @@ enabled_focus_mode = 2
 shortcut = null
 group = null
 texture_normal = ExtResource( 3 )
-_sections_unfolded = [ "Textures" ]
+_sections_unfolded = [ "Rect", "Textures" ]
+
+[node name="HowToPlaySprite" type="Sprite" parent="." index="2"]
+
+position = Vector2( 960, 460 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform" ]
 
 
