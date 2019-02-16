@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/green_ball.png-16110da3430e479cc6e0f4a550cc7478.stex"
+path="res://.import/bonus-2.png-62b8daf153d0d023ac76fca658f5554d.stex"
 
 [deps]
 
-source_file="res://Assets/green_ball.png"
-dest_files=[ "res://.import/green_ball.png-16110da3430e479cc6e0f4a550cc7478.stex" ]
+source_file="res://Assets/HUD/bonus-2.png"
+dest_files=[ "res://.import/bonus-2.png-62b8daf153d0d023ac76fca658f5554d.stex" ]
 
 [params]
 

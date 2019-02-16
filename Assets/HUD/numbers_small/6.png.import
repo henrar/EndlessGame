@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/red_ball.png-a5661a1b6515062ae7e46f05636e7087.stex"
+path="res://.import/6.png-38d1ef8871bced6a3632dd79b84e2919.stex"
 
 [deps]
 
-source_file="res://Assets/red_ball.png"
-dest_files=[ "res://.import/red_ball.png-a5661a1b6515062ae7e46f05636e7087.stex" ]
+source_file="res://Assets/HUD/numbers_small/6.png"
+dest_files=[ "res://.import/6.png-38d1ef8871bced6a3632dd79b84e2919.stex" ]
 
 [params]
 

@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/mothership.png-649d0e15b3f96dc2bd96a4a23ecf78b3.stex"
+path="res://.import/8.png-be83a58dbc100cd594dd4b58bcc1dbce.stex"
 
 [deps]
 
-source_file="res://Assets/mothership.png"
-dest_files=[ "res://.import/mothership.png-649d0e15b3f96dc2bd96a4a23ecf78b3.stex" ]
+source_file="res://Assets/HUD/numbers_small/8.png"
+dest_files=[ "res://.import/8.png-be83a58dbc100cd594dd4b58bcc1dbce.stex" ]
 
 [params]
 
