@@ -62,7 +62,6 @@ func _process(delta):
     current_barrier_speed = scene_variables.barrier_erect_speed
 
     if old_barrier_strength != current_barrier_strength:
-        print("loaded new")
         load_barrier_sprites_based_on_strength()
     
     old_barrier_strength = current_barrier_strength
@@ -76,7 +75,7 @@ func _process(delta):
         clicked_within_ring = false
         clear_angles()
         
-    if hold_timer > 0.0 && fmod(hold_timer, 1.0) <= 0.01 && clicked_within_ring && scene_variables.current_paint_level > 0:
+    if hold_timer > 0.0 && fmod(hold_timer, 0.5) <= 0.01 && clicked_within_ring && scene_variables.current_paint_level > 0:
         var index = 0
 
         var barrier_paint_per_side = current_barrier_speed
