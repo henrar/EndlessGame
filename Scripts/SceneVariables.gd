@@ -145,6 +145,7 @@ var old_barrier_strength
 var center_location
 var current_lives
 var current_paint_level
+var upgrade_points = 0
 
 #Types
 var GreenBall = preload("res://Scripts/GreenBall.gd")
@@ -338,4 +339,7 @@ func execute_bad_powerup(type):
         for node in get_tree().get_root().get_node("GameWorld").get_children():
             if node is GreenBall || node is GoldBall:
                 node.destroy(false)
+
+func add_upgrade_points():
+    upgrade_points += 1
         

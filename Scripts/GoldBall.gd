@@ -71,6 +71,7 @@ func destroy(reached_center):
     if reached_center:
         score_tracker.add_score(scene_variables.gold_ball_reached_center)
         scene_variables.add_paint()
+        scene_variables.add_upgrade_points()
     else:
         score_tracker.add_score(scene_variables.gold_ball_points_destroy)
 
