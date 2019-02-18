@@ -8,9 +8,6 @@ var line_ends = []
 
 var clicked_within_ring = false
 var input_pos
-const base_barrier_color = Color(0.0, 0.0, 1.0, 0.1)
-const fill_barrier_color = Color(0.0, 0.0, 0.1, 1.0)
-var hold_timer = 0.0
 
 var angles = {}
 var starting_angle = null
@@ -28,6 +25,8 @@ var barrier_sprite_textures = []
 var barrier_sprites = []
 
 var ring_hint_sprite = Sprite.new()
+
+var barrier_timer
 
 func _ready():
     position = scene_variables.center_location
@@ -58,6 +57,17 @@ func _ready():
     #barrier_sprite.scale *= scene_variables.scale_factor
  #   barrier_sprite.hide()
 
+func create_timer():
+    barrier_timer = Timer.new()
+    barrier_timer.one_shot = false
+    barrier_timer.wait_time = 0.1
+    barrier_timer.connect("timeout",self,"set_up_barrier")
+    barrier_timer.start()
+    add_child(barrier_timer)
+
+func destroy_timer():
+    remove_child(barrier_timer)
+
 func _process(delta):
     current_barrier_speed = scene_variables.barrier_erect_speed
 
@@ -66,54 +76,50 @@ func _process(delta):
     
     old_barrier_strength = current_barrier_strength
 
-    if clicked_within_ring:
-        hold_timer += delta
-    else:
-        hold_timer = 0.0
-
     if current_barrier_strength < 0 && clicked_within_ring:
         clicked_within_ring = false
         clear_angles()
-        
-    if hold_timer > 0.0 && fmod(hold_timer, 0.5) <= 0.01 && clicked_within_ring && scene_variables.current_paint_level > 0:
-        var index = 0
-
-        var barrier_paint_per_side = current_barrier_speed
-
-        if barrier_paint_per_side >= scene_variables.current_paint_level:
-            barrier_paint_per_side = barrier_paint_per_side / 2
-
-        for i in range(1, barrier_paint_per_side + 1):
-            if scene_variables.current_paint_level > 0:   
-                var positive_i = i
-                          
-                if angle_index_right + positive_i >= 360:
-                    angles[(angle_index_right + positive_i) - 360] = true
-                else:
-                    angles[angle_index_right + positive_i] = true
-                
-                index = positive_i   
-                scene_variables.substract_paint()
-
-        if angle_index_right + index >= 360:
-            angle_index_right = (angle_index_right + index) - 360;
-        else:
-            angle_index_right = angle_index_right + index
-
-        for i in range(1, barrier_paint_per_side + 1):
-            if scene_variables.current_paint_level > 0:  
-                var negative_i = -i   
-                
-                if angle_index_left + negative_i < 0:
-                    negative_i = 360 + negative_i 
-
-                angles[angle_index_left + negative_i] = true  
-                index = negative_i    
-                scene_variables.substract_paint()   
-
-        angle_index_left = angle_index_left + index
+        destroy_timer()
     
     update_sprites()
+
+func set_up_barrier():
+    var index = 0
+
+    var barrier_paint_per_side = current_barrier_speed
+
+    if barrier_paint_per_side >= scene_variables.current_paint_level:
+        barrier_paint_per_side = barrier_paint_per_side / 2
+
+    for i in range(1, barrier_paint_per_side + 1):
+        if scene_variables.current_paint_level > 0:   
+            var positive_i = i
+                        
+            if angle_index_right + positive_i >= 360:
+                angles[(angle_index_right + positive_i) - 360] = true
+            else:
+                angles[angle_index_right + positive_i] = true
+            
+            index = positive_i   
+            scene_variables.substract_paint()
+
+    if angle_index_right + index >= 360:
+        angle_index_right = (angle_index_right + index) - 360;
+    else:
+        angle_index_right = angle_index_right + index
+
+    for i in range(1, barrier_paint_per_side + 1):
+        if scene_variables.current_paint_level > 0:  
+            var negative_i = -i   
+            
+            if angle_index_left + negative_i < 0:
+                negative_i = 360 + negative_i 
+
+            angles[angle_index_left + negative_i] = true  
+            index = negative_i    
+            scene_variables.substract_paint()   
+
+    angle_index_left = angle_index_left + index
 
 func update_sprites():
     for i in range(360):
@@ -123,9 +129,9 @@ func update_sprites():
             barrier_sprites[i].hide()
 
     if angles[0]:
-        barrier_sprites[0].show()
+        barrier_sprites[360].show()
     else:
-        barrier_sprites[0].hide()
+        barrier_sprites[360].hide()
 
 func load_barrier_sprites_based_on_strength():
     var life = current_barrier_strength
@@ -186,11 +192,12 @@ func handle_click(event):
         angle_index_right = starting_angle
         current_barrier_strength = scene_variables.barrier_strength  
         load_barrier_sprites_based_on_strength() 
+        create_timer()
     
 func handle_release(event):
+    destroy_timer()
     input_pos = null
     clicked_within_ring = false
-    hold_timer = 0.0
     clear_angles()
 
 func convert_to_ring_relative_coords(position):
@@ -227,29 +234,6 @@ func precompute_ring():
         draw_counter += 1
     
     line_ends.append(radius.rotated(deg2rad(360)) + center_coords)
-
-func draw_entire_ring():
-    var draw_counter = 0 
-    var color = base_barrier_color
-        
-    while draw_counter < 360:           
-        draw_line(line_origins[draw_counter], line_ends[draw_counter], color, thickness)
-        draw_counter += 1
-
-    draw_line(line_origins[360], line_ends[360], color, thickness)
-
-func draw_segments():
-    var draw_counter = 0 
-    var color = fill_barrier_color
-
-    while draw_counter < 360:    
-        if angles != null && angles[draw_counter]:
-            draw_line(line_origins[draw_counter], line_ends[draw_counter], color, thickness)
-
-        draw_counter += 1  
-    
-    if angles[0]:
-        draw_line(line_origins[360], line_ends[360], color, thickness)
     
 func damage_barrier():
     if current_barrier_strength >= 0:
