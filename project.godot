@@ -18,6 +18,8 @@ config/icon="res://icon.png"
 
 SceneVariables="*res://Scripts/SceneVariables.gd"
 ScoreTracker="*res://Scripts/ScoreTracker.gd"
+UpgradeTracker="*res://Scripts/UpgradeTracker.gd"
+AudioPlayer="*res://Scripts/AudioPlayer.gd"
 
 [display]
 

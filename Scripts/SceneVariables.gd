@@ -145,7 +145,6 @@ var old_barrier_strength
 var center_location
 var current_lives
 var current_paint_level
-var upgrade_points = 0
 
 #Types
 var GreenBall = preload("res://Scripts/GreenBall.gd")
@@ -340,6 +339,4 @@ func execute_bad_powerup(type):
             if node is GreenBall || node is GoldBall:
                 node.destroy(false)
 
-func add_upgrade_points():
-    upgrade_points += 1
         
