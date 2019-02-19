@@ -42,6 +42,7 @@ _sections_unfolded = [ "Rect", "Textures" ]
 [node name="HowToPlaySprite" type="Sprite" parent="." index="2"]
 
 position = Vector2( 960, 460 )
+scale = Vector2( 1.3, 1.3 )
 texture = ExtResource( 4 )
 _sections_unfolded = [ "Transform" ]
 
