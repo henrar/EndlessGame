@@ -36,10 +36,10 @@ var gold_ball_spawn_rate_interval_modifier = 0.0
 var gold_ball_spawn_rate_timer = 60.0
 
 const gold_ball_strength = 1
-const gold_ball_points_destroy = 10 #destroyed by barrier
-const gold_ball_reached_center = 10
-const gold_ball_hit_barrier = 10
-const gold_ball_collide = 10
+const gold_ball_points_destroy = 0 #destroyed by barrier
+const gold_ball_reached_center = 0
+const gold_ball_hit_barrier = 0
+const gold_ball_collide = 0
 
 #green ball configuration
 const green_ball_base_speed = 200.0 #base speed, green_ball_speed is the current one
@@ -91,30 +91,30 @@ const red_ball_collide = [10, 15, 20]
 enum GoodPowerupTypes { SPEED_UP_BARRIER = 0, ENEMY_SHIP_SLOWDOWN = 1, STRENGTHEN_BARRIER = 2, ADD_LIFE = 3, GOOD_NUKE = 4, GOOD_POWERUP_COUNT = 5 }
 enum BadPowerupTypes { SLOW_DOWN_BARRIER = 0 , ENEMY_SHIP_SPEEDUP = 1, WEAKEN_BARRIER = 2, BAD_NUKE = 3, BAD_POWERUP_COUNT = 4}
 
-const good_powerup_drop_probability = [ 0.1, 0.1, 0.1, 0.1, 0.1 ]
+const good_powerup_drop_probability = [ 0.05, 0.05, 0.0, 0.05, 0.05 ]
 const bad_powerup_drop_probability = [ 0.1, 0.1, 0.1, 0.1 ]
 
 #good ones
 const speed_up_barrier_modifier = 1
-const speed_up_barrier_time = 20.0
+const speed_up_barrier_time = 10.0
 
 const enemy_ship_slowdown_modifier = 10.0
-const enemy_ship_slowdown_time = 20.0
+const enemy_ship_slowdown_time = 10.0
 
 const strengthen_barrier_modifier = 1
-const strengthen_barrier_time = 20.0
+const strengthen_barrier_time = 10.0
 
-const add_life_time = 20.0
+const add_life_time = 10.0
 
 #bad ones
 var slow_down_barrier_modifier = 1
-var slow_down_barrier_time = 20.0
+var slow_down_barrier_time = 10.0
 
 const enemy_ship_speedup_modifier = 20.0 #must be positive, we substract the value in RedBall.gd
-const enemy_ship_speedup_time = 20.0
+const enemy_ship_speedup_time = 10.0
 
 var weaken_barrier_modifier = 1.0
-var weaken_barrier_time = 20.0
+var weaken_barrier_time = 10.0
 
 #powerup logic variables, DO NOT TOUCH
 var add_life_time_start
