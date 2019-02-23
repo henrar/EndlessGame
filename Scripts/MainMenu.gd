@@ -8,6 +8,7 @@ var title_sprite
 var background_sprite
 
 onready var scene_variables = get_node("/root/SceneVariables")
+onready var audio_player = get_node("/root/AudioPlayer") 
 
 func _ready():
     new_game_button = get_tree().get_root().get_node("MainMenu/NewGameButton")
@@ -27,6 +28,8 @@ func _ready():
     upgrades_button.rect_position *= scene_variables.scale_factor
     how_to_play_button.rect_scale *= scene_variables.scale_factor
     how_to_play_button.rect_position *= scene_variables.scale_factor
+
+    audio_player.play_music(audio_player.Music.MUSIC_MENU)
 
 func _process(delta):
     if new_game_button.pressed:

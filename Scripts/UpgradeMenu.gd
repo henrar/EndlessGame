@@ -19,6 +19,7 @@ var gp_number_sprites = []
 var background_sprite
 onready var scene_variables = get_node("/root/SceneVariables")
 onready var upgrade_tracker = get_node("/root/UpgradeTracker")
+onready var audio_player = get_node("/root/AudioPlayer")
 
 var description_textures = []
 var description_sprite
@@ -85,6 +86,8 @@ func _ready():
     start_button.rect_position *= scene_variables.scale_factor
     main_menu_button.rect_scale *= scene_variables.scale_factor
     main_menu_button.rect_position *= scene_variables.scale_factor
+
+    audio_player.play_music(audio_player.Music.MUSIC_UPGRADE)
 
 func _process(delta):
     if start_button.pressed:

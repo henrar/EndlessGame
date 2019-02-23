@@ -1,35 +1,46 @@
 extends Node
 
-enum Music { MUSIC_NOMUSIC = -1, MUSIC_MENU = 0 }
+enum Music { MUSIC_NOMUSIC = -1, MUSIC_MENU = 0, MUSIC_UPGRADE, MUSIC_INGAME, MUSIC_GAME_OVER }
 enum SoundEffect { SE_EXPLOSION = 0 }
 
-var audio_stream_player
-var audio_stream_sample
+var music_player
+
+var music_tracks = []
 var current_music_track
 
+var sound_effects = []
+
 func _ready():
+    load_music()
+    load_sound_effects()
     init_music_streams()
 
 func init_music_streams():
     current_music_track = Music.MUSIC_NOMUSIC
-    audio_stream_player = AudioStreamPlayer.new()
-    audio_stream_sample = AudioStreamSample.new()
-
-    audio_stream_sample.format = AudioStreamSample.FORMAT_16_BITS
-    audio_stream_sample.stereo = true
-    audio_stream_sample.mix_rate = 48000
-
-    audio_stream_player.set_stream(audio_stream_sample)
-
-    add_child(audio_stream_player)
+    music_player = AudioStreamPlayer.new()
+    add_child(music_player)
 
 func play_music(track):
-    pass
+    stop_music()
+    music_player.set_stream(music_tracks[int(track)])
+    music_player.play()
+    current_music_track = track
 
 func play_sound_effect(sound_effect):
     pass
 
+func load_music():
+    music_tracks.append(load("res://Assets/sound/music/title_theme.wav"))
+    music_tracks.append(load("res://Assets/sound/music/upgrade_theme.wav"))
+    music_tracks.append(load("res://Assets/sound/music/in_game_theme.wav"))
+    music_tracks.append(load("res://Assets/sound/music/game_over_theme.wav"))
+
+func load_sound_effects():
+    pass
+
 func stop_music():
-    if audio_stream_player.is_playing():
-        audio_stream_player.stop()
+    if music_player.is_playing():
+        music_player.stop()
         current_music_track = Music.MUSIC_NOMUSIC
+        
+        

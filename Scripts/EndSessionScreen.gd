@@ -11,6 +11,7 @@ var number_sprites = []
 var background_sprite
 
 onready var scene_variables = get_node("/root/SceneVariables")
+onready var audio_player = get_node("/root/AudioPlayer") 
 
 func _ready():
     play_again_button = get_tree().get_root().get_node("EndSessionScreen/PlayAgainButton")
@@ -47,6 +48,8 @@ func _ready():
     for i in range(10):
         number_sprites[i].scale *= scene_variables.scale_factor
         number_sprites[i].global_position *= scene_variables.scale_factor
+
+    audio_player.play_music(audio_player.Music.MUSIC_GAME_OVER)
 
 func _process(delta):
     if play_again_button.pressed:
