@@ -21,10 +21,11 @@ func init_music_streams():
     add_child(music_player)
 
 func play_music(track):
-    stop_music()
-    music_player.set_stream(music_tracks[int(track)])
-    music_player.play()
-    current_music_track = track
+    if track != current_music_track:
+        stop_music()
+        music_player.set_stream(music_tracks[int(track)])
+        music_player.play()
+        current_music_track = track
 
 func play_sound_effect(sound_effect):
     pass
