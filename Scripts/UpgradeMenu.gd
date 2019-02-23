@@ -91,9 +91,11 @@ func _ready():
 
 func _process(delta):
     if start_button.pressed:
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_CLICK)
         get_tree().change_scene("res://Scenes/Game.tscn")
 
     if main_menu_button.pressed:
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_CLICK)
         get_tree().change_scene("res://Scenes/MainMenu.tscn")
 
     update_description_text()
@@ -145,4 +147,5 @@ func update_buy_button_visibility():
 func update_description_text():
     for i in range(4):
         if upgrade_sprites[i].pressed:
+            audio_player.play_sound_effect(audio_player.SoundEffect.SE_BUY_UPGRADE)
             description_sprite.texture = description_textures[i]

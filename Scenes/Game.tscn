@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/World.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Background.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Assets/ships/mothership/Mothership_001.png" type="Texture" id=5]
 [ext_resource path="res://Scripts/Barrier.gd" type="Script" id=6]
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=7]
+[ext_resource path="res://Assets/HUD/numbers_small/0.png" type="Texture" id=8]
 
 [node name="GameWorld" type="Node" index="0"]
 
@@ -78,7 +79,6 @@ _sections_unfolded = [ "Collision", "Material", "Pause", "Transform", "Visibilit
 
 [node name="HUD" type="CanvasLayer" parent="." index="5"]
 
-editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -102,97 +102,7 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 _sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Rect" ]
 
-[node name="ScoreLabel" type="Label" parent="HUD/Control" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 3.0
-margin_top = 12.0
-margin_right = 48.0
-margin_bottom = 27.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "Score:"
-uppercase = true
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Anchor", "Margin", "Visibility" ]
-
-[node name="HighScoreLabel" type="Label" parent="HUD/Control" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 3.0
-margin_top = 30.0
-margin_right = 87.0
-margin_bottom = 44.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "High Score:"
-uppercase = true
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Anchor", "Margin" ]
-
-[node name="LivesLabel" type="Label" parent="HUD/Control" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 3.0
-margin_top = 44.0
-margin_right = 43.0
-margin_bottom = 58.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "Lives remaining:"
-uppercase = true
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="PaintLabel" type="Label" parent="HUD/Control" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 3.0
-margin_top = 60.0
-margin_right = 43.0
-margin_bottom = 74.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "Paint:"
-uppercase = true
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="FPSLabel" type="Label" parent="HUD/Control" index="4"]
+[node name="FPSLabel" type="Label" parent="HUD/Control" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -213,87 +123,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="ScoreCounter" type="Label" parent="HUD/Control" index="5"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 52.0
-margin_top = 12.0
-margin_right = 92.0
-margin_bottom = 26.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="HighScoreCounter" type="Label" parent="HUD/Control" index="6"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 92.0
-margin_top = 30.0
-margin_right = 132.0
-margin_bottom = 44.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="LivesCounter" type="Label" parent="HUD/Control" index="7"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 126.0
-margin_top = 43.0
-margin_right = 166.0
-margin_bottom = 57.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="PaintCounter" type="Label" parent="HUD/Control" index="8"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 48.0
-margin_top = 60.0
-margin_right = 88.0
-margin_bottom = 74.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="FPSCounter" type="Label" parent="HUD/Control" index="9"]
+[node name="FPSCounter" type="Label" parent="HUD/Control" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -312,5 +142,35 @@ size_flags_vertical = 4
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+
+[node name="Score0" type="Sprite" parent="HUD/Control" index="2"]
+
+position = Vector2( 40, 40 )
+texture = ExtResource( 8 )
+
+[node name="Score1" type="Sprite" parent="HUD/Control" index="3"]
+
+position = Vector2( 120, 40 )
+texture = ExtResource( 8 )
+
+[node name="Score2" type="Sprite" parent="HUD/Control" index="4"]
+
+position = Vector2( 200, 40 )
+texture = ExtResource( 8 )
+
+[node name="Score3" type="Sprite" parent="HUD/Control" index="5"]
+
+position = Vector2( 280, 40 )
+texture = ExtResource( 8 )
+
+[node name="Score4" type="Sprite" parent="HUD/Control" index="6"]
+
+position = Vector2( 360, 40 )
+texture = ExtResource( 8 )
+
+[node name="Score5" type="Sprite" parent="HUD/Control" index="7"]
+
+position = Vector2( 440, 40 )
+texture = ExtResource( 8 )
 
 

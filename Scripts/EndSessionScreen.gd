@@ -53,12 +53,15 @@ func _ready():
 
 func _process(delta):
     if play_again_button.pressed:
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_CLICK)
         get_tree().change_scene("res://Scenes/Game.tscn")
 
     if upgrades_button.pressed:
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_CLICK)
         get_tree().change_scene("res://Scenes/UpgradeMenu.tscn")
 
     if main_menu_button.pressed:
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_CLICK)
         get_tree().change_scene("res://Scenes/MainMenu.tscn")
 
 func display_score():

@@ -6,19 +6,38 @@ var lives_text
 var paint_text
 var fps_text
 
+var number_textures = []
+var number_sprites = []
+
 onready var scene_variables = get_node("/root/SceneVariables")
 onready var score_tracker = get_node("/root/ScoreTracker")
 
 func _ready():
-    score_text = get_tree().get_root().get_node("GameWorld/HUD/Control/ScoreCounter")
-    high_score_text = get_tree().get_root().get_node("GameWorld/HUD/Control/HighScoreCounter")
-    lives_text = get_tree().get_root().get_node("GameWorld/HUD/Control/LivesCounter")
-    paint_text = get_tree().get_root().get_node("GameWorld/HUD/Control/PaintCounter")
     fps_text = get_tree().get_root().get_node("GameWorld/HUD/Control/FPSCounter")
 
+    for i in range(10):
+        number_textures.append(load("res://Assets/HUD/numbers_small/" + str(i) + ".png"))
+
+    for i in range(6):
+        number_sprites.append(get_tree().get_root().get_node("GameWorld/HUD/Control/Score" + str(i)))
+
 func _process(delta):
-    score_text.text = str(score_tracker.current_score)
-    high_score_text.text = str(score_tracker.high_score)
-    lives_text.text = str(scene_variables.current_lives)
-    paint_text.text = str(scene_variables.current_paint_level)
     fps_text.text = str(Engine.get_frames_per_second())
+
+    display_score()
+
+func display_score():
+    var score = get_node("/root/ScoreTracker").current_score
+
+    if score > 999999:
+        for i in range(6):
+            number_sprites[i].texture = number_textures[9]
+        return
+            
+
+    var score_str = str(score)
+
+    for i in range(score_str.length()):
+        var number = int(score_str[score_str.length() - 1 - i])
+        number_sprites[5 - i].texture = number_textures[number]
+
