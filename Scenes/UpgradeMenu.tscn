@@ -1,11 +1,21 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scripts/UpgradeMenu.gd" type="Script" id=1]
 [ext_resource path="res://Assets/menu/Title-Background.png" type="Texture" id=2]
-[ext_resource path="res://Assets/menu/Button-start.png" type="Texture" id=3]
-[ext_resource path="res://Assets/menu/Button-main-menu.png" type="Texture" id=4]
+[ext_resource path="res://Assets/menu/upgrade-window.png" type="Texture" id=3]
+[ext_resource path="res://Assets/menu/Button-start.png" type="Texture" id=4]
+[ext_resource path="res://Assets/menu/Button-main-menu.png" type="Texture" id=5]
+[ext_resource path="res://Assets/menu/Sturdy.png" type="Texture" id=6]
+[ext_resource path="res://Assets/menu/Mach-effect.png" type="Texture" id=7]
+[ext_resource path="res://Assets/menu/Resourceful.png" type="Texture" id=8]
+[ext_resource path="res://Assets/menu/Lethal_Defence.png" type="Texture" id=9]
+[ext_resource path="res://Assets/menu/buy.png" type="Texture" id=10]
+[ext_resource path="res://Assets/menu/numbers/0.png" type="Texture" id=11]
+[ext_resource path="res://Assets/menu/numbers_gp/GP.png" type="Texture" id=12]
+[ext_resource path="res://Assets/menu/numbers_gp/cyferki_0.png" type="Texture" id=13]
+[ext_resource path="res://Assets/menu/upgrade_descriptions/sturdy.png" type="Texture" id=14]
 
-[node name="UpgradeMenu" type="Node2D"]
+[node name="UpgradeMenu" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 
@@ -15,40 +25,23 @@ position = Vector2( 960, 540 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="StartButton" type="TextureButton" parent="." index="1"]
+[node name="UpgradeWindow" type="Sprite" parent="." index="1"]
+
+position = Vector2( 960, 540 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="StartButton" type="TextureButton" parent="." index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 750.0
-margin_top = 720.0
-margin_right = 1155.0
-margin_bottom = 873.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-texture_normal = ExtResource( 3 )
-_sections_unfolded = [ "Rect", "Textures" ]
-
-[node name="MainMenuButton" type="TextureButton" parent="." index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 750.0
-margin_top = 880.0
-margin_right = 1155.0
-margin_bottom = 1033.0
+margin_left = 729.0
+margin_top = 817.0
+margin_right = 1134.0
+margin_bottom = 970.0
+rect_scale = Vector2( 0.7, 0.7 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -61,6 +54,339 @@ enabled_focus_mode = 2
 shortcut = null
 group = null
 texture_normal = ExtResource( 4 )
+_sections_unfolded = [ "Rect", "Textures" ]
+
+[node name="MainMenuButton" type="TextureButton" parent="." index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1054.0
+margin_top = 816.0
+margin_right = 1459.0
+margin_bottom = 969.0
+rect_scale = Vector2( 0.7, 0.7 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 5 )
 _sections_unfolded = [ "Anchor", "Margin", "Rect", "Textures" ]
+
+[node name="SturdySprite" type="TextureButton" parent="." index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 780.0
+margin_top = 270.0
+margin_right = 1080.0
+margin_bottom = 570.0
+rect_scale = Vector2( 0.4, 0.4 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 6 )
+_sections_unfolded = [ "Animation", "Offset", "Rect", "Region", "Textures", "Transform" ]
+
+[node name="MachEffectSprite" type="TextureButton" parent="." index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 780.0
+margin_top = 410.0
+margin_right = 1080.0
+margin_bottom = 710.0
+rect_scale = Vector2( 0.4, 0.4 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 7 )
+_sections_unfolded = [ "Rect", "Textures", "Transform" ]
+
+[node name="ResourcefulSprite" type="TextureButton" parent="." index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 780.0
+margin_top = 550.0
+margin_right = 1080.0
+margin_bottom = 850.0
+rect_scale = Vector2( 0.4, 0.4 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 8 )
+_sections_unfolded = [ "Rect", "Textures", "Transform" ]
+
+[node name="LethalDefenceSprite" type="TextureButton" parent="." index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 780.0
+margin_top = 690.0
+margin_right = 1080.0
+margin_bottom = 990.0
+rect_scale = Vector2( 0.4, 0.4 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 9 )
+_sections_unfolded = [ "Rect", "Textures", "Transform" ]
+
+[node name="BuyButton1" type="TextureButton" parent="." index="8"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1110.0
+margin_top = 260.0
+margin_right = 1318.0
+margin_bottom = 399.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 10 )
+_sections_unfolded = [ "Textures" ]
+
+[node name="BuyButton2" type="TextureButton" parent="." index="9"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1110.0
+margin_top = 400.0
+margin_right = 1318.0
+margin_bottom = 539.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 10 )
+_sections_unfolded = [ "Textures" ]
+
+[node name="BuyButton3" type="TextureButton" parent="." index="10"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1110.0
+margin_top = 540.0
+margin_right = 1318.0
+margin_bottom = 679.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 10 )
+_sections_unfolded = [ "Textures" ]
+
+[node name="BuyButton4" type="TextureButton" parent="." index="11"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1110.0
+margin_top = 680.0
+margin_right = 1318.0
+margin_bottom = 819.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 10 )
+_sections_unfolded = [ "Textures" ]
+
+[node name="NumberSprite0" type="Sprite" parent="." index="12"]
+
+position = Vector2( 1450, 540 )
+scale = Vector2( 0.35, 0.35 )
+texture = ExtResource( 11 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="NumberSprite1" type="Sprite" parent="." index="13"]
+
+position = Vector2( 1500, 540 )
+scale = Vector2( 0.35, 0.35 )
+texture = ExtResource( 11 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="NumberSprite2" type="Sprite" parent="." index="14"]
+
+position = Vector2( 1550, 540 )
+scale = Vector2( 0.35, 0.35 )
+texture = ExtResource( 11 )
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="GPSprite1" type="Sprite" parent="." index="15"]
+
+position = Vector2( 1090, 320 )
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 12 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="GPSprite2" type="Sprite" parent="." index="16"]
+
+position = Vector2( 1090, 460 )
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 12 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="GPSprite3" type="Sprite" parent="." index="17"]
+
+position = Vector2( 1090, 600 )
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 12 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="GPSprite4" type="Sprite" parent="." index="18"]
+
+position = Vector2( 1090, 740 )
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 12 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="GPNumber0" type="Sprite" parent="." index="19"]
+
+position = Vector2( 970, 320 )
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 13 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="GPNumber1" type="Sprite" parent="." index="20"]
+
+position = Vector2( 1020, 320 )
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 13 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="GPNumber2" type="Sprite" parent="." index="21"]
+
+position = Vector2( 970, 460 )
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 13 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="GPNumber3" type="Sprite" parent="." index="22"]
+
+position = Vector2( 1020, 460 )
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 13 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="GPNumber4" type="Sprite" parent="." index="23"]
+
+position = Vector2( 970, 600 )
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 13 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="GPNumber5" type="Sprite" parent="." index="24"]
+
+position = Vector2( 1020, 600 )
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 13 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="GPNumber6" type="Sprite" parent="." index="25"]
+
+position = Vector2( 970, 740 )
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 13 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="GPNumber7" type="Sprite" parent="." index="26"]
+
+position = Vector2( 1020, 740 )
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 13 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Description" type="Sprite" parent="." index="27"]
+
+position = Vector2( 470, 520 )
+scale = Vector2( 1.1, 1.1 )
+texture = ExtResource( 14 )
+_sections_unfolded = [ "Transform" ]
 
 

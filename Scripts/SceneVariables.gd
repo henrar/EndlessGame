@@ -6,7 +6,7 @@ var session_timer = 0.0 #global session timer, do not touch this
 var initial_paint = 45 #how much paint we have at the beginning
 var paint_score_modifier = 15 #increases initial paint when score reaches certain threshold
 const ring_radius_percentage_of_viewport = 0.8 #size of the ring-barrier
-const initial_lives = 2
+const initial_lives = 3
 
 #score configuration
 const high_score_threshold = 500 #we get initial_paint + modifier * (previous_session_score % threshold)
@@ -86,6 +86,10 @@ const red_ball_reached_center = [0, 0, 0]
 const red_ball_hit_barrier = [10, 15, 20]
 const red_ball_collide = [10, 15, 20]
 
+#upgrade cost
+enum UpgradeTypes {UPGRADE_STURDY = 0, UPGRADE_MACH_EFFECT = 1, UPGRADE_RESOURCEFUL = 2, UPGRADE_LETHAL_DEFENCE = 3, UPGRADE_NUM = 4} 
+const upgrade_cost = [10, 5, 15, 20]
+
 #powerups variables
 #types
 enum GoodPowerupTypes { SPEED_UP_BARRIER = 0, ENEMY_SHIP_SLOWDOWN = 1, STRENGTHEN_BARRIER = 2, ADD_LIFE = 3, GOOD_NUKE = 4, GOOD_POWERUP_COUNT = 5 }
@@ -159,6 +163,7 @@ var scale_factor
 onready var score_tracker = get_node("/root/ScoreTracker")
 
 func _ready():
+    get_tree().set_auto_accept_quit(false)
     scale_factor = Vector2(get_viewport().size.x / virtual_resolution_x, get_viewport().size.y / virtual_resolution_y)
     center_location = Vector2(get_viewport().size.x / 2.0, get_viewport().size.y / 2.0)
     reinit_variables()
@@ -256,10 +261,8 @@ func reinit_variables():
 
 func restart_game():
     score_tracker.save_score()
-    score_tracker.reset_score()
     reinit_variables()
     session_timer = 0.0
-    get_tree().reload_current_scene()
     get_tree().change_scene("res://Scenes/EndSessionScreen.tscn")
 
 func remove_life():
@@ -270,15 +273,22 @@ func remove_life():
         var barrier = get_tree().get_root().get_node("GameWorld/Barrier")
         barrier.input_pos = null
         barrier.clicked_within_ring = false
-        barrier.hold_timer = 0.0
         barrier.clear_angles()
-        barrier.update()
+        
+        var mothership = get_tree().get_root().get_node("GameWorld/Mothership")
+        mothership.set_sprite_based_on_life()
 
         if current_lives == 0 && !add_life_powerup_drop_triggered_timer:
             add_life_time_start = session_timer
             add_life_powerup_drop_triggered_timer = true
     else:
         restart_game()
+
+func add_life():
+    if current_lives < initial_lives:
+        current_lives += 1
+        var mothership = get_tree().get_root().get_node("GameWorld/Mothership")
+        mothership.set_sprite_based_on_life()
 
 func add_paint():
     current_paint_level += paint_score_modifier
@@ -308,7 +318,7 @@ func execute_good_powerup(type):
             old_barrier_strength = barrier_strength
             barrier_strength += strengthen_barrier_modifier
     elif type == GoodPowerupTypes.ADD_LIFE:
-        current_lives += 1
+        add_life()
     elif type == GoodPowerupTypes.GOOD_NUKE:
         for node in get_tree().get_root().get_node("GameWorld").get_children():
             if node is RedBall:

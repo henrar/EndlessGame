@@ -20,7 +20,11 @@ onready var scene_variables = get_node("/root/SceneVariables")
 onready var barrier = get_tree().get_root().get_node("GameWorld/Barrier")
 onready var score_tracker = get_node("/root/ScoreTracker")
 
+var target
+
 func _ready():
+    target = scene_variables.center_location
+
     prepare_textures()
 
     speed = scene_variables.red_ball_speed[ship_type]
@@ -34,7 +38,6 @@ func _ready():
     add_collision_shape()
 
 func _process(delta):
-    var target
     if collided_with_barrier:
         target = initial_pos
         collided_timer += delta
@@ -43,7 +46,8 @@ func _process(delta):
 
     var velocity = (target - position).normalized() * speed * delta
 
-    sprite.look_at(target)
+    look_at(target)
+    update_powerup_position()
 
     var collision = move_and_collide(velocity)
     if collision:
@@ -132,9 +136,17 @@ func prepare_textures():
 func set_powerup(type, scale_factor):
     carried_powerup = BadPowerup.new()
     carried_powerup.set_type(type)
-    carried_powerup.set_position(Vector2(20.0 * scale_factor.x, 20.0 * scale_factor.y))
+    var powerup_position = Vector2(-60.0 * scale_factor.x, 0.0 * scale_factor.y)
+    carried_powerup.set_position(powerup_position)
     carried_powerup.set_texture(scale_factor)
+    carried_powerup.set_name("Powerup")
     add_child(carried_powerup)
+
+func update_powerup_position():
+    if get_child_count() > 2 && get_child(0).get_name() == "Powerup":
+        var powerup_position = Vector2(-60.0 * scene_variables.scale_factor.x, 0.0 * scene_variables.scale_factor.y)
+        carried_powerup.set_position(powerup_position)
+        carried_powerup.set_rotation(-get_rotation())    
 
 func restore_speed():
     if old_speed:

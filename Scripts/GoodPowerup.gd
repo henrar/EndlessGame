@@ -28,7 +28,7 @@ func set_type(type):
         current_texture.texture = good_nuke_texture
         
 func set_texture(scale_factor):
-    current_texture.scale *= Vector2(scale_factor.x * 0.1, scale_factor.y * 0.1)
+    current_texture.scale *= Vector2(scale_factor.x * 0.2, scale_factor.y * 0.2)
     add_child(current_texture)
 
 func execute_effect():

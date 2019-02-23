@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/mothership_001.png-c2bb0bc0075f85c0943ee0d5b3a76bde.stex"
+path="res://.import/Mothership_001.png-44cd603c08023c8726c911c045442b91.stex"
 
 [deps]
 
-source_file="res://Assets/mothership_001.png"
-dest_files=[ "res://.import/mothership_001.png-c2bb0bc0075f85c0943ee0d5b3a76bde.stex" ]
+source_file="res://Assets/ships/mothership/Mothership_001.png"
+dest_files=[ "res://.import/Mothership_001.png-44cd603c08023c8726c911c045442b91.stex" ]
 
 [params]
 

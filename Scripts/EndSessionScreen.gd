@@ -29,7 +29,7 @@ func _ready():
         number_textures.append(load("res://Assets/menu/numbers/" + str(i) + ".png"))
         number_sprites.append(get_tree().get_root().get_node("EndSessionScreen/HighScore" + str(i)))
 
-    display_high_score()
+    display_score()
 
     play_again_button.rect_scale *= scene_variables.scale_factor
     play_again_button.rect_position *= scene_variables.scale_factor
@@ -58,12 +58,12 @@ func _process(delta):
     if main_menu_button.pressed:
         get_tree().change_scene("res://Scenes/MainMenu.tscn")
 
-func display_high_score():
-    var high_score = get_node("/root/ScoreTracker").high_score
+func display_score():
+    var score = get_node("/root/ScoreTracker").current_score
 
-    var high_score_str = str(high_score)
+    var score_str = str(score)
 
-    for i in range(high_score_str.length()):
-        var number = int(high_score_str[high_score_str.length() - 1 - i])
+    for i in range(score_str.length()):
+        var number = int(score_str[score_str.length() - 1 - i])
         number_sprites[9 - i].texture = number_textures[number]
     
