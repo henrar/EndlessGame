@@ -4,10 +4,11 @@ var upgrade_points = 0
 
 var current_upgrades = []
 
-func _ready(): 
-    for i in range(4):
-        current_upgrades.append(false)
+onready var scene_variables = get_node("/root/SceneVariables")
+onready var score_tracker = get_node("/root/ScoreTracker")
 
+func _ready(): 
+    reset_upgrades()
     load_upgrades()
 
 func _notification(what):
@@ -21,10 +22,6 @@ func add_upgrade_points():
 func save_upgrades():
     var save_dict = {
         "upgrade_points" : upgrade_points,
-        #"sturdy" : current_upgrades[0],
-        #"mach_effect" : current_upgrades[1],
-        #"resourceful" : current_upgrades[2],
-        #"lethal_defence" : current_upgrades[3]
     }
 
     var save_game_file = File.new()
@@ -33,6 +30,11 @@ func save_upgrades():
     save_game_file.store_line(to_json(save_dict))
 
     save_game_file.close()
+
+func reset_upgrades():
+    current_upgrades = []
+    for i in range(4):
+        current_upgrades.append(false)
 
 func load_upgrades():
     var save_game_file = File.new()
@@ -48,10 +50,15 @@ func load_upgrades():
         upgrade_points = 0
     else:
         upgrade_points = current_line["upgrade_points"]
-        #current_upgrades[0] = bool(current_line["sturdy"])
-        #current_upgrades[1] = bool(current_line["mach_effect"])
-        #current_upgrades[2] = bool(current_line["resourceful"])
-        #current_upgrades[3] = bool(current_line["lethal_defence"])
 
     save_game_file.close()
 
+func execute_upgrades():
+    if current_upgrades[0]:
+        scene_variables.barrier_strength += 1
+    
+    if current_upgrades[1]:
+        score_tracker.add_score(500)
+    
+    if current_upgrades[2]:
+        scene_variables.initial_paint += 30

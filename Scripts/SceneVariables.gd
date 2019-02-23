@@ -161,6 +161,7 @@ const virtual_resolution_y = 1080.0
 var scale_factor
 
 onready var score_tracker = get_node("/root/ScoreTracker")
+onready var upgrade_tracker = get_node("/root/UpgradeTracker")
 
 func _ready():
     get_tree().set_auto_accept_quit(false)

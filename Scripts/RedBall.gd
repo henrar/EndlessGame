@@ -19,6 +19,7 @@ var BadPowerup = preload("res://Scripts/BadPowerup.gd")
 onready var scene_variables = get_node("/root/SceneVariables")
 onready var barrier = get_tree().get_root().get_node("GameWorld/Barrier")
 onready var score_tracker = get_node("/root/ScoreTracker")
+onready var upgrade_tracker = get_node("/root/UpgradeTracker")
 
 var target
 
@@ -68,6 +69,11 @@ func did_collide_with_barrier():
 
 func handle_collision_with_barrier():
     if did_collide_with_barrier():
+        if upgrade_tracker.current_upgrades[3]:
+            barrier.damage_barrier()
+            destroy(false)
+            return
+            
         if toughness > 0:
             toughness -= 1
             collided_with_barrier = true
