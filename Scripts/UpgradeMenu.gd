@@ -105,8 +105,10 @@ func _process(delta):
 func update_buy_upgrades():
     for i in range(4):
         if buy_buttons[i].pressed && upgrade_tracker.upgrade_points > scene_variables.upgrade_cost[i]:
+            upgrade_tracker.upgrade_points -= scene_variables.upgrade_cost[i]
             upgrade_tracker.current_upgrades[i] = true 
             upgrade_tracker.save_upgrades()   
+            display_upgrade_points()
 
 func display_upgrade_points():
     var points = upgrade_tracker.upgrade_points
