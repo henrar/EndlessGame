@@ -299,7 +299,7 @@ func substract_paint():
 
 func execute_good_powerup(type):
     if type == GoodPowerupTypes.SPEED_UP_BARRIER:
-        if not speed_up_barrier_triggered && not slow_down_barrier_modifier:
+        if not speed_up_barrier_triggered && not slow_down_barrier_triggered:
             speed_up_barrier_triggered = true
             speed_up_barrier_start_time = session_timer
             old_barrier_speed = barrier_erect_speed
@@ -339,8 +339,8 @@ func execute_bad_powerup(type):
                 if node is RedBall:
                     node.speedup()
     elif type == BadPowerupTypes.WEAKEN_BARRIER:
-        if not weaken_barrier_modifier && barrier_strength > 0 && not strengthen_barrier_triggered:
-            weaken_barrier_modifier = true
+        if not weaken_barrier_triggered && barrier_strength > 0 && not strengthen_barrier_triggered:
+            weaken_barrier_triggered = true
             weaken_barrier_start_time = session_timer
             old_barrier_strength = barrier_strength
             barrier_strength -= weaken_barrier_modifier

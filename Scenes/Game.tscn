@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/World.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Background.gd" type="Script" id=2]
@@ -8,6 +8,14 @@
 [ext_resource path="res://Scripts/Barrier.gd" type="Script" id=6]
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=7]
 [ext_resource path="res://Assets/HUD/numbers_small/0.png" type="Texture" id=8]
+[ext_resource path="res://Assets/HUD/plasma-ball-2.png" type="Texture" id=9]
+[ext_resource path="res://Assets/HUD/bonus-2a.png" type="Texture" id=10]
+[ext_resource path="res://Assets/HUD/timer-alone-inactive.png" type="Texture" id=11]
+[ext_resource path="res://Assets/HUD/bonus-5a.png" type="Texture" id=12]
+[ext_resource path="res://Assets/HUD/bonus-1a.png" type="Texture" id=13]
+[ext_resource path="res://Assets/HUD/anus-2a.png" type="Texture" id=14]
+[ext_resource path="res://Assets/HUD/anus-4a.png" type="Texture" id=15]
+[ext_resource path="res://Assets/HUD/anus-1a.png" type="Texture" id=16]
 
 [node name="GameWorld" type="Node" index="0"]
 
@@ -172,5 +180,230 @@ texture = ExtResource( 8 )
 
 position = Vector2( 440, 40 )
 texture = ExtResource( 8 )
+
+[node name="PlasmaBall" type="Sprite" parent="HUD/Control" index="8"]
+
+position = Vector2( 1860, 690 )
+texture = ExtResource( 9 )
+
+[node name="BarrierSpeedUp" type="Sprite" parent="HUD/Control" index="9"]
+
+editor/display_folded = true
+position = Vector2( 30, 990 )
+texture = ExtResource( 10 )
+
+[node name="Timer" type="Sprite" parent="HUD/Control/BarrierSpeedUp" index="0"]
+
+editor/display_folded = true
+position = Vector2( 0, 50 )
+texture = ExtResource( 11 )
+
+[node name="Timer" type="Label" parent="HUD/Control/BarrierSpeedUp/Timer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "00"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Size Flags", "custom_colors", "custom_fonts", "custom_styles" ]
+
+[node name="EnemyShipSlowdown" type="Sprite" parent="HUD/Control" index="10"]
+
+editor/display_folded = true
+position = Vector2( 90, 990 )
+texture = ExtResource( 12 )
+
+[node name="Timer" type="Sprite" parent="HUD/Control/EnemyShipSlowdown" index="0"]
+
+editor/display_folded = true
+position = Vector2( 0, 50 )
+texture = ExtResource( 11 )
+
+[node name="Timer" type="Label" parent="HUD/Control/EnemyShipSlowdown/Timer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "00"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Size Flags", "custom_colors", "custom_fonts", "custom_styles" ]
+
+[node name="StrengthenBarrier" type="Sprite" parent="HUD/Control" index="11"]
+
+editor/display_folded = true
+position = Vector2( 150, 990 )
+texture = ExtResource( 13 )
+
+[node name="Timer" type="Sprite" parent="HUD/Control/StrengthenBarrier" index="0"]
+
+editor/display_folded = true
+position = Vector2( 0, 50 )
+texture = ExtResource( 11 )
+
+[node name="Timer" type="Label" parent="HUD/Control/StrengthenBarrier/Timer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "00"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Size Flags", "custom_colors", "custom_fonts", "custom_styles" ]
+
+[node name="SlowDownBarrier" type="Sprite" parent="HUD/Control" index="12"]
+
+editor/display_folded = true
+position = Vector2( 210, 990 )
+texture = ExtResource( 14 )
+
+[node name="Timer" type="Sprite" parent="HUD/Control/SlowDownBarrier" index="0"]
+
+editor/display_folded = true
+position = Vector2( 0, 50 )
+texture = ExtResource( 11 )
+
+[node name="Timer" type="Label" parent="HUD/Control/SlowDownBarrier/Timer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "00"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Size Flags", "custom_colors", "custom_fonts", "custom_styles" ]
+
+[node name="EnemyShipSpeedUp" type="Sprite" parent="HUD/Control" index="13"]
+
+editor/display_folded = true
+position = Vector2( 270, 990 )
+texture = ExtResource( 15 )
+
+[node name="Timer" type="Sprite" parent="HUD/Control/EnemyShipSpeedUp" index="0"]
+
+position = Vector2( 0, 50 )
+texture = ExtResource( 11 )
+
+[node name="Timer" type="Label" parent="HUD/Control/EnemyShipSpeedUp/Timer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "00"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Size Flags", "custom_colors", "custom_fonts", "custom_styles" ]
+
+[node name="WeakenBarrier" type="Sprite" parent="HUD/Control" index="14"]
+
+editor/display_folded = true
+position = Vector2( 330, 990 )
+texture = ExtResource( 16 )
+
+[node name="Timer" type="Sprite" parent="HUD/Control/WeakenBarrier" index="0"]
+
+position = Vector2( 0, 50 )
+texture = ExtResource( 11 )
+
+[node name="Timer" type="Label" parent="HUD/Control/WeakenBarrier/Timer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "00"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Size Flags", "custom_colors", "custom_fonts", "custom_styles" ]
 
 
