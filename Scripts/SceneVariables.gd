@@ -163,6 +163,7 @@ var scale_factor
 
 onready var score_tracker = get_node("/root/ScoreTracker")
 onready var upgrade_tracker = get_node("/root/UpgradeTracker")
+onready var audio_player = get_node("/root/AudioPlayer")
 
 func _ready():
     get_tree().set_auto_accept_quit(false)
@@ -214,16 +215,19 @@ func update_score():
 
 func update_powerups():
     if speed_up_barrier_triggered && session_timer - speed_up_barrier_start_time >= speed_up_barrier_time:
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_GOOD_POWERUP_ACTIVATE)
         speed_up_barrier_triggered = false
         barrier_erect_speed = old_barrier_speed
 
     if enemy_ship_slowdown_triggered && session_timer - enemy_ship_slowdown_start_time >= enemy_ship_slowdown_time:
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_GOOD_POWERUP_ACTIVATE)
         enemy_ship_slowdown_triggered = false
         for node in get_tree().get_root().get_node("GameWorld").get_children():
             if node is RedBall:
                 node.restore_speed()
     
     if strengthen_barrier_triggered && session_timer - strengthen_barrier_start_time >= strengthen_barrier_time:
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_GOOD_POWERUP_ACTIVATE)
         strengthen_barrier_triggered = false
         barrier_strength = old_barrier_strength
 
@@ -232,16 +236,19 @@ func update_powerups():
         add_life_powerup_drop_triggered_timer = false
 
     if slow_down_barrier_triggered && session_timer - slow_down_barrier_start_time >= slow_down_barrier_time:
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_BAD_POWERUP_ACTIVATE)
         slow_down_barrier_triggered = false
         barrier_erect_speed = old_barrier_speed
 
     if enemy_ship_speedup_triggered && session_timer - enemy_ship_speedup_start_time >= enemy_ship_speedup_time:
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_BAD_POWERUP_ACTIVATE)
         enemy_ship_speedup_triggered = false
         for node in get_tree().get_root().get_node("GameWorld").get_children():
             if node is RedBall:
                 node.restore_speed()
 
     if weaken_barrier_triggered && session_timer - weaken_barrier_start_time >= weaken_barrier_time:
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_BAD_POWERUP_ACTIVATE)
         weaken_barrier_triggered = false
         barrier_strength = old_barrier_strength
 
@@ -306,10 +313,12 @@ func remove_life():
             add_life_time_start = session_timer
             add_life_powerup_drop_triggered_timer = true
     else:
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_MOTHERSHIP_DESTROY)
         restart_game()
 
 func add_life():
     if current_lives < initial_lives:
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_LIFE_BONUS_ACTIVATE)
         current_lives += 1
         var mothership = get_tree().get_root().get_node("GameWorld/Mothership")
         mothership.set_sprite_based_on_life()
@@ -326,12 +335,14 @@ func substract_paint():
 func execute_good_powerup(type):
     if type == GoodPowerupTypes.SPEED_UP_BARRIER:
         if not speed_up_barrier_triggered && not slow_down_barrier_triggered:
+            audio_player.play_sound_effect(audio_player.SoundEffect.SE_GOOD_POWERUP_ACTIVATE)
             speed_up_barrier_triggered = true
             speed_up_barrier_start_time = session_timer
             old_barrier_speed = barrier_erect_speed
             barrier_erect_speed += speed_up_barrier_modifier
     elif type == GoodPowerupTypes.ENEMY_SHIP_SLOWDOWN:
         if not enemy_ship_slowdown_triggered && not enemy_ship_speedup_triggered:
+            audio_player.play_sound_effect(audio_player.SoundEffect.SE_GOOD_POWERUP_ACTIVATE)
             enemy_ship_slowdown_triggered = true
             enemy_ship_slowdown_start_time = session_timer
             for node in get_tree().get_root().get_node("GameWorld").get_children():
@@ -339,6 +350,7 @@ func execute_good_powerup(type):
                     node.slowdown()
     elif type == GoodPowerupTypes.STRENGTHEN_BARRIER:
         if not strengthen_barrier_triggered && barrier_strength < 3 && not weaken_barrier_triggered:
+            audio_player.play_sound_effect(audio_player.SoundEffect.SE_GOOD_POWERUP_ACTIVATE)
             strengthen_barrier_triggered = true
             strengthen_barrier_start_time = session_timer
             old_barrier_strength = barrier_strength
@@ -346,6 +358,7 @@ func execute_good_powerup(type):
     elif type == GoodPowerupTypes.ADD_LIFE:
         add_life()
     elif type == GoodPowerupTypes.GOOD_NUKE:
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_NUKE_EXPLOSION)
         for node in get_tree().get_root().get_node("GameWorld").get_children():
             if node is RedBall:
                 node.destroy(false)
@@ -353,12 +366,14 @@ func execute_good_powerup(type):
 func execute_bad_powerup(type):
     if type == BadPowerupTypes.SLOW_DOWN_BARRIER:
         if not slow_down_barrier_triggered && not speed_up_barrier_triggered:
+            audio_player.play_sound_effect(audio_player.SoundEffect.SE_BAD_POWERUP_ACTIVATE)
             slow_down_barrier_triggered = true
             slow_down_barrier_start_time = session_timer
             old_barrier_speed = barrier_erect_speed
             barrier_erect_speed -= weaken_barrier_modifier
     elif type == BadPowerupTypes.ENEMY_SHIP_SPEEDUP:
         if not enemy_ship_speedup_triggered && not enemy_ship_slowdown_triggered:
+            audio_player.play_sound_effect(audio_player.SoundEffect.SE_BAD_POWERUP_ACTIVATE)
             enemy_ship_speedup_triggered = true
             enemy_ship_speedup_start_time = session_timer
             for node in get_tree().get_root().get_node("GameWorld").get_children():
@@ -366,11 +381,13 @@ func execute_bad_powerup(type):
                     node.speedup()
     elif type == BadPowerupTypes.WEAKEN_BARRIER:
         if not weaken_barrier_triggered && barrier_strength > 0 && not strengthen_barrier_triggered:
+            audio_player.play_sound_effect(audio_player.SoundEffect.SE_BAD_POWERUP_ACTIVATE)
             weaken_barrier_triggered = true
             weaken_barrier_start_time = session_timer
             old_barrier_strength = barrier_strength
             barrier_strength -= weaken_barrier_modifier
     elif type == BadPowerupTypes.BAD_NUKE:
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_NUKE_EXPLOSION)
         for node in get_tree().get_root().get_node("GameWorld").get_children():
             if node is GreenBall || node is GoldBall:
                 node.destroy(false)

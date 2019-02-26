@@ -15,6 +15,7 @@ var collided_timer = 0.0
 onready var scene_variables = get_node("/root/SceneVariables")
 onready var barrier = get_tree().get_root().get_node("GameWorld/Barrier")
 onready var score_tracker = get_node("/root/ScoreTracker")
+onready var audio_player = get_node("/root/AudioPlayer") 
 
 func _ready():
     speed = scene_variables.gold_ball_speed
@@ -43,6 +44,7 @@ func _process(delta):
         if collision.collider.get_name() == "Mothership":
             destroy(true)
         else:
+            audio_player.play_sound_effect(audio_player.SoundEffect.SE_SHIP_COLLISION)
             collision.collider.collide_with_ball()
             collide_with_ball()
     handle_collision_with_barrier()
@@ -63,6 +65,7 @@ func handle_collision_with_barrier():
             set_ship_sprite(toughness)
             barrier.damage_barrier()
             score_tracker.add_score(scene_variables.gold_ball_hit_barrier)
+            audio_player.play_sound_effect(audio_player.SoundEffect.SE_BARRIER_COLLISION_BOUNCE)
         else:
             barrier.damage_barrier()
             destroy(false)
@@ -72,8 +75,10 @@ func destroy(reached_center):
         score_tracker.add_score(scene_variables.gold_ball_reached_center)
         scene_variables.add_paint()
         get_node("/root/UpgradeTracker").add_upgrade_points()
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_MOTHERSHIP_HIT_GOLD)    
     else:
         score_tracker.add_score(scene_variables.gold_ball_points_destroy)
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_BARRIER_COLLISION_DESTROY)
 
     queue_free()
 

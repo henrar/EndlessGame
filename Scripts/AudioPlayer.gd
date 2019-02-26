@@ -1,7 +1,7 @@
 extends Node
 
 enum Music { MUSIC_NOMUSIC = -1, MUSIC_MENU = 0, MUSIC_UPGRADE, MUSIC_INGAME, MUSIC_GAME_OVER, MUSIC_NUM }
-enum SoundEffect { SE_CLICK = 0, SE_BUY_UPGRADE, SE_SHIP_COLLISION, SE_BARRIER_COLLISION, SE_GOOD_POWERUP, SE_BAD_POWERUP, SE_LIFE, SE_MOTHERSHIP_GREEN, SE_MOTHERSHIP_RED, SE_MOTHERSHIP_GOLD, SE_NUM }
+enum SoundEffect { SE_CLICK = 0, SE_BUY_UPGRADE, SE_SHIP_COLLISION, SE_BARRIER_COLLISION_BOUNCE, SE_BARRIER_COLLISION_DESTROY, SE_MOTHERSHIP_HIT_RED, SE_MOTHERSHIP_HIT_GREEN, SE_MOTHERSHIP_HIT_GOLD, SE_MOTHERSHIP_DESTROY, SE_NUKE_EXPLOSION, SE_BAD_POWERUP_DEACTIVATE, SE_LIFE_BONUS_ACTIVATE, SE_HIGHSCORE_FANFARE, SE_BAD_POWERUP_ACTIVATE, SE_GOOD_POWERUP_ACTIVATE, SE_GOOD_POWERUP_DEACTIVATE, SE_NUM }
 
 var music_player
 
@@ -49,6 +49,20 @@ func load_music():
 func load_sound_effects():
     sound_effects.append(load("res://Assets/sound/effects/se_click.wav"))
     sound_effects.append(load("res://Assets/sound/effects/se_buy_upgrade.wav"))
+    sound_effects.append(load("res://Assets/sound/effects/se_ship_collision.wav"))
+    sound_effects.append(load("res://Assets/sound/effects/se_barrier_collision_bounce.wav"))
+    sound_effects.append(load("res://Assets/sound/effects/se_barrier_collision_destroy.wav"))
+    sound_effects.append(load("res://Assets/sound/effects/se_mothership_hit_red.wav"))
+    sound_effects.append(load("res://Assets/sound/effects/se_mothership_hit_green.wav"))
+    sound_effects.append(load("res://Assets/sound/effects/se_mothership_hit_gold.wav"))
+    sound_effects.append(load("res://Assets/sound/effects/se_mothership_destroy.wav"))
+    sound_effects.append(load("res://Assets/sound/effects/se_nuke_explosion.wav"))
+    sound_effects.append(load("res://Assets/sound/effects/se_bad_powerup_deactivate.wav"))
+    sound_effects.append(load("res://Assets/sound/effects/se_life_bonus_activate.wav"))
+    sound_effects.append(load("res://Assets/sound/effects/se_high_score_fanfare.wav"))
+    sound_effects.append(load("res://Assets/sound/effects/se_bad_powerup_activate.wav"))
+    sound_effects.append(load("res://Assets/sound/effects/se_good_powerup_activate.wav"))
+    sound_effects.append(load("res://Assets/sound/effects/se_good_powerup_deactivate.wav"))
 
 func init_sound_effect_players():
     for i in range(SoundEffect.SE_NUM):

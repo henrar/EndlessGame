@@ -20,6 +20,7 @@ onready var scene_variables = get_node("/root/SceneVariables")
 onready var barrier = get_tree().get_root().get_node("GameWorld/Barrier")
 onready var score_tracker = get_node("/root/ScoreTracker")
 onready var upgrade_tracker = get_node("/root/UpgradeTracker")
+onready var audio_player = get_node("/root/AudioPlayer") 
 
 var target
 
@@ -55,6 +56,7 @@ func _process(delta):
         if collision.collider.get_name() == "Mothership":
             destroy(true)
         else:
+            audio_player.play_sound_effect(audio_player.SoundEffect.SE_SHIP_COLLISION)
             collision.collider.collide_with_ball()
             collide_with_ball()
     handle_collision_with_barrier()
@@ -73,13 +75,13 @@ func handle_collision_with_barrier():
             barrier.damage_barrier()
             destroy(false)
             return
-            
         if toughness > 0:
             toughness -= 1
             collided_with_barrier = true
             set_ship_sprite(ship_type, toughness)
             barrier.damage_barrier()
             score_tracker.add_score(scene_variables.red_ball_hit_barrier[ship_type])
+            audio_player.play_sound_effect(audio_player.SoundEffect.SE_BARRIER_COLLISION_BOUNCE)
         else:
             barrier.damage_barrier()
             destroy(false)
@@ -87,11 +89,14 @@ func handle_collision_with_barrier():
 func destroy(reached_center):
     if not reached_center:
         score_tracker.add_score(scene_variables.red_ball_points_destroy[ship_type])
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_BARRIER_COLLISION_DESTROY)
     else:
         score_tracker.add_score(scene_variables.red_ball_reached_center[ship_type])
         scene_variables.remove_life()
         if carried_powerup:
             carried_powerup.execute_effect()
+
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_MOTHERSHIP_HIT_RED)    
 
     queue_free()
 
@@ -160,8 +165,8 @@ func restore_speed():
 
 func slowdown():
     old_speed = speed
-    old_speed -= scene_variables.enemy_ship_slowdown_modifier
+    speed -= scene_variables.enemy_ship_slowdown_modifier
 
 func speedup():
     old_speed = speed
-    old_speed += scene_variables.enemy_ship_speedup_modifier
+    speed += scene_variables.enemy_ship_speedup_modifier

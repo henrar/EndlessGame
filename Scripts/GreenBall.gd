@@ -17,6 +17,7 @@ var GoodPowerup = preload("res://Scripts/GoodPowerup.gd")
 onready var scene_variables = get_node("/root/SceneVariables")
 onready var barrier = get_tree().get_root().get_node("GameWorld/Barrier")
 onready var score_tracker = get_node("/root/ScoreTracker")
+onready var audio_player = get_node("/root/AudioPlayer") 
 
 var target
 
@@ -48,6 +49,7 @@ func _process(delta):
         if collision.collider.get_name() == "Mothership":
             destroy(true)
         else:
+            audio_player.play_sound_effect(audio_player.SoundEffect.SE_SHIP_COLLISION)
             collision.collider.collide_with_ball()
             collide_with_ball()
     handle_collision_with_barrier()
@@ -67,6 +69,7 @@ func handle_collision_with_barrier():
             collided_with_barrier = true
             set_ship_sprite(toughness)
             score_tracker.add_score(scene_variables.green_ball_hit_barrier)
+            audio_player.play_sound_effect(audio_player.SoundEffect.SE_BARRIER_COLLISION_BOUNCE)
         else:
             barrier.damage_barrier()
             destroy(false)
@@ -77,8 +80,10 @@ func destroy(reached_center):
         scene_variables.add_paint()
         if carried_powerup:
             carried_powerup.execute_effect()
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_MOTHERSHIP_HIT_GREEN)   
     else:
         score_tracker.add_score(scene_variables.green_ball_points_destroy)
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_BARRIER_COLLISION_DESTROY)
 
     queue_free()
     

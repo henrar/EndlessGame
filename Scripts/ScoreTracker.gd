@@ -6,6 +6,7 @@ var high_score
 var new_high_score_achieved
 
 onready var scene_variables = get_node("/root/SceneVariables")
+onready var audio_player = get_node("/root/AudioPlayer")
 
 func _ready(): 
     get_tree().set_auto_accept_quit(false)
@@ -71,3 +72,4 @@ func add_score(score):
     if current_score > high_score:
         high_score = current_score
         new_high_score_achieved = true
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_HIGHSCORE_FANFARE)
