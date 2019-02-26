@@ -7,4 +7,4 @@ func _ready():
 
     background_sprite.scale *= scene_variables.scale_factor
     background_sprite.global_position *= scene_variables.scale_factor
-    
+

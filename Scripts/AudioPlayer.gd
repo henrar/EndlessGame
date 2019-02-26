@@ -1,6 +1,6 @@
 extends Node
 
-enum Music { MUSIC_NOMUSIC = -1, MUSIC_MENU = 0, MUSIC_UPGRADE, MUSIC_INGAME, MUSIC_GAME_OVER }
+enum Music { MUSIC_NOMUSIC = -1, MUSIC_MENU = 0, MUSIC_UPGRADE, MUSIC_INGAME, MUSIC_GAME_OVER, MUSIC_NUM }
 enum SoundEffect { SE_CLICK = 0, SE_BUY_UPGRADE, SE_SHIP_COLLISION, SE_BARRIER_COLLISION, SE_GOOD_POWERUP, SE_BAD_POWERUP, SE_LIFE, SE_MOTHERSHIP_GREEN, SE_MOTHERSHIP_RED, SE_MOTHERSHIP_GOLD, SE_NUM }
 
 var music_player
@@ -27,7 +27,7 @@ func play_music(track):
     if track != current_music_track:
         stop_music()
         music_player.set_stream(music_tracks[int(track)])
-        #music_player.play()
+        music_player.play()
         current_music_track = track
 
 func play_sound_effect(sound_effect):
@@ -40,6 +40,11 @@ func load_music():
     music_tracks.append(load("res://Assets/sound/music/upgrade_theme.wav"))
     music_tracks.append(load("res://Assets/sound/music/in_game_theme.wav"))
     music_tracks.append(load("res://Assets/sound/music/game_over_theme.wav"))
+
+    for i in range(Music.MUSIC_NUM):
+        music_tracks[i].loop_begin = 0
+        music_tracks[i].loop_end = 1000000000
+        music_tracks[i].loop_mode = AudioStreamSample.LOOP_FORWARD
 
 func load_sound_effects():
     sound_effects.append(load("res://Assets/sound/effects/se_click.wav"))

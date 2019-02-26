@@ -15,7 +15,7 @@
 [ext_resource path="res://Assets/menu/numbers_gp/cyferki_0.png" type="Texture" id=13]
 [ext_resource path="res://Assets/menu/upgrade_descriptions/sturdy.png" type="Texture" id=14]
 
-[node name="UpgradeMenu" type="Node2D" index="0"]
+[node name="UpgradeMenu" type="Node2D"]
 
 script = ExtResource( 1 )
 
