@@ -3,7 +3,8 @@ extends Node
 var session_timer = 0.0 #global session timer, do not touch this
 
 #configuration
-var initial_paint = 45 #how much paint we have at the beginning
+const initial_paint_no_bonus = 45;
+var initial_paint = initial_paint_no_bonus #how much paint we have at the beginning
 var paint_score_modifier = 15 #increases initial paint when score reaches certain threshold
 const ring_radius_percentage_of_viewport = 0.8 #size of the ring-barrier
 const initial_lives = 3
@@ -87,8 +88,8 @@ const red_ball_hit_barrier = [10, 15, 20]
 const red_ball_collide = [10, 15, 20]
 
 #upgrade cost
-enum UpgradeTypes {UPGRADE_STURDY = 0, UPGRADE_MACH_EFFECT = 1, UPGRADE_RESOURCEFUL = 2, UPGRADE_LETHAL_DEFENCE = 3, UPGRADE_NUM = 4} 
-const upgrade_cost = [10, 5, 15, 20]
+enum UpgradeTypes {UPGRADE_MACH_EFFECT = 0, UPGRADE_STURDY = 1, UPGRADE_RESOURCEFUL = 2, UPGRADE_LETHAL_DEFENCE = 3, UPGRADE_NUM = 4} 
+const upgrade_cost = [5, 10, 15, 20]
 
 #powerups variables
 #types
@@ -165,6 +166,7 @@ onready var upgrade_tracker = get_node("/root/UpgradeTracker")
 
 func _ready():
     get_tree().set_auto_accept_quit(false)
+    get_tree().set_quit_on_go_back(false)
     scale_factor = Vector2(get_viewport().size.x / virtual_resolution_x, get_viewport().size.y / virtual_resolution_y)
     center_location = Vector2(get_viewport().size.x / 2.0, get_viewport().size.y / 2.0)
     reinit_variables()
@@ -245,6 +247,7 @@ func update_powerups():
 
 func reinit_variables():
     current_lives = initial_lives
+    initial_paint = initial_paint_no_bonus
     current_paint_level = initial_paint
 
     green_ball_speed = green_ball_base_speed
@@ -260,8 +263,28 @@ func reinit_variables():
     gold_ball_spawn_rate = gold_ball_base_spawn_rate
     gold_ball_spawn_interval = gold_ball_base_spawn_interval
 
+    speed_up_barrier_triggered = false
+    slow_down_barrier_triggered = false
+
+    enemy_ship_slowdown_triggered = false
+    enemy_ship_speedup_triggered = false
+
+    strengthen_barrier_triggered = false
+    weaken_barrier_triggered = false
+
+    speed_up_barrier_start_time = 0.0
+    enemy_ship_slowdown_start_time = 0.0
+    strengthen_barrier_start_time = 0.0
+    slow_down_barrier_start_time = 0.0
+    enemy_ship_speedup_start_time = 0.0
+    weaken_barrier_start_time = 0.0
+
+    add_life_powerup_drop = false
+    add_life_powerup_drop_triggered_timer = false
+
 func restart_game():
     score_tracker.save_score()
+    upgrade_tracker.save_upgrades()
     reinit_variables()
     session_timer = 0.0
     get_tree().change_scene("res://Scenes/EndSessionScreen.tscn")
@@ -293,6 +316,8 @@ func add_life():
 
 func add_paint():
     current_paint_level += paint_score_modifier
+    if current_paint_level > 360:
+        current_paint_level = 360
 
 func substract_paint():
     if current_paint_level > 0:

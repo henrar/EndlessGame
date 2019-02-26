@@ -8,6 +8,8 @@ var new_high_score_achieved
 onready var scene_variables = get_node("/root/SceneVariables")
 
 func _ready(): 
+    get_tree().set_auto_accept_quit(false)
+    get_tree().set_quit_on_go_back(false)
     new_high_score_achieved = false
     current_score = 0
     load_score()
@@ -48,6 +50,9 @@ func load_score():
 
         for i in range(crossed_threshold):
             new_paint_amount += scene_variables.paint_score_modifier
+
+        if new_paint_amount > 360:
+            new_paint_amount = 360
 
         scene_variables.initial_paint = new_paint_amount
         scene_variables.current_paint_level = new_paint_amount

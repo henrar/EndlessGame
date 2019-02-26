@@ -30,8 +30,8 @@ func _ready():
     main_menu_button = get_tree().get_root().get_node("UpgradeMenu/MainMenuButton")
     background_sprite = get_tree().get_root().get_node("UpgradeMenu/Background")
 
-    upgrade_sprites.append(get_tree().get_root().get_node("UpgradeMenu/SturdySprite"))
     upgrade_sprites.append(get_tree().get_root().get_node("UpgradeMenu/MachEffectSprite"))
+    upgrade_sprites.append(get_tree().get_root().get_node("UpgradeMenu/SturdySprite"))
     upgrade_sprites.append(get_tree().get_root().get_node("UpgradeMenu/ResourcefulSprite"))
     upgrade_sprites.append(get_tree().get_root().get_node("UpgradeMenu/LethalDefenceSprite"))
 
@@ -61,8 +61,8 @@ func _ready():
    
     description_sprite = get_tree().get_root().get_node("UpgradeMenu/Description")
 
-    description_textures.append(preload("res://Assets/menu/upgrade_descriptions/sturdy.png"))
     description_textures.append(preload("res://Assets/menu/upgrade_descriptions/mach.png"))
+    description_textures.append(preload("res://Assets/menu/upgrade_descriptions/sturdy.png"))
     description_textures.append(preload("res://Assets/menu/upgrade_descriptions/resourceful.png"))
     description_textures.append(preload("res://Assets/menu/upgrade_descriptions/lethal.png"))
 

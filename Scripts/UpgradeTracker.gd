@@ -8,6 +8,8 @@ onready var scene_variables = get_node("/root/SceneVariables")
 onready var score_tracker = get_node("/root/ScoreTracker")
 
 func _ready(): 
+    get_tree().set_auto_accept_quit(false)
+    get_tree().set_quit_on_go_back(false)
     reset_upgrades()
     load_upgrades()
 
@@ -55,10 +57,10 @@ func load_upgrades():
 
 func execute_upgrades():
     if current_upgrades[0]:
-        scene_variables.barrier_strength += 1
+        score_tracker.add_score(500)
     
     if current_upgrades[1]:
-        score_tracker.add_score(500)
+        scene_variables.barrier_strength += 1
     
     if current_upgrades[2]:
         scene_variables.initial_paint += 30
