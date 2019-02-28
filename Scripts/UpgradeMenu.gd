@@ -67,7 +67,7 @@ func _ready():
     description_textures.append(preload("res://Assets/menu/upgrade_descriptions/lethal.png"))
 
     description_sprite.texture = description_textures[0]
-    
+
     display_upgrade_points()
     display_upgrade_prices()
 
@@ -106,7 +106,7 @@ func _process(delta):
 
 func update_buy_upgrades():
     for i in range(4):
-        if buy_buttons[i].pressed && upgrade_tracker.upgrade_points > scene_variables.upgrade_cost[i]:
+        if buy_buttons[i].pressed && upgrade_tracker.upgrade_points >= scene_variables.upgrade_cost[i]:
             audio_player.play_sound_effect(audio_player.SoundEffect.SE_BUY_UPGRADE)
             upgrade_tracker.upgrade_points -= scene_variables.upgrade_cost[i]
             upgrade_tracker.current_upgrades[i] = true 
