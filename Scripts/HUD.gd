@@ -4,6 +4,7 @@ var fps_text
 
 var number_textures = []
 var number_sprites = []
+var paint_bar_sprites = []
 
 var plasma_ball
 
@@ -14,6 +15,7 @@ var slowdown_barrier_sprite
 var enemy_ship_speedup_sprite
 var weaken_barrier_sprite
 
+var paint_bar_textures = []
 var bar_textures = []
 var barrier_speedup_textures = []
 var enemy_ship_slowdown_textures = []
@@ -58,6 +60,14 @@ func _ready():
     weaken_barrier_textures.append(preload("res://Assets/HUD/anus-1a.png"))
     weaken_barrier_textures.append(preload("res://Assets/HUD/anus-1.png"))
 
+    paint_bar_textures.append(preload("res://Assets/HUD/single_bar_empty.png"))
+    paint_bar_textures.append(preload("res://Assets/HUD/single_bar_full.png"))
+
+    for i in range(36):
+        paint_bar_sprites.append(get_tree().get_root().get_node("GameWorld/HUD/Control/Bar" + str(i)))
+        paint_bar_sprites[i].scale *= scene_variables.scale_factor
+        paint_bar_sprites[i].global_position *= scene_variables.scale_factor
+
     for i in range(10):
         number_textures.append(load("res://Assets/HUD/numbers_small/" + str(i) + ".png"))
 
@@ -86,7 +96,7 @@ func _process(delta):
     fps_text.text = str(Engine.get_frames_per_second())
 
     display_score()
-    update_bar()
+    update_paint_bar()
     update_powerups_display()
 
 func display_score():
@@ -103,8 +113,14 @@ func display_score():
         var number = int(score_str[score_str.length() - 1 - i])
         number_sprites[5 - i].texture = number_textures[number]
 
-func update_bar():
-    pass
+func update_paint_bar():
+    var bar_index = int(scene_variables.current_paint_level / 10)
+
+    for i in range(36):
+        if i < bar_index:
+            paint_bar_sprites[i].texture = paint_bar_textures[1]
+        else:
+            paint_bar_sprites[i].texture = paint_bar_textures[0]
 
 func update_powerups_display():
     if scene_variables.speed_up_barrier_triggered:
