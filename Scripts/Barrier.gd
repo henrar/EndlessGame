@@ -154,7 +154,7 @@ func load_barrier_sprites_based_on_strength():
 
 func _input(event):
     if OS.get_name() == "Android" || OS.get_name() == "iOS":
-        if event is InputEventScreenTouch && (event.index == null || event_index == 0):
+        if event is InputEventScreenTouch && (event.index == null || event.index == 0):
             if event.pressed:
                 handle_click(event)
             elif !event.pressed:
