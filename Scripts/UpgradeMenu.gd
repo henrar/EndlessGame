@@ -51,14 +51,14 @@ func _ready():
 
     for i in range(4):
         gp_sprites.append(get_tree().get_root().get_node("UpgradeMenu/GPSprite" + str(i+1)))
-        gp_sprites[i].scale *= scene_variables.scale_factor 
+        gp_sprites[i].scale *= scene_variables.scale_factor
         gp_sprites[i].global_position *= scene_variables.scale_factor
 
     for i in range(4 * 2):
         gp_number_sprites.append(get_tree().get_root().get_node("UpgradeMenu/GPNumber" + str(i)))
-        gp_number_sprites[i].scale *= scene_variables.scale_factor 
+        gp_number_sprites[i].scale *= scene_variables.scale_factor
         gp_number_sprites[i].global_position *= scene_variables.scale_factor
-   
+
     description_sprite = get_tree().get_root().get_node("UpgradeMenu/Description")
 
     description_textures.append(preload("res://Assets/menu/upgrade_descriptions/mach.png"))
@@ -73,7 +73,7 @@ func _ready():
 
     description_sprite.scale *= scene_variables.scale_factor
     description_sprite.global_position *= scene_variables.scale_factor
-   
+
     for i in range(4):
         upgrade_sprites[i].rect_scale *= scene_variables.scale_factor
         upgrade_sprites[i].rect_position *= scene_variables.scale_factor
@@ -109,8 +109,8 @@ func update_buy_upgrades():
         if buy_buttons[i].pressed && upgrade_tracker.upgrade_points >= scene_variables.upgrade_cost[i]:
             audio_player.play_sound_effect(audio_player.SoundEffect.SE_BUY_UPGRADE)
             upgrade_tracker.upgrade_points -= scene_variables.upgrade_cost[i]
-            upgrade_tracker.current_upgrades[i] = true 
-            upgrade_tracker.save_upgrades()   
+            upgrade_tracker.current_upgrades[i] = true
+            upgrade_tracker.save_upgrades()
             display_upgrade_points()
 
 func display_upgrade_points():
@@ -137,7 +137,7 @@ func display_upgrade_prices():
             continue
 
         var price_str = str(price)
-        
+
         for j in range(price_str.length()):
             var number = int(price_str[price_str.length() - 1 - j])
             gp_number_sprites[1 - j + i * 2].texture = upgrade_number_textures[number]

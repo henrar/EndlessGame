@@ -16,7 +16,8 @@ const score_time_addition_interval = 1.0
 
 #barrier
 var barrier_erect_speed = 5 #per second
-var barrier_strength = 0 
+const base_barrier_strenth = 0
+var barrier_strength = base_barrier_strenth
 
 #ball behavior
 var collision_timer = 2.0 #how long will it take for a ship to return from a barrier bounce to normal state
@@ -28,10 +29,10 @@ const gold_ball_speed_modifier = 10.0
 const gold_ball_speed_modifier_interval = 60.0
 
 const gold_ball_base_spawn_rate = 1 #per interval
-var gold_ball_spawn_rate = gold_ball_base_spawn_rate 
+var gold_ball_spawn_rate = gold_ball_base_spawn_rate
 
 const gold_ball_base_spawn_interval = 60.0 #interval (seconds)
-var gold_ball_spawn_interval = gold_ball_base_spawn_interval 
+var gold_ball_spawn_interval = gold_ball_base_spawn_interval
 var gold_ball_spawn_rate_modifier = 1
 var gold_ball_spawn_rate_interval_modifier = 0.0
 var gold_ball_spawn_rate_timer = 60.0
@@ -49,10 +50,10 @@ const green_ball_speed_modifier = 10.0
 const green_ball_speed_modifier_interval = 60.0
 
 const green_ball_base_spawn_rate = 1 #per interval
-var green_ball_spawn_rate = green_ball_base_spawn_rate 
+var green_ball_spawn_rate = green_ball_base_spawn_rate
 
 const green_ball_base_spawn_interval = 3.0 #interval (seconds)
-var green_ball_spawn_interval = green_ball_base_spawn_interval 
+var green_ball_spawn_interval = green_ball_base_spawn_interval
 var green_ball_spawn_rate_modifier = 0
 var green_ball_spawn_rate_interval_modifier = 0.0
 var green_ball_spawn_rate_timer = 60.0
@@ -73,10 +74,10 @@ const red_ball_speed_modifier = [10.0, 10.0, 10.0]
 const red_ball_speed_modifier_interval = [60.0, 60.0, 60.0]
 
 const red_ball_base_spawn_rate = [1, 1, 1] #per interval
-var red_ball_spawn_rate = red_ball_base_spawn_rate 
+var red_ball_spawn_rate = red_ball_base_spawn_rate
 
 const red_ball_base_spawn_interval = [5.0, 19.0, 31.0] #interval (seconds)
-var red_ball_spawn_interval = red_ball_base_spawn_interval 
+var red_ball_spawn_interval = red_ball_base_spawn_interval
 const red_ball_spawn_rate_modifier = [1, 1, 1]
 const red_ball_spawn_rate_interval_modifier = [0.0, 0.0, 0.0]
 const red_ball_spawn_rate_timer = [60.0, 60.0, 60.0]
@@ -88,7 +89,7 @@ const red_ball_hit_barrier = [10, 15, 20]
 const red_ball_collide = [10, 15, 20]
 
 #upgrade cost
-enum UpgradeTypes {UPGRADE_MACH_EFFECT = 0, UPGRADE_STURDY = 1, UPGRADE_RESOURCEFUL = 2, UPGRADE_LETHAL_DEFENCE = 3, UPGRADE_NUM = 4} 
+enum UpgradeTypes {UPGRADE_MACH_EFFECT = 0, UPGRADE_STURDY = 1, UPGRADE_RESOURCEFUL = 2, UPGRADE_LETHAL_DEFENCE = 3, UPGRADE_NUM = 4}
 const upgrade_cost = [5, 10, 15, 20]
 
 #powerups variables
@@ -155,6 +156,7 @@ var current_paint_level
 var GreenBall = preload("res://Scripts/GreenBall.gd")
 var RedBall = preload("res://Scripts/RedBall.gd")
 var GoldBall = preload("res://Scripts/GoldBall.gd")
+var NukeExplosion = preload("res://Scenes/NukeParticle.tscn")
 
 #graphics
 const virtual_resolution_x = 1920.0
@@ -164,6 +166,9 @@ var scale_factor
 onready var score_tracker = get_node("/root/ScoreTracker")
 onready var upgrade_tracker = get_node("/root/UpgradeTracker")
 onready var audio_player = get_node("/root/AudioPlayer")
+
+var score_timer
+var created_score_timer = false
 
 func _ready():
     get_tree().set_auto_accept_quit(false)
@@ -178,7 +183,6 @@ func _process(delta):
 
         update_ball_speed()
         update_ball_spawn_rate()
-        update_score()
         update_powerups()
 
 func update_ball_spawn_rate():
@@ -187,16 +191,16 @@ func update_ball_spawn_rate():
         if green_ball_spawn_interval - green_ball_spawn_rate_interval_modifier > 1.0:
             green_ball_spawn_interval -= green_ball_spawn_rate_interval_modifier
 
-    for i in range(0, 3):   
+    for i in range(0, 3):
         if fmod(session_timer, red_ball_spawn_rate_timer[i]) <= 0.01:
             red_ball_spawn_rate[i] += red_ball_spawn_rate_modifier[i]
             if red_ball_spawn_interval[i] - red_ball_spawn_rate_interval_modifier[i] > 1.0:
-                red_ball_spawn_interval[i] -= red_ball_spawn_rate_interval_modifier[i]     
+                red_ball_spawn_interval[i] -= red_ball_spawn_rate_interval_modifier[i]
 
     if fmod(session_timer, gold_ball_spawn_rate_timer) <= 0.01:
         gold_ball_spawn_rate += gold_ball_spawn_rate_modifier
         if gold_ball_spawn_interval - gold_ball_spawn_rate_interval_modifier > 1.0:
-            gold_ball_spawn_interval -= gold_ball_spawn_rate_interval_modifier        
+            gold_ball_spawn_interval -= gold_ball_spawn_rate_interval_modifier
 
 func update_ball_speed():
     if fmod(session_timer, green_ball_speed_modifier_interval) <= 0.01:
@@ -204,13 +208,23 @@ func update_ball_speed():
 
     for i in range(0, 3):
         if fmod(session_timer, red_ball_speed_modifier_interval[i]) <= 0.01:
-            red_ball_speed[i] += red_ball_speed_modifier[i]   
-        
+            red_ball_speed[i] += red_ball_speed_modifier[i]
+
     if fmod(session_timer, gold_ball_speed_modifier_interval) <= 0.01:
-        gold_ball_speed += gold_ball_speed_modifier    
+        gold_ball_speed += gold_ball_speed_modifier
+
+func init_score_timer():
+    if not created_score_timer:
+        score_timer = Timer.new()
+        score_timer.one_shot = false
+        score_timer.wait_time = score_time_addition_interval
+        score_timer.connect("timeout",self,"update_score")
+        get_tree().get_root().get_node("GameWorld").add_child(score_timer)
+        score_timer.start()
+        created_score_timer = true
 
 func update_score():
-    if fmod(session_timer, score_time_addition_interval) <= 0.01:
+    if get_tree().get_current_scene().get_name() == "GameWorld":
         score_tracker.add_score(score_time_addition)
 
 func update_powerups():
@@ -225,7 +239,7 @@ func update_powerups():
         for node in get_tree().get_root().get_node("GameWorld").get_children():
             if node is RedBall:
                 node.restore_speed()
-    
+
     if strengthen_barrier_triggered && session_timer - strengthen_barrier_start_time >= strengthen_barrier_time:
         audio_player.play_sound_effect(audio_player.SoundEffect.SE_GOOD_POWERUP_ACTIVATE)
         strengthen_barrier_triggered = false
@@ -289,23 +303,26 @@ func reinit_variables():
     add_life_powerup_drop = false
     add_life_powerup_drop_triggered_timer = false
 
+    barrier_strength = base_barrier_strenth
+
 func restart_game():
     score_tracker.save_score()
     upgrade_tracker.save_upgrades()
+    upgrade_tracker.reset_upgrades()
     reinit_variables()
     session_timer = 0.0
+    created_score_timer = false
     get_tree().change_scene("res://Scenes/EndSessionScreen.tscn")
 
 func remove_life():
     if current_lives > 0:
         current_lives -= 1
-        current_paint_level = initial_paint
 
         var barrier = get_tree().get_root().get_node("GameWorld/Barrier")
         barrier.input_pos = null
         barrier.clicked_within_ring = false
         barrier.clear_angles()
-        
+
         var mothership = get_tree().get_root().get_node("GameWorld/Mothership")
         mothership.set_sprite_based_on_life()
 
@@ -325,6 +342,9 @@ func add_life():
 
 func add_paint():
     current_paint_level += paint_score_modifier
+    if current_paint_level > initial_paint:
+        current_paint_level = initial_paint
+
     if current_paint_level > 360:
         current_paint_level = 360
 
@@ -358,6 +378,11 @@ func execute_good_powerup(type):
     elif type == GoodPowerupTypes.ADD_LIFE:
         add_life()
     elif type == GoodPowerupTypes.GOOD_NUKE:
+        var nuke_explosion = NukeExplosion.instance()
+        nuke_explosion.get_node("NukeParticles").emitting = true
+        nuke_explosion.get_node("NukeParticles").process_material.color = Color(0.0, 1.0, 0.0)
+        get_tree().get_root().get_node("GameWorld").add_child(nuke_explosion)
+        nuke_explosion.global_position = center_location
         audio_player.play_sound_effect(audio_player.SoundEffect.SE_NUKE_EXPLOSION)
         for node in get_tree().get_root().get_node("GameWorld").get_children():
             if node is RedBall:
@@ -387,9 +412,13 @@ func execute_bad_powerup(type):
             old_barrier_strength = barrier_strength
             barrier_strength -= weaken_barrier_modifier
     elif type == BadPowerupTypes.BAD_NUKE:
+        var nuke_explosion = NukeExplosion.instance()
+        nuke_explosion.get_node("NukeParticles").emitting = true
+        nuke_explosion.get_node("NukeParticles").process_material.color = Color(1.0, 0.0, 0.0)
+        get_tree().get_root().get_node("GameWorld").add_child(nuke_explosion)
+        nuke_explosion.global_position = center_location
         audio_player.play_sound_effect(audio_player.SoundEffect.SE_NUKE_EXPLOSION)
         for node in get_tree().get_root().get_node("GameWorld").get_children():
             if node is GreenBall || node is GoldBall:
                 node.destroy(false)
 
-        

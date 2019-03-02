@@ -59,7 +59,7 @@ func load_sound_effects():
     sound_effects.append(load("res://Assets/sound/effects/se_nuke_explosion.wav"))
     sound_effects.append(load("res://Assets/sound/effects/se_bad_powerup_deactivate.wav"))
     sound_effects.append(load("res://Assets/sound/effects/se_life_bonus_activate.wav"))
-    sound_effects.append(load("res://Assets/sound/effects/se_high_score_fanfare.wav"))
+    sound_effects.append(load("res://Assets/sound/effects/se_highscore_fanfare.wav"))
     sound_effects.append(load("res://Assets/sound/effects/se_bad_powerup_activate.wav"))
     sound_effects.append(load("res://Assets/sound/effects/se_good_powerup_activate.wav"))
     sound_effects.append(load("res://Assets/sound/effects/se_good_powerup_deactivate.wav"))
@@ -69,13 +69,12 @@ func init_sound_effect_players():
         sound_effect_players.append(AudioStreamPlayer.new())
         if i < sound_effects.size():
             sound_effect_players[i].set_stream(sound_effects[i])
-        
+
         sound_effect_players[i].set_name("SoundEffectPlayer" + str(i))
-        add_child(sound_effect_players[i])   
+        add_child(sound_effect_players[i])
 
 func stop_music():
     if music_player.is_playing():
         music_player.stop()
         current_music_track = Music.MUSIC_NOMUSIC
-        
-        
+

@@ -19,7 +19,6 @@ var old_barrier_strength
 var current_barrier_speed
 
 onready var scene_variables = get_node("/root/SceneVariables")
-#onready var barrier_sprite = get_tree().get_root().get_node("GameWorld/Barrier/BarrierSprite")
 
 var barrier_sprite_textures = []
 var barrier_sprites = []
@@ -27,6 +26,7 @@ var barrier_sprites = []
 var ring_hint_sprite = Sprite.new()
 
 var barrier_timer
+var touched = false
 
 func _ready():
     position = scene_variables.center_location
@@ -49,14 +49,6 @@ func _ready():
 
     load_barrier_sprites_based_on_strength()
 
-    #barrier_sprite_textures.append(preload("res://Assets/barrier/circle-fin-3.png"))
-    #barrier_sprite_textures.append(preload("res://Assets/barrier/circle-fin-2.png"))
-   # barrier_sprite_textures.append(preload("res://Assets/barrier/circle-fin-1.png"))
-
-    #barrier_sprite.global_position = position
-    #barrier_sprite.scale *= scene_variables.scale_factor
- #   barrier_sprite.hide()
-
 func create_timer():
     barrier_timer = Timer.new()
     barrier_timer.one_shot = false
@@ -64,23 +56,26 @@ func create_timer():
     barrier_timer.connect("timeout",self,"set_up_barrier")
     barrier_timer.start()
     add_child(barrier_timer)
+    touched = true
 
 func destroy_timer():
-    remove_child(barrier_timer)
+    if touched:
+        remove_child(barrier_timer)
+        touched = false
 
 func _process(delta):
     current_barrier_speed = scene_variables.barrier_erect_speed
 
     if old_barrier_strength != current_barrier_strength:
         load_barrier_sprites_based_on_strength()
-    
+
     old_barrier_strength = current_barrier_strength
 
     if current_barrier_strength < 0 && clicked_within_ring:
         clicked_within_ring = false
         clear_angles()
         destroy_timer()
-    
+
     update_sprites()
 
 func set_up_barrier():
@@ -92,15 +87,15 @@ func set_up_barrier():
         barrier_paint_per_side = barrier_paint_per_side / 2
 
     for i in range(1, barrier_paint_per_side + 1):
-        if scene_variables.current_paint_level > 0:   
+        if scene_variables.current_paint_level > 0:
             var positive_i = i
-                        
+
             if angle_index_right + positive_i >= 360:
                 angles[(angle_index_right + positive_i) - 360] = true
             else:
                 angles[angle_index_right + positive_i] = true
-            
-            index = positive_i   
+
+            index = positive_i
             scene_variables.substract_paint()
 
     if angle_index_right + index >= 360:
@@ -109,15 +104,15 @@ func set_up_barrier():
         angle_index_right = angle_index_right + index
 
     for i in range(1, barrier_paint_per_side + 1):
-        if scene_variables.current_paint_level > 0:  
-            var negative_i = -i   
-            
-            if angle_index_left + negative_i < 0:
-                negative_i = 360 + negative_i 
+        if scene_variables.current_paint_level > 0:
+            var negative_i = -i
 
-            angles[angle_index_left + negative_i] = true  
-            index = negative_i    
-            scene_variables.substract_paint()   
+            if angle_index_left + negative_i < 0:
+                negative_i = 360 + negative_i
+
+            angles[angle_index_left + negative_i] = true
+            index = negative_i
+            scene_variables.substract_paint()
 
     angle_index_left = angle_index_left + index
 
@@ -145,7 +140,7 @@ func load_barrier_sprites_based_on_strength():
         if node is Sprite && not node.name == "RingHintSprite":
             remove_child(node)
             node.queue_free()
-    
+
     barrier_sprites = []
 
     for i in range(361):
@@ -159,29 +154,18 @@ func load_barrier_sprites_based_on_strength():
 
 func _input(event):
     if OS.get_name() == "Android" || OS.get_name() == "iOS":
-        if event is InputEventScreenTouch:
+        if event is InputEventScreenTouch && (event.index == null || event_index == 0):
             if event.pressed:
                 handle_click(event)
             elif !event.pressed:
                 handle_release(event)
-        if event is InputEventScreenDrag:
-            if clicked_within_ring:
-                input_pos = convert_to_ring_relative_coords(event.position)
-                if is_on_ring(input_pos):
-                    pass
     else:
-        if event is InputEventMouseButton: 
+        if event is InputEventMouseButton:
             if event.pressed && event.button_index == BUTTON_LEFT:
                 handle_click(event)
             elif !event.pressed && event.button_index == BUTTON_LEFT:
                 handle_release(event)
 
-        if event is InputEventMouseMotion:
-            if clicked_within_ring:
-                input_pos = convert_to_ring_relative_coords(event.position)
-                if is_on_ring(input_pos):
-                    pass    
-  
 func handle_click(event):
     if scene_variables.current_paint_level > 0:
         input_pos = convert_to_ring_relative_coords(event.position)
@@ -190,10 +174,10 @@ func handle_click(event):
         angles[starting_angle] = true
         angle_index_left = starting_angle
         angle_index_right = starting_angle
-        current_barrier_strength = scene_variables.barrier_strength  
-        load_barrier_sprites_based_on_strength() 
+        current_barrier_strength = scene_variables.barrier_strength
+        load_barrier_sprites_based_on_strength()
         create_timer()
-    
+
 func handle_release(event):
     destroy_timer()
     input_pos = null
@@ -201,11 +185,11 @@ func handle_release(event):
     clear_angles()
 
 func convert_to_ring_relative_coords(position):
-    return Vector2(position.x - scene_variables.center_location.x, scene_variables.center_location.y - position.y)                
+    return Vector2(position.x - scene_variables.center_location.x, scene_variables.center_location.y - position.y)
 
 func is_on_ring(position):
     return position.distance_to(center_coords) > (radius.x - thickness / 2.0) && position.distance_to(center_coords) < (radius.x + thickness / 2.0)
-    
+
 func is_inside_inner_circle(position):
     return position.distance_to(center_coords) < (radius.x - thickness / 2.0)
 
@@ -227,14 +211,14 @@ func precompute_ring():
     line_ends = []
     line_origins.append(radius + center_coords)
 
-    var draw_counter = 0 
+    var draw_counter = 0
     while draw_counter < 360:
         line_ends.append(radius.rotated(deg2rad(draw_counter)) + center_coords)
         line_origins.append(line_ends[draw_counter])
         draw_counter += 1
-    
+
     line_ends.append(radius.rotated(deg2rad(360)) + center_coords)
-    
+
 func damage_barrier():
     if current_barrier_strength >= 0:
         current_barrier_strength -= 1

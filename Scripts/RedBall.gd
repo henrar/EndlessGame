@@ -15,12 +15,15 @@ var ship_type
 
 var carried_powerup
 var BadPowerup = preload("res://Scripts/BadPowerup.gd")
+var ExplosionParticle = preload("res://Scenes/ExplosionMothershipRed.tscn")
+var ExplosionBarrierParticle = preload("res://Scenes/ExplosionBarrierWhite.tscn")
+var EngineParticle = preload("res://Scenes/EngineParticlesRed.tscn")
 
 onready var scene_variables = get_node("/root/SceneVariables")
 onready var barrier = get_tree().get_root().get_node("GameWorld/Barrier")
 onready var score_tracker = get_node("/root/ScoreTracker")
 onready var upgrade_tracker = get_node("/root/UpgradeTracker")
-onready var audio_player = get_node("/root/AudioPlayer") 
+onready var audio_player = get_node("/root/AudioPlayer")
 
 var target
 
@@ -39,6 +42,12 @@ func _ready():
 
     add_collision_shape()
 
+    var particle_position = Vector2(-20.0 * scene_variables.scale_factor.x, 0.0 * scene_variables.scale_factor.y)
+    var engine_particle = EngineParticle.instance()
+    engine_particle.get_node("EngineParticles").process_material.color = Color(1.0, 0.0, 0.0)
+    add_child(engine_particle)
+    engine_particle.position = particle_position
+
 func _process(delta):
     if collided_with_barrier:
         target = initial_pos
@@ -54,8 +63,20 @@ func _process(delta):
     var collision = move_and_collide(velocity)
     if collision:
         if collision.collider.get_name() == "Mothership":
+            var explosion_particle = ExplosionParticle.instance()
+            explosion_particle.global_position = global_position
+            get_tree().get_root().get_node("GameWorld").add_child(explosion_particle)
+            var particle = explosion_particle.get_node("ExplosionParticle")
+            particle.emitting = true
+            particle.process_material.color = Color(1.0, 0.0, 0.0)
             destroy(true)
         else:
+            var explosion_particle = ExplosionParticle.instance()
+            explosion_particle.global_position = global_position
+            get_tree().get_root().get_node("GameWorld").add_child(explosion_particle)
+            var particle = explosion_particle.get_node("ExplosionParticle")
+            particle.emitting = true
+            particle.process_material.color = Color(1.0, 0.5, 0.0)
             audio_player.play_sound_effect(audio_player.SoundEffect.SE_SHIP_COLLISION)
             collision.collider.collide_with_ball()
             collide_with_ball()
@@ -73,6 +94,7 @@ func handle_collision_with_barrier():
     if did_collide_with_barrier():
         if upgrade_tracker.current_upgrades[3]:
             barrier.damage_barrier()
+            explode_on_barrier()
             destroy(false)
             return
         if toughness > 0:
@@ -84,6 +106,7 @@ func handle_collision_with_barrier():
             audio_player.play_sound_effect(audio_player.SoundEffect.SE_BARRIER_COLLISION_BOUNCE)
         else:
             barrier.damage_barrier()
+            explode_on_barrier()
             destroy(false)
 
 func destroy(reached_center):
@@ -96,7 +119,7 @@ func destroy(reached_center):
         if carried_powerup:
             carried_powerup.execute_effect()
 
-        audio_player.play_sound_effect(audio_player.SoundEffect.SE_MOTHERSHIP_HIT_RED)    
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_MOTHERSHIP_HIT_RED)
 
     queue_free()
 
@@ -157,7 +180,7 @@ func update_powerup_position():
     if get_child_count() > 2 && get_child(0).get_name() == "Powerup":
         var powerup_position = Vector2(-60.0 * scene_variables.scale_factor.x, 0.0 * scene_variables.scale_factor.y)
         carried_powerup.set_position(powerup_position)
-        carried_powerup.set_rotation(-get_rotation())    
+        carried_powerup.set_rotation(-get_rotation())
 
 func restore_speed():
     if old_speed:
@@ -170,3 +193,11 @@ func slowdown():
 func speedup():
     old_speed = speed
     speed += scene_variables.enemy_ship_speedup_modifier
+
+func explode_on_barrier():
+    var explosion_particle = ExplosionBarrierParticle.instance()
+    explosion_particle.global_position = global_position
+    get_tree().get_root().get_node("GameWorld").add_child(explosion_particle)
+    var particle = explosion_particle.get_node("ExplosionParticle")
+    particle.emitting = true
+    particle.process_material.color = Color(1.0, 1.0, 1.0)

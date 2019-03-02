@@ -14,7 +14,7 @@ func _ready():
     loading_box = get_tree().get_root().get_node("LoadingScreen/LoadingBox")
     loading_bar = get_tree().get_root().get_node("LoadingScreen/LoadingBox/LoadingBar")
     loading_bar.scale = Vector2(0.0, 1.0 * scene_variables.scale_factor.y)
-    
+
     title_sprite = get_tree().get_root().get_node("LoadingScreen/Title")
     background_sprite = get_tree().get_root().get_node("LoadingScreen/Background")
 
@@ -31,9 +31,9 @@ func _process(delta):
 
     if fmod(loading_timer, 0.4) <= 0.02 && loading_bar.scale.x < 1.0:
         loading_bar.scale.x += 0.1
-    
+
     if loading_bar.scale.x >= 1.0:
         score_tracker.reset_score()
         get_tree().change_scene("res://Scenes/Game.tscn")
 
-    
+

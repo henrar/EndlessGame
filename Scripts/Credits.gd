@@ -5,7 +5,7 @@ var main_menu_button
 var background_sprite
 
 onready var scene_variables = get_node("/root/SceneVariables")
-onready var audio_player = get_node("/root/AudioPlayer") 
+onready var audio_player = get_node("/root/AudioPlayer")
 
 func _ready():
     main_menu_button = get_tree().get_root().get_node("Credits/MainMenuButton")

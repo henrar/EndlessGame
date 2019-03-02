@@ -9,7 +9,7 @@ var title_sprite
 var background_sprite
 
 onready var scene_variables = get_node("/root/SceneVariables")
-onready var audio_player = get_node("/root/AudioPlayer") 
+onready var audio_player = get_node("/root/AudioPlayer")
 
 func _ready():
     new_game_button = get_tree().get_root().get_node("MainMenu/NewGameButton")

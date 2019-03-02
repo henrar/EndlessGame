@@ -11,7 +11,7 @@ var number_sprites = []
 var background_sprite
 
 onready var scene_variables = get_node("/root/SceneVariables")
-onready var audio_player = get_node("/root/AudioPlayer") 
+onready var audio_player = get_node("/root/AudioPlayer")
 onready var upgrade_tracker = get_node("/root/UpgradeTracker")
 
 func _ready():
@@ -32,6 +32,7 @@ func _ready():
     for i in range(10):
         number_textures.append(load("res://Assets/menu/numbers/" + str(i) + ".png"))
         number_sprites.append(get_tree().get_root().get_node("EndSessionScreen/HighScore" + str(i)))
+        number_sprites[i].hide()
 
     display_score()
 
@@ -69,10 +70,37 @@ func _process(delta):
 
 func display_score():
     var score = get_node("/root/ScoreTracker").current_score
-
     var score_str = str(score)
 
     for i in range(score_str.length()):
         var number = int(score_str[score_str.length() - 1 - i])
-        number_sprites[9 - i].texture = number_textures[number]
-    
+        if score_str.length() < 10:
+            if score_str.length() % 2 == 1:
+                number_sprites[9 - i - score_str.length() - 1].texture = number_textures[number]
+            else:
+                number_sprites[9 - i - (9 - score_str.length()) + (9 - score_str.length()) / 2].texture = number_textures[number]
+                number_sprites[9 - i - (9 - score_str.length())  + (9 - score_str.length()) / 2].show()
+        else:
+            number_sprites[9 - i].texture = number_textures[number]
+            number_sprites[9 - i].show()
+
+    if score_str.length() % 2 == 1 && score_str.length() < 10:
+        var middle_index = (score_str.length() / 2) + 1
+        var sprite_middle_index = 9 - middle_index - score_str.length()
+
+        number_sprites[sprite_middle_index].global_position.x = scene_variables.center_location.x
+        number_sprites[sprite_middle_index].show()
+
+        var index_min = sprite_middle_index - score_str.length() / 2
+        var index_max =  sprite_middle_index + score_str.length() / 2
+        for i in range (index_min, sprite_middle_index):
+            number_sprites[i].global_position.x = number_sprites[sprite_middle_index].global_position.x - (190 * (sprite_middle_index - i))
+            number_sprites[i].show()
+
+        var modifier = 1
+        for i in range (sprite_middle_index + 1, index_max + 1):
+            number_sprites[i].global_position.x = number_sprites[sprite_middle_index].global_position.x + (190 * modifier)
+            number_sprites[i].show()
+            modifier += 1
+
+

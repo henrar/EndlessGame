@@ -8,7 +8,7 @@ var new_high_score_achieved
 onready var scene_variables = get_node("/root/SceneVariables")
 onready var audio_player = get_node("/root/AudioPlayer")
 
-func _ready(): 
+func _ready():
     get_tree().set_auto_accept_quit(false)
     get_tree().set_quit_on_go_back(false)
     new_high_score_achieved = false
@@ -66,10 +66,10 @@ func reset_score():
 
 func add_score(score):
     current_score += score
-    if current_score % scene_variables.high_score_threshold == 0:
+    if current_score % scene_variables.high_score_threshold == 0 && current_score > high_score:
         scene_variables.add_paint()
+        new_high_score_achieved = true
+        audio_player.play_sound_effect(audio_player.SoundEffect.SE_HIGHSCORE_FANFARE)
 
     if current_score > high_score:
         high_score = current_score
-        new_high_score_achieved = true
-        audio_player.play_sound_effect(audio_player.SoundEffect.SE_HIGHSCORE_FANFARE)
