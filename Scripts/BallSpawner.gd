@@ -88,7 +88,7 @@ func select_good_powerup():
     var probability_table = []
     for i in range(0, GoodPowerupTypes.GOOD_POWERUP_COUNT):
         var sum = 0.0
-        for j in range(0, i):
+        for j in range(i + 1):
             sum += scene_variables.good_powerup_drop_probability[j]
         probability_table.append(sum)
 
@@ -111,7 +111,7 @@ func select_bad_powerup():
     var probability_table = []
     for i in range(0, BadPowerupTypes.BAD_POWERUP_COUNT):
         var sum = 0.0
-        for j in range(0, i):
+        for j in range(i + 1):
             sum += scene_variables.bad_powerup_drop_probability[j]
         probability_table.append(sum)
 
