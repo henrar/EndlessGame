@@ -34,8 +34,6 @@ onready var score_tracker = get_node("/root/ScoreTracker")
 func _ready():
     plasma_ball = get_tree().get_root().get_node("GameWorld/HUD/Control/PlasmaBall")
 
-    fps_text = get_tree().get_root().get_node("GameWorld/HUD/Control/FPSCounter")
-
     bar_textures.append(preload("res://Assets/HUD/timer-alone-inactive.png"))
     bar_textures.append(preload("res://Assets/HUD/timer-alone-active.png"))
 
@@ -113,8 +111,6 @@ func _ready():
     weaken_barrier_sprite.global_position *= scene_variables.scale_factor
 
 func _process(delta):
-    fps_text.text = str(Engine.get_frames_per_second())
-
     display_score()
     display_high_score()
     update_paint_bar()

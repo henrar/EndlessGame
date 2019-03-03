@@ -132,83 +132,42 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 _sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Rect" ]
 
-[node name="FPSLabel" type="Label" parent="HUD/Control" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 5.0
-margin_top = 78.0
-margin_right = 45.0
-margin_bottom = 92.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "FPS:"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="FPSCounter" type="Label" parent="HUD/Control" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 36.0
-margin_top = 77.0
-margin_right = 76.0
-margin_bottom = 91.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="Score0" type="Sprite" parent="HUD/Control" index="2"]
+[node name="Score0" type="Sprite" parent="HUD/Control" index="0"]
 
 position = Vector2( 40, 40 )
 texture = ExtResource( 10 )
 
-[node name="Score1" type="Sprite" parent="HUD/Control" index="3"]
+[node name="Score1" type="Sprite" parent="HUD/Control" index="1"]
 
 position = Vector2( 120, 40 )
 texture = ExtResource( 10 )
 
-[node name="Score2" type="Sprite" parent="HUD/Control" index="4"]
+[node name="Score2" type="Sprite" parent="HUD/Control" index="2"]
 
 position = Vector2( 200, 40 )
 texture = ExtResource( 10 )
 
-[node name="Score3" type="Sprite" parent="HUD/Control" index="5"]
+[node name="Score3" type="Sprite" parent="HUD/Control" index="3"]
 
 position = Vector2( 280, 40 )
 texture = ExtResource( 10 )
 
-[node name="Score4" type="Sprite" parent="HUD/Control" index="6"]
+[node name="Score4" type="Sprite" parent="HUD/Control" index="4"]
 
 position = Vector2( 360, 40 )
 texture = ExtResource( 10 )
 
-[node name="Score5" type="Sprite" parent="HUD/Control" index="7"]
+[node name="Score5" type="Sprite" parent="HUD/Control" index="5"]
 
 position = Vector2( 440, 40 )
 texture = ExtResource( 10 )
 
-[node name="PlasmaBall" type="Sprite" parent="HUD/Control" index="8"]
+[node name="PlasmaBall" type="Sprite" parent="HUD/Control" index="6"]
 
 position = Vector2( 1860, 690 )
 texture = ExtResource( 11 )
 
-[node name="BarrierSpeedUp" type="Sprite" parent="HUD/Control" index="9"]
+[node name="BarrierSpeedUp" type="Sprite" parent="HUD/Control" index="7"]
 
 editor/display_folded = true
 position = Vector2( 30, 990 )
@@ -246,7 +205,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Size Flags", "custom_colors", "custom_fonts", "custom_styles" ]
 
-[node name="EnemyShipSlowdown" type="Sprite" parent="HUD/Control" index="10"]
+[node name="EnemyShipSlowdown" type="Sprite" parent="HUD/Control" index="8"]
 
 editor/display_folded = true
 position = Vector2( 90, 990 )
@@ -284,7 +243,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Size Flags", "custom_colors", "custom_fonts", "custom_styles" ]
 
-[node name="StrengthenBarrier" type="Sprite" parent="HUD/Control" index="11"]
+[node name="StrengthenBarrier" type="Sprite" parent="HUD/Control" index="9"]
 
 editor/display_folded = true
 position = Vector2( 150, 990 )
@@ -322,7 +281,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Size Flags", "custom_colors", "custom_fonts", "custom_styles" ]
 
-[node name="SlowDownBarrier" type="Sprite" parent="HUD/Control" index="12"]
+[node name="SlowDownBarrier" type="Sprite" parent="HUD/Control" index="10"]
 
 editor/display_folded = true
 position = Vector2( 210, 990 )
@@ -360,7 +319,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Size Flags", "custom_colors", "custom_fonts", "custom_styles" ]
 
-[node name="EnemyShipSpeedUp" type="Sprite" parent="HUD/Control" index="13"]
+[node name="EnemyShipSpeedUp" type="Sprite" parent="HUD/Control" index="11"]
 
 editor/display_folded = true
 position = Vector2( 270, 990 )
@@ -398,7 +357,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Size Flags", "custom_colors", "custom_fonts", "custom_styles" ]
 
-[node name="WeakenBarrier" type="Sprite" parent="HUD/Control" index="14"]
+[node name="WeakenBarrier" type="Sprite" parent="HUD/Control" index="12"]
 
 editor/display_folded = true
 position = Vector2( 330, 990 )
@@ -437,257 +396,257 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Size Flags", "custom_colors", "custom_fonts", "custom_styles" ]
 
-[node name="Bar0" type="Sprite" parent="HUD/Control" index="15"]
+[node name="Bar0" type="Sprite" parent="HUD/Control" index="13"]
 
 position = Vector2( 1860, 950 )
 texture = ExtResource( 19 )
 
-[node name="Bar1" type="Sprite" parent="HUD/Control" index="16"]
+[node name="Bar1" type="Sprite" parent="HUD/Control" index="14"]
 
 position = Vector2( 1860, 930 )
 texture = ExtResource( 19 )
 
-[node name="Bar2" type="Sprite" parent="HUD/Control" index="17"]
+[node name="Bar2" type="Sprite" parent="HUD/Control" index="15"]
 
 position = Vector2( 1860, 910 )
 texture = ExtResource( 19 )
 
-[node name="Bar3" type="Sprite" parent="HUD/Control" index="18"]
+[node name="Bar3" type="Sprite" parent="HUD/Control" index="16"]
 
 position = Vector2( 1860, 890 )
 texture = ExtResource( 19 )
 
-[node name="Bar4" type="Sprite" parent="HUD/Control" index="19"]
+[node name="Bar4" type="Sprite" parent="HUD/Control" index="17"]
 
 position = Vector2( 1860, 870 )
 texture = ExtResource( 19 )
 
-[node name="Bar5" type="Sprite" parent="HUD/Control" index="20"]
+[node name="Bar5" type="Sprite" parent="HUD/Control" index="18"]
 
 position = Vector2( 1860, 850 )
 texture = ExtResource( 19 )
 
-[node name="Bar6" type="Sprite" parent="HUD/Control" index="21"]
+[node name="Bar6" type="Sprite" parent="HUD/Control" index="19"]
 
 position = Vector2( 1860, 830 )
 texture = ExtResource( 19 )
 
-[node name="Bar7" type="Sprite" parent="HUD/Control" index="22"]
+[node name="Bar7" type="Sprite" parent="HUD/Control" index="20"]
 
 position = Vector2( 1860, 810 )
 texture = ExtResource( 19 )
 
-[node name="Bar8" type="Sprite" parent="HUD/Control" index="23"]
+[node name="Bar8" type="Sprite" parent="HUD/Control" index="21"]
 
 position = Vector2( 1860, 790 )
 texture = ExtResource( 19 )
 
-[node name="Bar9" type="Sprite" parent="HUD/Control" index="24"]
+[node name="Bar9" type="Sprite" parent="HUD/Control" index="22"]
 
 position = Vector2( 1860, 770 )
 texture = ExtResource( 19 )
 
-[node name="Bar10" type="Sprite" parent="HUD/Control" index="25"]
+[node name="Bar10" type="Sprite" parent="HUD/Control" index="23"]
 
 position = Vector2( 1860, 750 )
 texture = ExtResource( 19 )
 
-[node name="Bar11" type="Sprite" parent="HUD/Control" index="26"]
+[node name="Bar11" type="Sprite" parent="HUD/Control" index="24"]
 
 position = Vector2( 1860, 730 )
 texture = ExtResource( 19 )
 
-[node name="Bar12" type="Sprite" parent="HUD/Control" index="27"]
+[node name="Bar12" type="Sprite" parent="HUD/Control" index="25"]
 
 position = Vector2( 1860, 710 )
 texture = ExtResource( 19 )
 
-[node name="Bar13" type="Sprite" parent="HUD/Control" index="28"]
+[node name="Bar13" type="Sprite" parent="HUD/Control" index="26"]
 
 position = Vector2( 1860, 690 )
 texture = ExtResource( 19 )
 
-[node name="Bar14" type="Sprite" parent="HUD/Control" index="29"]
+[node name="Bar14" type="Sprite" parent="HUD/Control" index="27"]
 
 position = Vector2( 1860, 670 )
 texture = ExtResource( 19 )
 
-[node name="Bar15" type="Sprite" parent="HUD/Control" index="30"]
+[node name="Bar15" type="Sprite" parent="HUD/Control" index="28"]
 
 position = Vector2( 1860, 650 )
 texture = ExtResource( 19 )
 
-[node name="Bar16" type="Sprite" parent="HUD/Control" index="31"]
+[node name="Bar16" type="Sprite" parent="HUD/Control" index="29"]
 
 position = Vector2( 1860, 630 )
 texture = ExtResource( 19 )
 
-[node name="Bar17" type="Sprite" parent="HUD/Control" index="32"]
+[node name="Bar17" type="Sprite" parent="HUD/Control" index="30"]
 
 position = Vector2( 1860, 610 )
 texture = ExtResource( 19 )
 
-[node name="Bar18" type="Sprite" parent="HUD/Control" index="33"]
+[node name="Bar18" type="Sprite" parent="HUD/Control" index="31"]
 
 position = Vector2( 1860, 590 )
 texture = ExtResource( 19 )
 
-[node name="Bar19" type="Sprite" parent="HUD/Control" index="34"]
+[node name="Bar19" type="Sprite" parent="HUD/Control" index="32"]
 
 position = Vector2( 1860, 570 )
 texture = ExtResource( 19 )
 
-[node name="Bar20" type="Sprite" parent="HUD/Control" index="35"]
+[node name="Bar20" type="Sprite" parent="HUD/Control" index="33"]
 
 position = Vector2( 1860, 550 )
 texture = ExtResource( 19 )
 
-[node name="Bar21" type="Sprite" parent="HUD/Control" index="36"]
+[node name="Bar21" type="Sprite" parent="HUD/Control" index="34"]
 
 position = Vector2( 1860, 530 )
 texture = ExtResource( 19 )
 
-[node name="Bar22" type="Sprite" parent="HUD/Control" index="37"]
+[node name="Bar22" type="Sprite" parent="HUD/Control" index="35"]
 
 position = Vector2( 1860, 510 )
 texture = ExtResource( 19 )
 
-[node name="Bar23" type="Sprite" parent="HUD/Control" index="38"]
+[node name="Bar23" type="Sprite" parent="HUD/Control" index="36"]
 
 position = Vector2( 1860, 490 )
 texture = ExtResource( 19 )
 
-[node name="Bar24" type="Sprite" parent="HUD/Control" index="39"]
+[node name="Bar24" type="Sprite" parent="HUD/Control" index="37"]
 
 position = Vector2( 1860, 470 )
 texture = ExtResource( 19 )
 
-[node name="Bar25" type="Sprite" parent="HUD/Control" index="40"]
+[node name="Bar25" type="Sprite" parent="HUD/Control" index="38"]
 
 position = Vector2( 1860, 450 )
 texture = ExtResource( 19 )
 
-[node name="Bar26" type="Sprite" parent="HUD/Control" index="41"]
+[node name="Bar26" type="Sprite" parent="HUD/Control" index="39"]
 
 position = Vector2( 1860, 430 )
 texture = ExtResource( 19 )
 
-[node name="Bar27" type="Sprite" parent="HUD/Control" index="42"]
+[node name="Bar27" type="Sprite" parent="HUD/Control" index="40"]
 
 position = Vector2( 1860, 410 )
 texture = ExtResource( 19 )
 
-[node name="Bar28" type="Sprite" parent="HUD/Control" index="43"]
+[node name="Bar28" type="Sprite" parent="HUD/Control" index="41"]
 
 position = Vector2( 1860, 390 )
 texture = ExtResource( 19 )
 
-[node name="Bar29" type="Sprite" parent="HUD/Control" index="44"]
+[node name="Bar29" type="Sprite" parent="HUD/Control" index="42"]
 
 position = Vector2( 1860, 370 )
 texture = ExtResource( 19 )
 
-[node name="Bar30" type="Sprite" parent="HUD/Control" index="45"]
+[node name="Bar30" type="Sprite" parent="HUD/Control" index="43"]
 
 position = Vector2( 1860, 350 )
 texture = ExtResource( 19 )
 
-[node name="Bar31" type="Sprite" parent="HUD/Control" index="46"]
+[node name="Bar31" type="Sprite" parent="HUD/Control" index="44"]
 
 position = Vector2( 1860, 330 )
 texture = ExtResource( 19 )
 
-[node name="Bar32" type="Sprite" parent="HUD/Control" index="47"]
+[node name="Bar32" type="Sprite" parent="HUD/Control" index="45"]
 
 position = Vector2( 1860, 310 )
 texture = ExtResource( 19 )
 
-[node name="Bar33" type="Sprite" parent="HUD/Control" index="48"]
+[node name="Bar33" type="Sprite" parent="HUD/Control" index="46"]
 
 position = Vector2( 1860, 290 )
 texture = ExtResource( 19 )
 
-[node name="Bar34" type="Sprite" parent="HUD/Control" index="49"]
+[node name="Bar34" type="Sprite" parent="HUD/Control" index="47"]
 
 position = Vector2( 1860, 270 )
 texture = ExtResource( 19 )
 
-[node name="Bar35" type="Sprite" parent="HUD/Control" index="50"]
+[node name="Bar35" type="Sprite" parent="HUD/Control" index="48"]
 
 position = Vector2( 1860, 250 )
 texture = ExtResource( 19 )
 
-[node name="HighScoreText" type="Sprite" parent="HUD/Control" index="51"]
+[node name="HighScoreText" type="Sprite" parent="HUD/Control" index="49"]
 
 position = Vector2( 1320, 20 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 20 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="HighScore0" type="Sprite" parent="HUD/Control" index="52"]
+[node name="HighScore0" type="Sprite" parent="HUD/Control" index="50"]
 
 position = Vector2( 1540, 20 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 10 )
 _sections_unfolded = [ "Material", "Transform" ]
 
-[node name="HighScore1" type="Sprite" parent="HUD/Control" index="53"]
+[node name="HighScore1" type="Sprite" parent="HUD/Control" index="51"]
 
 position = Vector2( 1580, 20 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 10 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="HighScore2" type="Sprite" parent="HUD/Control" index="54"]
+[node name="HighScore2" type="Sprite" parent="HUD/Control" index="52"]
 
 position = Vector2( 1620, 20 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 10 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="HighScore3" type="Sprite" parent="HUD/Control" index="55"]
+[node name="HighScore3" type="Sprite" parent="HUD/Control" index="53"]
 
 position = Vector2( 1660, 20 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 10 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="HighScore4" type="Sprite" parent="HUD/Control" index="56"]
+[node name="HighScore4" type="Sprite" parent="HUD/Control" index="54"]
 
 position = Vector2( 1700, 20 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 10 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="HighScore5" type="Sprite" parent="HUD/Control" index="57"]
+[node name="HighScore5" type="Sprite" parent="HUD/Control" index="55"]
 
 position = Vector2( 1740, 20 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 10 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="HighScore6" type="Sprite" parent="HUD/Control" index="58"]
+[node name="HighScore6" type="Sprite" parent="HUD/Control" index="56"]
 
 position = Vector2( 1780, 20 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 10 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="HighScore7" type="Sprite" parent="HUD/Control" index="59"]
+[node name="HighScore7" type="Sprite" parent="HUD/Control" index="57"]
 
 position = Vector2( 1820, 20 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 10 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="HighScore8" type="Sprite" parent="HUD/Control" index="60"]
+[node name="HighScore8" type="Sprite" parent="HUD/Control" index="58"]
 
 position = Vector2( 1860, 20 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 10 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="HighScore9" type="Sprite" parent="HUD/Control" index="61"]
+[node name="HighScore9" type="Sprite" parent="HUD/Control" index="59"]
 
 position = Vector2( 1900, 20 )
 scale = Vector2( 0.5, 0.5 )
