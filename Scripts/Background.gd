@@ -11,6 +11,8 @@ func _ready():
         var path = "res://Assets/Backgrounds/space_" + str(i) + ".png"
         textures.append(load(path))
 
+    scale *= scene_variables.scale_factor
+
     randomize()
 
     replace_background()
@@ -25,5 +27,4 @@ func _ready():
 func replace_background():
     current_sprite_index = int(rand_range(0, 8))
     texture = textures[current_sprite_index]
-    scale *= scene_variables.scale_factor
 
