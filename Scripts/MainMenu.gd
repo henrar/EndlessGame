@@ -38,7 +38,7 @@ func _ready():
 func _process(delta):
     if new_game_button.pressed:
         audio_player.play_sound_effect(audio_player.SoundEffect.SE_CLICK)
-        get_tree().change_scene("res://Scenes/LoadingScreen.tscn")
+        get_tree().change_scene("res://Scenes/Game.tscn")
 
     if upgrades_button.pressed:
         audio_player.play_sound_effect(audio_player.SoundEffect.SE_CLICK)

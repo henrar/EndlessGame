@@ -68,16 +68,16 @@ const green_ball_collide = 0
 enum RedBallTypes { SHIP_1 = 0, SHIP_2 = 1, SHIP_3 = 2, SHIP_TYPE_COUNT = 3 }
 
 const red_ball_base_speed = [199.0, 151.0, 97.0]
-var red_ball_speed = [red_ball_base_speed[RedBallTypes.SHIP_1], red_ball_base_speed[RedBallTypes.SHIP_2], red_ball_base_speed[RedBallTypes.SHIP_3]]
+var red_ball_speed = []
 
 const red_ball_speed_modifier = [10.0, 10.0, 10.0]
 const red_ball_speed_modifier_interval = [60.0, 60.0, 60.0]
 
 const red_ball_base_spawn_rate = [1, 1, 1] #per interval
-var red_ball_spawn_rate = red_ball_base_spawn_rate
+var red_ball_spawn_rate = []
 
 const red_ball_base_spawn_interval = [5.0, 19.0, 31.0] #interval (seconds)
-var red_ball_spawn_interval = red_ball_base_spawn_interval
+var red_ball_spawn_interval = []
 const red_ball_spawn_rate_modifier = [1, 1, 1]
 const red_ball_spawn_rate_interval_modifier = [0.0, 0.0, 0.0]
 const red_ball_spawn_rate_timer = [60.0, 60.0, 60.0]
@@ -170,6 +170,14 @@ onready var audio_player = get_node("/root/AudioPlayer")
 var score_timer
 var created_score_timer = false
 
+var green_ball_speed_timer
+var red_ball_speed_timer = []
+var gold_ball_speed_timer
+
+var green_ball_spawn_increase_timer
+var red_ball_spawn_increase_timer = []
+var gold_ball_spawn_increase_timer
+
 func _ready():
     get_tree().set_auto_accept_quit(false)
     get_tree().set_quit_on_go_back(false)
@@ -177,45 +185,116 @@ func _ready():
     center_location = Vector2(get_viewport().size.x / 2.0, get_viewport().size.y / 2.0)
     reinit_variables()
 
+func add_speed_timers():
+    green_ball_speed_timer = Timer.new()
+    green_ball_speed_timer.set_name("GreenBallSpeedTimer")
+    green_ball_speed_timer.one_shot = false
+    green_ball_speed_timer.wait_time = green_ball_speed_modifier_interval
+    green_ball_speed_timer.connect("timeout",self,"increase_green_ball_speed") 
+    get_tree().get_root().get_node("GameWorld").add_child(green_ball_speed_timer)
+
+    red_ball_speed_timer = []
+
+    for i in range(RedBallTypes.SHIP_TYPE_COUNT):
+        red_ball_speed_timer.append(Timer.new())
+        red_ball_speed_timer[i].set_name("RedBallSpeedTimer" + str(i))
+        red_ball_speed_timer[i].one_shot = false
+        red_ball_speed_timer[i].wait_time = red_ball_speed_modifier_interval[i]
+        red_ball_speed_timer[i].connect("timeout",self,"increase_red_ball_speed", [i]) 
+        get_tree().get_root().get_node("GameWorld").add_child(red_ball_speed_timer[i])
+
+    gold_ball_speed_timer = Timer.new()
+    gold_ball_speed_timer.set_name("GoldBallSpeedTimer")
+    gold_ball_speed_timer.one_shot = false
+    gold_ball_speed_timer.wait_time = gold_ball_speed_modifier_interval
+    gold_ball_speed_timer.connect("timeout",self,"increase_gold_ball_speed") 
+    get_tree().get_root().get_node("GameWorld").add_child(gold_ball_speed_timer)
+
+func add_spawn_increase_timers():
+    green_ball_spawn_increase_timer = Timer.new()
+    green_ball_spawn_increase_timer.set_name("GreenBallSpawnIncreaseTimer")
+    green_ball_spawn_increase_timer.one_shot = false
+    green_ball_spawn_increase_timer.wait_time = green_ball_spawn_rate_timer
+    green_ball_spawn_increase_timer.connect("timeout",self,"increase_green_ball_spawn_rate") 
+    get_tree().get_root().get_node("GameWorld").add_child(green_ball_spawn_increase_timer)
+
+    red_ball_spawn_increase_timer = []
+
+    for i in range(RedBallTypes.SHIP_TYPE_COUNT):
+        red_ball_spawn_increase_timer.append(Timer.new())
+        red_ball_spawn_increase_timer[i].set_name("RedBallSpawnIncreaseTimer" + str(i))
+        red_ball_spawn_increase_timer[i].one_shot = false
+        red_ball_spawn_increase_timer[i].wait_time = red_ball_spawn_rate_timer[i]
+        red_ball_spawn_increase_timer[i].connect("timeout",self,"increase_red_ball_spawn_rate", [i]) 
+        get_tree().get_root().get_node("GameWorld").add_child(red_ball_spawn_increase_timer[i])
+
+    gold_ball_spawn_increase_timer = Timer.new()
+    gold_ball_spawn_increase_timer.set_name("GoldBallSpawnIncreaseTimer")
+    gold_ball_spawn_increase_timer.one_shot = false
+    gold_ball_spawn_increase_timer.wait_time = gold_ball_spawn_rate_timer
+    gold_ball_spawn_increase_timer.connect("timeout",self,"increase_gold_ball_spawn_rate") 
+    get_tree().get_root().get_node("GameWorld").add_child(gold_ball_spawn_increase_timer)
+
+func start_spawn_increase_timers():
+    green_ball_spawn_increase_timer.start()
+    for i in range(RedBallTypes.SHIP_TYPE_COUNT):
+        red_ball_spawn_increase_timer[i].start()
+    gold_ball_spawn_increase_timer.start()
+
+func stop_spawn_increase_timers():
+    green_ball_spawn_increase_timer.stop()
+    for i in range(RedBallTypes.SHIP_TYPE_COUNT):
+        red_ball_spawn_increase_timer[i].stop()
+    gold_ball_spawn_increase_timer.stop()
+
+func start_speed_timers():
+    green_ball_speed_timer.start()
+    for i in range(RedBallTypes.SHIP_TYPE_COUNT):
+        red_ball_speed_timer[i].start()
+    gold_ball_speed_timer.start()
+
+func stop_speed_timers():
+    green_ball_speed_timer.stop()
+    for i in range(RedBallTypes.SHIP_TYPE_COUNT):
+        red_ball_speed_timer[i].stop()
+    gold_ball_speed_timer.stop()
+
 func _process(delta):
     if get_tree().get_current_scene().get_name() == "GameWorld":
         session_timer += delta
 
-        update_ball_speed()
-        update_ball_spawn_rate()
         update_powerups()
+    else:
+        session_timer = 0.0
 
-func update_ball_spawn_rate():
-    if fmod(session_timer, green_ball_spawn_rate_timer) <= 0.01:
-        green_ball_spawn_rate += green_ball_spawn_rate_modifier
-        if green_ball_spawn_interval - green_ball_spawn_rate_interval_modifier > 1.0:
-            green_ball_spawn_interval -= green_ball_spawn_rate_interval_modifier
+func increase_green_ball_spawn_rate():
+    green_ball_spawn_rate += green_ball_spawn_rate_modifier
+    if green_ball_spawn_interval - green_ball_spawn_rate_interval_modifier > 1.0:
+        green_ball_spawn_interval -= green_ball_spawn_rate_interval_modifier
 
-    for i in range(0, 3):
-        if fmod(session_timer, red_ball_spawn_rate_timer[i]) <= 0.01:
-            red_ball_spawn_rate[i] += red_ball_spawn_rate_modifier[i]
-            if red_ball_spawn_interval[i] - red_ball_spawn_rate_interval_modifier[i] > 1.0:
-                red_ball_spawn_interval[i] -= red_ball_spawn_rate_interval_modifier[i]
+func increase_red_ball_spawn_rate(type):
+    red_ball_spawn_rate[type] += red_ball_spawn_rate_modifier[type]
+    if red_ball_spawn_interval[type] - red_ball_spawn_rate_interval_modifier[type] > 1.0:
+        red_ball_spawn_interval[type] -= red_ball_spawn_rate_interval_modifier[type]
 
-    if fmod(session_timer, gold_ball_spawn_rate_timer) <= 0.01:
-        gold_ball_spawn_rate += gold_ball_spawn_rate_modifier
-        if gold_ball_spawn_interval - gold_ball_spawn_rate_interval_modifier > 1.0:
-            gold_ball_spawn_interval -= gold_ball_spawn_rate_interval_modifier
+func increase_gold_ball_spawn_rate():
+    gold_ball_spawn_rate += gold_ball_spawn_rate_modifier
+    if gold_ball_spawn_interval - gold_ball_spawn_rate_interval_modifier > 1.0:
+        gold_ball_spawn_interval -= gold_ball_spawn_rate_interval_modifier     
 
-func update_ball_speed():
-    if fmod(session_timer, green_ball_speed_modifier_interval) <= 0.01:
-        green_ball_speed += green_ball_speed_modifier
+func increase_green_ball_speed():
+    green_ball_speed += green_ball_speed_modifier
 
-    for i in range(0, 3):
-        if fmod(session_timer, red_ball_speed_modifier_interval[i]) <= 0.01:
-            red_ball_speed[i] += red_ball_speed_modifier[i]
+func increase_red_ball_speed(type):
+    red_ball_speed[type] += red_ball_speed_modifier[type]
 
-    if fmod(session_timer, gold_ball_speed_modifier_interval) <= 0.01:
-        gold_ball_speed += gold_ball_speed_modifier
+func increase_gold_ball_speed():
+    gold_ball_speed += gold_ball_speed_modifier
 
 func init_score_timer():
     if not created_score_timer:
         score_timer = Timer.new()
+        score_timer.set_name("ScoreTimer")
         score_timer.one_shot = false
         score_timer.wait_time = score_time_addition_interval
         score_timer.connect("timeout",self,"update_score")
@@ -275,10 +354,13 @@ func reinit_variables():
     green_ball_spawn_rate = green_ball_base_spawn_rate
     green_ball_spawn_interval = green_ball_base_spawn_interval
 
-    for i in range(0, RedBallTypes.SHIP_TYPE_COUNT):
-        red_ball_speed[i] = red_ball_base_speed[i]
-        red_ball_spawn_rate[i] = red_ball_base_spawn_rate[i]
-        red_ball_spawn_interval[i] = red_ball_base_spawn_interval[i]
+    red_ball_speed = []
+    red_ball_spawn_rate = []
+    red_ball_spawn_interval = []
+    for i in range(RedBallTypes.SHIP_TYPE_COUNT):
+        red_ball_speed.append(red_ball_base_speed[i])
+        red_ball_spawn_rate.append(red_ball_base_spawn_rate[i])
+        red_ball_spawn_interval.append(red_ball_base_spawn_interval[i])
 
     gold_ball_speed = gold_ball_base_speed
     gold_ball_spawn_rate = gold_ball_base_spawn_rate

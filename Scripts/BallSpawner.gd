@@ -18,6 +18,7 @@ onready var scene_variables = get_node("/root/SceneVariables")
 
 func _ready():
     green_ball_spawn_timer = Timer.new()
+    green_ball_spawn_timer.set_name("GreenBallSpawnTimer")
     green_ball_spawn_timer.one_shot = false
     green_ball_spawn_timer.wait_time = scene_variables.green_ball_spawn_interval
     green_ball_spawn_timer.connect("timeout",self,"spawn_green_ball") 
@@ -26,6 +27,7 @@ func _ready():
 
     for i in range(0, scene_variables.RedBallTypes.SHIP_TYPE_COUNT):
         red_ball_spawn_timer.append(Timer.new())
+        red_ball_spawn_timer[i].set_name("RedBallSpawnTimer" + str(i))
         red_ball_spawn_timer[i].one_shot = false
         red_ball_spawn_timer[i].wait_time = scene_variables.red_ball_spawn_interval[i]
         red_ball_spawn_timer[i].connect("timeout",self,"spawn_red_ball", [i]) 
@@ -33,6 +35,7 @@ func _ready():
         add_child(red_ball_spawn_timer[i])
         
     gold_ball_spawn_timer = Timer.new()
+    gold_ball_spawn_timer.set_name("GoldBallSpawnTimer")
     gold_ball_spawn_timer.one_shot = false
     gold_ball_spawn_timer.wait_time = scene_variables.gold_ball_spawn_interval
     gold_ball_spawn_timer.connect("timeout",self,"spawn_gold_ball") 

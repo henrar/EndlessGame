@@ -16,4 +16,7 @@ func _ready():
     upgrade_tracker.execute_upgrades()
 
     scene_variables.init_score_timer()
-
+    scene_variables.add_speed_timers()
+    scene_variables.start_speed_timers()
+    scene_variables.add_spawn_increase_timers()
+    scene_variables.start_spawn_increase_timers()
