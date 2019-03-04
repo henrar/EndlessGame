@@ -11,9 +11,6 @@ var GreenBall
 var RedBall
 var GoldBall
 
-var good_powerup_probability_sum = 0.0
-var bad_powerup_probability_sum = 0.0
-
 onready var scene_variables = get_node("/root/SceneVariables")
 
 func _ready():
@@ -45,13 +42,7 @@ func _ready():
     scene_instance = get_tree().get_root().get_node("GameWorld")
     GreenBall = preload("res://Scripts/GreenBall.gd")
     RedBall = preload("res://Scripts/RedBall.gd")
-    GoldBall = preload("res://Scripts/GoldBall.gd")
-
-    for i in range(GoodPowerupTypes.SPEED_UP_BARRIER, GoodPowerupTypes.GOOD_POWERUP_COUNT):
-        good_powerup_probability_sum += scene_variables.good_powerup_drop_probability[i]
-
-    for i in range(BadPowerupTypes.SLOW_DOWN_BARRIER, BadPowerupTypes.BAD_POWERUP_COUNT):
-        bad_powerup_probability_sum += scene_variables.bad_powerup_drop_probability[i]       
+    GoldBall = preload("res://Scripts/GoldBall.gd")     
 
     randomize()
 
@@ -86,19 +77,19 @@ func spawn_green_ball_with_add_life():
 
 func select_good_powerup():
     var probability_table = []
-    for i in range(0, GoodPowerupTypes.GOOD_POWERUP_COUNT):
+    for i in range(GoodPowerupTypes.GOOD_POWERUP_COUNT):
         var sum = 0.0
         for j in range(i + 1):
             sum += scene_variables.good_powerup_drop_probability[j]
         probability_table.append(sum)
 
-    var result = rand_range(0.0, 1.0)
-
+    var result = randf()
+   
     if result >= 0.0 && result < probability_table[0]:
         return GoodPowerupTypes.SPEED_UP_BARRIER
     elif result >= probability_table[0] && result < probability_table[1]:
         return GoodPowerupTypes.ENEMY_SHIP_SLOWDOWN
-    elif result >= probability_table[1] && result < probability_table[2]:
+    elif result >= probability_table[1] && result < probability_table[3]:
         return GoodPowerupTypes.STRENGTHEN_BARRIER
     #elif result >= probability_table[2] && result < probability_table[3]:
         #return GoodPowerupTypes.ADD_LIFE
@@ -109,13 +100,13 @@ func select_good_powerup():
 
 func select_bad_powerup():
     var probability_table = []
-    for i in range(0, BadPowerupTypes.BAD_POWERUP_COUNT):
+    for i in range(BadPowerupTypes.BAD_POWERUP_COUNT):
         var sum = 0.0
         for j in range(i + 1):
             sum += scene_variables.bad_powerup_drop_probability[j]
         probability_table.append(sum)
 
-    var result = rand_range(0.0, 1.0)
+    var result = randf()
 
     if result >= 0.0 && result < probability_table[0]:
         return BadPowerupTypes.SLOW_DOWN_BARRIER
