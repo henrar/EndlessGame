@@ -36,33 +36,34 @@ func play_sound_effect(sound_effect):
     sound_effect_players[int(sound_effect)].play()
 
 func load_music():
-    music_tracks.append(load("res://Assets/sound/music/title_theme.wav"))
-    music_tracks.append(load("res://Assets/sound/music/upgrade_theme.wav"))
-    music_tracks.append(load("res://Assets/sound/music/in_game_theme.wav"))
-    music_tracks.append(load("res://Assets/sound/music/game_over_theme.wav"))
+    music_tracks.append(load("res://Assets/sound/music/title_theme.ogg"))
+    music_tracks.append(load("res://Assets/sound/music/upgrade_theme.ogg"))
+    music_tracks.append(load("res://Assets/sound/music/in_game_theme.ogg"))
+    music_tracks.append(load("res://Assets/sound/music/game_over_theme.ogg"))
 
     for i in range(Music.MUSIC_NUM):
-        music_tracks[i].loop_begin = 0
-        music_tracks[i].loop_end = 1000000000
-        music_tracks[i].loop_mode = AudioStreamSample.LOOP_FORWARD
+        music_tracks[i].loop = true
 
 func load_sound_effects():
-    sound_effects.append(load("res://Assets/sound/effects/se_click.wav"))
-    sound_effects.append(load("res://Assets/sound/effects/se_buy_upgrade.wav"))
-    sound_effects.append(load("res://Assets/sound/effects/se_ship_collision.wav"))
-    sound_effects.append(load("res://Assets/sound/effects/se_barrier_collision_bounce.wav"))
-    sound_effects.append(load("res://Assets/sound/effects/se_barrier_collision_destroy.wav"))
-    sound_effects.append(load("res://Assets/sound/effects/se_mothership_hit_red.wav"))
-    sound_effects.append(load("res://Assets/sound/effects/se_mothership_hit_green.wav"))
-    sound_effects.append(load("res://Assets/sound/effects/se_mothership_hit_gold.wav"))
-    sound_effects.append(load("res://Assets/sound/effects/se_mothership_destroy.wav"))
-    sound_effects.append(load("res://Assets/sound/effects/se_nuke_explosion.wav"))
-    sound_effects.append(load("res://Assets/sound/effects/se_bad_powerup_deactivate.wav"))
-    sound_effects.append(load("res://Assets/sound/effects/se_life_bonus_activate.wav"))
-    sound_effects.append(load("res://Assets/sound/effects/se_highscore_fanfare.wav"))
-    sound_effects.append(load("res://Assets/sound/effects/se_bad_powerup_activate.wav"))
-    sound_effects.append(load("res://Assets/sound/effects/se_good_powerup_activate.wav"))
-    sound_effects.append(load("res://Assets/sound/effects/se_good_powerup_deactivate.wav"))
+    sound_effects.append(load("res://Assets/sound/effects/se_click.ogg"))
+    sound_effects.append(load("res://Assets/sound/effects/se_buy_upgrade.ogg"))
+    sound_effects.append(load("res://Assets/sound/effects/se_ship_collision.ogg"))
+    sound_effects.append(load("res://Assets/sound/effects/se_barrier_collision_bounce.ogg"))
+    sound_effects.append(load("res://Assets/sound/effects/se_barrier_collision_destroy.ogg"))
+    sound_effects.append(load("res://Assets/sound/effects/se_mothership_hit_red.ogg"))
+    sound_effects.append(load("res://Assets/sound/effects/se_mothership_hit_green.ogg"))
+    sound_effects.append(load("res://Assets/sound/effects/se_mothership_hit_gold.ogg"))
+    sound_effects.append(load("res://Assets/sound/effects/se_mothership_destroy.ogg"))
+    sound_effects.append(load("res://Assets/sound/effects/se_nuke_explosion.ogg"))
+    sound_effects.append(load("res://Assets/sound/effects/se_bad_powerup_deactivate.ogg"))
+    sound_effects.append(load("res://Assets/sound/effects/se_life_bonus_activate.ogg"))
+    sound_effects.append(load("res://Assets/sound/effects/se_highscore_fanfare.ogg"))
+    sound_effects.append(load("res://Assets/sound/effects/se_bad_powerup_activate.ogg"))
+    sound_effects.append(load("res://Assets/sound/effects/se_good_powerup_activate.ogg"))
+    sound_effects.append(load("res://Assets/sound/effects/se_good_powerup_deactivate.ogg"))
+
+    for i in range(SoundEffect.SE_NUM):
+        sound_effects[i].loop = false
 
 func init_sound_effect_players():
     for i in range(SoundEffect.SE_NUM):
