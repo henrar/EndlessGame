@@ -100,8 +100,8 @@ func select_good_powerup():
         return GoodPowerupTypes.ENEMY_SHIP_SLOWDOWN
     elif result >= probability_table[1] && result < probability_table[2]:
         return GoodPowerupTypes.STRENGTHEN_BARRIER
-    elif result >= probability_table[2] && result < probability_table[3]:
-        return GoodPowerupTypes.ADD_LIFE
+    #elif result >= probability_table[2] && result < probability_table[3]:
+        #return GoodPowerupTypes.ADD_LIFE
     elif result >= probability_table[3] && result < probability_table[4]:
         return GoodPowerupTypes.GOOD_NUKE
     else:
